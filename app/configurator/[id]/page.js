@@ -3,10 +3,9 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import API from '@/lib/api';
 import useStore from '@/store/useStore';
+import { ArrowLeft, Check, ChevronRight, Loader2, Info } from 'lucide-react';
 
-// ─── ADD OR REMOVE CATEGORY NAMES HERE TO CONTROL MULTI-SELECT ───
 const MULTI_SELECT_CATEGORIES = ['accessories', 'tyres', 'wrapping'];
-// ─────────────────────────────────────────────────────────────────
 
 export default function ConfiguratorPage() {
   const { id } = useParams();
@@ -82,9 +81,10 @@ export default function ConfiguratorPage() {
   };
 
   if (!vehicle) return (
-    <main style={{ background: '#111', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <p style={{ color: '#00ff88', fontFamily: 'Orbitron, sans-serif' }}>Loading...</p>
-    </main>
+    <div className="min-h-screen flex flex-col items-center justify-center text-primary bg-background">
+      <Loader2 className="animate-spin mb-4" size={48} />
+      <p className="font-orbitron tracking-widest uppercase animate-pulse">Assembling Workshop...</p>
+    </div>
   );
 
   const categories = vehicle.availableOptions.reduce((acc, opt) => {
@@ -94,149 +94,144 @@ export default function ConfiguratorPage() {
   }, {});
 
   return (
-    <main style={{ background: '#111', minHeight: '100vh', color: '#fff', padding: '2rem', paddingBottom: '120px' }}>
-
-      {/* Header */}
-      <div style={{ marginBottom: '1.5rem' }}>
-        <button onClick={() => router.back()}
-          style={{ background: 'none', border: '1px solid #333', color: '#aaa', padding: '0.4rem 1rem', borderRadius: '6px', cursor: 'pointer', marginBottom: '1rem' }}>
-          ← Back
-        </button>
-        <h2 style={{ fontFamily: 'Orbitron, sans-serif', color: '#00ff88', margin: 0 }}>
-          Customize: {vehicle.name}
-        </h2>
-        <p style={{ color: '#aaa', margin: '0.3rem 0 0' }}>
-          Base price: ₹{vehicle.basePrice.toLocaleString()}
-        </p>
+    <main className="min-h-screen bg-background pb-32">
+      {/* Top Navigation Bar */}
+      <div className="glass sticky top-20 z-40 border-b border-white/5 py-4 px-6 mb-8">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <button onClick={() => router.back()} className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors group">
+            <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+            <span className="text-sm font-medium">Return to Fleet</span>
+          </button>
+          <div className="text-right">
+            <h1 className="font-orbitron text-xl font-bold uppercase tracking-tighter">{vehicle.name}</h1>
+            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em]">Configuration Mode</p>
+          </div>
+        </div>
       </div>
 
-      {/* Vehicle image */}
-      {vehicle.images?.[0] && (
-        <img src={vehicle.images[0]} alt={vehicle.name}
-          style={{ width: '100%', maxWidth: '520px', borderRadius: '12px', marginBottom: '2rem', display: 'block' }} />
-      )}
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12">
+        
+        {/* Left Column: Visual & Summary */}
+        <div className="lg:col-span-7 flex flex-col gap-8">
+          <div className="relative aspect-video bg-black/40 rounded-3xl overflow-hidden border border-border group">
+            <img 
+              src={vehicle.images?.[0]} 
+              alt={vehicle.name}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent"></div>
+            <div className="absolute bottom-6 left-8 flex gap-3">
+              <span className="px-3 py-1 bg-black/60 backdrop-blur-md rounded-full text-[10px] font-bold text-gray-300 uppercase tracking-widest border border-white/10">
+                4K Render
+              </span>
+            </div>
+          </div>
 
-      {/* Option categories */}
-      {Object.entries(categories).map(([category, options]) => {
-        const isMulti = isMultiCategory(category);
-        const selectedCount = isMulti ? (multiSelected[category] || []).length : null;
-
-        return (
-          <div key={category} style={{ marginBottom: '2rem' }}>
-
-            {/* Category label row */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
-              <h3 style={{ color: '#fff', textTransform: 'capitalize', margin: 0, fontSize: '1rem' }}>
-                {category}
-              </h3>
-              {isMulti ? (
-                <span style={{
-                  background: '#00ff8822', color: '#00ff88',
-                  border: '1px solid #00ff8855', borderRadius: '20px',
-                  padding: '0.15rem 0.6rem', fontSize: '0.72rem'
-                }}>
-                  pick any {selectedCount > 0 ? `· ${selectedCount} selected` : ''}
-                </span>
-              ) : (
-                <span style={{
-                  background: '#ffffff11', color: '#aaa',
-                  border: '1px solid #333', borderRadius: '20px',
-                  padding: '0.15rem 0.6rem', fontSize: '0.72rem'
-                }}>
-                  pick one
-                </span>
+          <div className="bg-surface/50 rounded-3xl p-8 border border-border">
+            <h3 className="font-orbitron text-sm font-bold uppercase tracking-widest text-primary mb-6 flex items-center gap-2">
+              <Info size={16} /> Configuration Summary
+            </h3>
+            <div className="space-y-4">
+              <div className="flex justify-between items-center text-sm">
+                <span className="text-gray-500 uppercase tracking-wide">Base Component</span>
+                <span className="text-white font-medium font-orbitron">₹{vehicle.basePrice.toLocaleString()}</span>
+              </div>
+              {allChosenOptions.map((opt, i) => (
+                <div key={i} className="flex justify-between items-center text-sm animate-fade-in">
+                  <span className="text-gray-400 capitalize">{opt.name}</span>
+                  <span className="text-white font-medium">
+                    {opt.price > 0 ? `+₹${opt.price.toLocaleString()}` : 'Standard'}
+                  </span>
+                </div>
+              ))}
+              {allChosenOptions.length === 0 && (
+                <p className="text-gray-600 text-xs italic">Select options below to begin customizing your {vehicle.name}.</p>
               )}
             </div>
-
-            {/* Option buttons */}
-            <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-              {options.map((opt, i) => {
-                const active = isSelected(category, opt);
-                return (
-                  <button key={i}
-                    onClick={() => isMulti
-                      ? handleMultiSelect(category, opt)
-                      : handleSingleSelect(category, opt)
-                    }
-                    style={{
-                      padding: '0.55rem 1.1rem',
-                      borderRadius: '8px',
-                      cursor: 'pointer',
-                      background: active ? '#00ff88' : '#1a1a1a',
-                      color: active ? '#111' : '#fff',
-                      border: active ? '2px solid #00ff88' : '1px solid #444',
-                      fontWeight: active ? 'bold' : 'normal',
-                      transition: 'all 0.15s',
-                      fontSize: '0.9rem',
-                    }}>
-                    {isMulti && (
-                      <span style={{ marginRight: '0.4rem', fontSize: '0.8rem' }}>
-                        {active ? '✓' : '○'}
-                      </span>
-                    )}
-                    {opt.name}
-                    {opt.price > 0 && (
-                      <span style={{ marginLeft: '0.5rem', fontSize: '0.8rem', opacity: 0.8 }}>
-                        +₹{opt.price.toLocaleString()}
-                      </span>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        );
-      })}
-
-      {/* Selections summary */}
-      {allChosenOptions.length > 0 && (
-        <div style={{
-          background: '#1a1a1a', border: '1px solid #333',
-          borderRadius: '10px', padding: '1rem 1.5rem', marginBottom: '1rem'
-        }}>
-          <p style={{ color: '#aaa', margin: '0 0 0.5rem', fontSize: '0.85rem' }}>
-            Your selections:
-          </p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-            {allChosenOptions.map((opt, i) => (
-              <span key={i} style={{
-                background: '#00ff8822', color: '#00ff88',
-                border: '1px solid #00ff8844', borderRadius: '20px',
-                padding: '0.2rem 0.75rem', fontSize: '0.8rem'
-              }}>
-                {opt.name} {opt.price > 0 ? `+₹${opt.price.toLocaleString()}` : '(free)'}
-              </span>
-            ))}
           </div>
         </div>
-      )}
 
-      {/* Sticky bottom bar */}
-      <div style={{
-        position: 'fixed', bottom: 0, left: 0, right: 0,
-        background: '#151515', borderTop: '1px solid #00ff8844',
-        padding: '1rem 2rem', display: 'flex',
-        justifyContent: 'space-between', alignItems: 'center',
-        zIndex: 100
-      }}>
-        <div>
-          <p style={{ margin: 0, color: '#aaa', fontSize: '0.8rem' }}>Total price</p>
-          <p style={{ margin: 0, fontSize: '1.4rem', color: '#00ff88', fontFamily: 'Orbitron, sans-serif', fontWeight: 'bold' }}>
-            ₹{totalPrice.toLocaleString()}
-          </p>
+        {/* Right Column: Options Selection */}
+        <div className="lg:col-span-5 space-y-12">
+          {Object.entries(categories).map(([category, options], catIdx) => {
+            const isMulti = isMultiCategory(category);
+            const selectedCount = isMulti ? (multiSelected[category] || []).length : null;
+
+            return (
+              <div key={category} className="animate-fade-in" style={{ animationDelay: `${catIdx * 0.1}s` }}>
+                <div className="flex items-end justify-between mb-6">
+                  <h3 className="font-orbitron text-lg font-bold text-white uppercase tracking-tight">
+                    {category}
+                  </h3>
+                  <span className={`text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded-md ${isMulti ? 'bg-primary/10 text-primary' : 'bg-white/5 text-gray-500'}`}>
+                    {isMulti ? `MULTI-SELECT (${selectedCount})` : 'SINGLE CHOICE'}
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  {options.map((opt, i) => {
+                    const active = isSelected(category, opt);
+                    return (
+                      <button 
+                        key={i}
+                        onClick={() => isMulti ? handleMultiSelect(category, opt) : handleSingleSelect(category, opt)}
+                        className={`group relative p-4 rounded-2xl border transition-all text-left flex flex-col justify-between min-h-[100px] ${
+                          active 
+                            ? 'bg-primary/5 border-primary shadow-[0_0_20px_rgba(0,255,136,0.1)]' 
+                            : 'bg-surface border-border hover:border-gray-700'
+                        }`}
+                      >
+                        <div className="flex justify-between items-start w-full">
+                          <span className={`font-medium text-sm transition-colors ${active ? 'text-primary' : 'text-gray-400'}`}>
+                            {opt.name}
+                          </span>
+                          {active && (
+                            <div className="bg-primary text-background rounded-full p-0.5">
+                              <Check size={12} strokeWidth={4} />
+                            </div>
+                          )}
+                        </div>
+                        <div>
+                          <p className={`text-xs font-orbitron mt-2 ${active ? 'text-white' : 'text-gray-600'}`}>
+                            {opt.price > 0 ? `+₹${opt.price.toLocaleString()}` : 'Included'}
+                          </p>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
         </div>
-        <button onClick={saveAndAddToCart} disabled={saving} style={{
-          background: saving ? '#555' : '#00ff88',
-          color: '#111', border: 'none',
-          padding: '0.85rem 2.2rem', borderRadius: '8px',
-          fontWeight: 'bold',
-          cursor: saving ? 'not-allowed' : 'pointer',
-          fontSize: '1rem'
-        }}>
-          {saving ? 'Saving...' : 'Add to Cart →'}
-        </button>
       </div>
 
+      {/* Sticky Action Bar */}
+      <div className="fixed bottom-0 left-0 right-0 glass border-t border-primary/20 z-50">
+        <div className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
+          <div className="hidden sm:block">
+            <p className="text-[10px] text-gray-500 font-black uppercase tracking-[0.2em] mb-1">Total Configuration Price</p>
+            <p className="font-orbitron text-2xl font-black text-primary neon-glow">
+              ₹{totalPrice.toLocaleString()}
+            </p>
+          </div>
+          <div className="flex-1 sm:flex-none flex gap-4">
+            <button 
+              onClick={saveAndAddToCart} 
+              disabled={saving}
+              className="flex-1 sm:flex-none group px-12 py-4 bg-primary text-background font-black uppercase tracking-widest text-sm rounded-2xl hover:scale-105 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+            >
+              {saving ? (
+                <Loader2 size={18} className="animate-spin" />
+              ) : (
+                <>
+                  Secure Build <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
     </main>
   );
-}
+}

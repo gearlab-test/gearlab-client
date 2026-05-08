@@ -1,26 +1,57 @@
 @import "tailwindcss";
 
+@theme {
+  --color-primary: #00ff88;
+  --color-secondary: #00e1ff;
+  --color-accent: #7000ff;
+  --color-background: #0a0a0a;
+  --color-surface: #151515;
+  --color-surface-hover: #1c1c1c;
+  --color-border: #262626;
+  
+  --font-orbitron: var(--font-orbitron);
+  --font-poppins: var(--font-poppins);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-poppins), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.glass {
+  background: rgba(21, 21, 21, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.neon-glow {
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+.neon-border {
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.1);
+}
+
+.neon-border:hover {
+  border-color: rgba(0, 255, 136, 0.6);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
 }
