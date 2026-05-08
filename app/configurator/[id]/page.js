@@ -5,7 +5,7 @@ import API from '@/lib/api';
 import useStore from '@/store/useStore';
 import { ArrowLeft, Check, ChevronRight, Loader2, Info } from 'lucide-react';
 
-const MULTI_SELECT_CATEGORIES = ['accessories', 'tyres', 'wrapping'];
+const MULTI_SELECT_CATEGORIES = ['accessories', 'tyres', 'wrapping', 'services'];
 
 export default function ConfiguratorPage() {
   const { id } = useParams();
@@ -104,7 +104,7 @@ export default function ConfiguratorPage() {
           </button>
           <div className="text-right">
             <h1 className="font-orbitron text-xl font-bold uppercase tracking-tighter">{vehicle.name}</h1>
-            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em]">Configuration Mode</p>
+            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em]">Customization & Service Mode</p>
           </div>
         </div>
       </div>
@@ -129,11 +129,11 @@ export default function ConfiguratorPage() {
 
           <div className="bg-surface/50 rounded-3xl p-8 border border-border">
             <h3 className="font-orbitron text-sm font-bold uppercase tracking-widest text-primary mb-6 flex items-center gap-2">
-              <Info size={16} /> Configuration Summary
+              <Info size={16} /> Job Summary
             </h3>
             <div className="space-y-4">
               <div className="flex justify-between items-center text-sm">
-                <span className="text-gray-500 uppercase tracking-wide">Base Component</span>
+                <span className="text-gray-500 uppercase tracking-wide">Base Service Fee</span>
                 <span className="text-white font-medium font-orbitron">₹{vehicle.basePrice.toLocaleString()}</span>
               </div>
               {allChosenOptions.map((opt, i) => (
@@ -210,7 +210,7 @@ export default function ConfiguratorPage() {
       <div className="fixed bottom-0 left-0 right-0 glass border-t border-primary/20 z-50">
         <div className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
           <div className="hidden sm:block">
-            <p className="text-[10px] text-gray-500 font-black uppercase tracking-[0.2em] mb-1">Total Configuration Price</p>
+            <p className="text-[10px] text-gray-500 font-black uppercase tracking-[0.2em] mb-1">Total Job Estimate</p>
             <p className="font-orbitron text-2xl font-black text-primary neon-glow">
               ₹{totalPrice.toLocaleString()}
             </p>

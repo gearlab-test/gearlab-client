@@ -61,7 +61,7 @@ function VehiclesList() {
               <div className="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-60"></div>
               <div className="absolute bottom-4 left-6">
                 <span className="px-3 py-1 bg-primary text-background text-[10px] font-black uppercase tracking-widest rounded-full">
-                  Base Model
+                  Service Ready
                 </span>
               </div>
             </div>
@@ -69,12 +69,12 @@ function VehiclesList() {
             <div className="p-8">
               <h3 className="font-orbitron text-xl font-bold text-white mb-2 group-hover:text-primary transition-colors">{v.name}</h3>
               <p className="text-gray-500 text-sm mb-6 leading-relaxed">
-                Experience unparalleled performance with the latest {v.name} engineering.
+                Professional maintenance and premium customization for your {v.name}.
               </p>
               
               <div className="flex items-center justify-between pt-6 border-t border-border">
                 <div>
-                  <p className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Starting At</p>
+                  <p className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Base Service Fee</p>
                   <p className="font-orbitron text-lg font-bold text-white">₹{v.basePrice.toLocaleString()}</p>
                 </div>
                 <button

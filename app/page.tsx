@@ -20,13 +20,13 @@ export default function HomePage() {
             Define Your <span className="text-primary neon-glow">Legacy</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
-            Engineered for the bold. Customize, price, and book your high-performance vehicle in a few clicks.
+            Engineered for the bold. Maintain, customize, and book premium services for your vehicle in a few clicks.
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/category" className="group relative px-8 py-4 bg-primary text-background font-bold text-lg rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95">
               <span className="relative z-10 flex items-center gap-2">
-                Start Customizing <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                Book Service & Customization <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </span>
             </Link>
             <Link href="/vehicles" className="px-8 py-4 border border-white/20 hover:border-primary/50 text-white font-medium text-lg rounded-full backdrop-blur-sm transition-all hover:bg-white/5">
