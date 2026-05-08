@@ -67,7 +67,7 @@ export default function HomePage() {
   );
 }
 
-function FeatureCard({ icon, title, description }) {
+function FeatureCard({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) {
   return (
     <div className="p-8 rounded-3xl bg-surface border border-border hover:border-primary/30 transition-all group">
       <div className="mb-6 p-4 rounded-2xl bg-primary/5 inline-block group-hover:bg-primary/10 transition-colors">
