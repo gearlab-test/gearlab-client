@@ -30,6 +30,20 @@ export default function Navbar() {
             <ShoppingCart size={16} />
             Cart
           </Link>
+
+          {user?.role === 'workshop' && (
+            <Link href="/workshop" className="px-4 py-1.5 rounded-lg bg-primary/10 border border-primary/20 text-primary hover:bg-primary hover:text-background transition-all uppercase tracking-widest text-[10px] font-black">
+              Workshop
+            </Link>
+          )}
+
+          {user?.role === 'admin' && (
+            <Link href="/admin" className="px-4 py-1.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-500 hover:bg-red-500 hover:text-white transition-all uppercase tracking-widest text-[10px] font-black">
+              Admin
+            </Link>
+          )}
+
+
           
           {user ? (
             <div className="flex items-center gap-6">
@@ -79,6 +93,28 @@ export default function Navbar() {
             >
               <ShoppingCart size={18} /> Cart
             </Link>
+
+            {user?.role === 'workshop' && (
+              <Link 
+                href="/workshop" 
+                onClick={closeMobileMenu}
+                className="flex items-center gap-4 p-4 rounded-2xl bg-primary/10 text-primary border border-primary/20 font-bold uppercase tracking-widest text-xs"
+              >
+                <Package size={18} /> Workshop Control
+              </Link>
+            )}
+
+            {user?.role === 'admin' && (
+              <Link 
+                href="/admin" 
+                onClick={closeMobileMenu}
+                className="flex items-center gap-4 p-4 rounded-2xl bg-red-500/10 text-red-500 border border-red-500/20 font-bold uppercase tracking-widest text-xs"
+              >
+                <ShieldCheck size={18} /> Admin Core
+              </Link>
+            )}
+
+
             
             {user ? (
               <>

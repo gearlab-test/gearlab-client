@@ -5,7 +5,7 @@ import API from '@/lib/api';
 import useStore from '@/store/useStore';
 
 export default function RegisterPage() {
-  const [form, setForm] = useState({ name: '', email: '', password: '' });
+  const [form, setForm] = useState({ name: '', email: '', password: '', role: 'customer' });
   const [error, setError] = useState('');
   const { setUser } = useStore();
   const router = useRouter();
@@ -15,8 +15,9 @@ export default function RegisterPage() {
     try {
       const res = await API.post('/auth/register', form);
       setUser(res.data.user, res.data.token);
-      router.push('/');
+      router.push(res.data.user.role === 'workshop' ? '/workshop' : '/');
     } catch (err) {
+
       setError(err.response?.data?.message || 'Registration failed');
     }
   };
@@ -31,7 +32,27 @@ export default function RegisterPage() {
           Create Account
         </h2>
         {error && <p style={{ color: '#ff4444', marginBottom: '1rem' }}>{error}</p>}
+        
+        {/* Role Selection */}
+        <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
+          {['customer', 'workshop'].map(role => (
+            <button key={role} type="button" 
+              onClick={() => setForm({ ...form, role })}
+              style={{
+                flex: 1, padding: '0.6rem', borderRadius: '8px', border: '1px solid #333',
+                background: form.role === role ? '#00ff88' : 'transparent',
+                color: form.role === role ? '#111' : '#aaa',
+                fontSize: '0.7rem', fontWeight: 'bold', textTransform: 'uppercase', cursor: 'pointer',
+                transition: 'all 0.3s'
+              }}
+            >
+              {role}
+            </button>
+          ))}
+        </div>
+
         {['name', 'email', 'password'].map(field => (
+
           <input key={field}
             type={field === 'password' ? 'password' : field === 'email' ? 'email' : 'text'}
             placeholder={field.charAt(0).toUpperCase() + field.slice(1)}

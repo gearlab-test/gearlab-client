@@ -15,8 +15,9 @@ export default function LoginPage() {
     try {
       const res = await API.post('/auth/login', form);
       setUser(res.data.user, res.data.token);
-      router.push('/');
+      router.push(res.data.user.role === 'workshop' ? '/workshop' : '/');
     } catch (err) {
+
       setError(err.response?.data?.message || 'Login failed');
     }
   };
