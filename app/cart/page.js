@@ -12,6 +12,9 @@ export default function CartPage() {
   const [loading, setLoading] = useState(true);
   const [removing, setRemoving] = useState(null);
   const [ordering, setOrdering] = useState(false);
+  const [workshops, setWorkshops] = useState([]);
+  const [selectedWorkshop, setSelectedWorkshop] = useState('');
+
 
   const fetchCart = async () => {
     try {
@@ -24,6 +27,15 @@ export default function CartPage() {
     }
   };
 
+  const fetchWorkshops = async () => {
+    try {
+      const res = await API.get('/auth/workshops');
+      setWorkshops(res.data);
+    } catch (err) {
+      console.error('Failed to fetch workshops:', err);
+    }
+  };
+
   useEffect(() => {
     if (sessionLoading) return;
     if (!user) {
@@ -31,7 +43,9 @@ export default function CartPage() {
       return;
     }
     fetchCart();
+    fetchWorkshops();
   }, [user, sessionLoading]);
+
 
 
   const handleRemove = async (configId) => {
@@ -48,21 +62,25 @@ export default function CartPage() {
 
   const handleOrder = async () => {
     if (!cart?.configurations?.length) return;
+    if (!selectedWorkshop) return alert('Please select a workshop for your build.');
+    
     setOrdering(true);
     try {
       await API.post('/orders', {
         items: cart.configurations.map(c => c._id),
         totalPrice: grandTotal,
+        workshopId: selectedWorkshop
       });
       alert('🎉 Order placed successfully!');
       await fetchCart();
-      router.push('/');
+      router.push('/profile');
     } catch (err) {
       alert('Order failed: ' + (err.response?.data?.message || err.message));
     } finally {
       setOrdering(false);
     }
   };
+
 
   const grandTotal = cart?.configurations?.reduce(
     (sum, c) => sum + (c.totalPrice || 0), 0
@@ -180,7 +198,43 @@ export default function CartPage() {
         })}
       </div>
 
+      {/* Workshop Selection */}
+      <div className="mt-16 mb-12 bg-surface border border-border rounded-[2.5rem] p-10">
+        <h3 className="font-orbitron text-xl font-bold text-white uppercase tracking-tight mb-8 flex items-center gap-4">
+          <span className="w-10 h-10 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-sm font-black">02</span>
+          SELECT <span className="text-primary">AUTHORIZED WORKSHOP</span>
+        </h3>
+        
+        {workshops.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {workshops.map((ws) => (
+              <button
+                key={ws._id}
+                onClick={() => setSelectedWorkshop(ws._id)}
+                className={`p-6 rounded-2xl border text-left transition-all group ${
+                  selectedWorkshop === ws._id 
+                    ? 'bg-primary/5 border-primary shadow-[0_0_20px_rgba(0,255,136,0.1)]' 
+                    : 'bg-black/20 border-white/5 hover:border-white/20'
+                }`}
+              >
+                <div className="flex justify-between items-center mb-1">
+                  <p className={`font-bold uppercase tracking-tight transition-colors ${selectedWorkshop === ws._id ? 'text-primary' : 'text-gray-300'}`}>
+                    {ws.name}
+                  </p>
+                </div>
+                <p className="text-[10px] text-gray-600 font-medium">{ws.email}</p>
+              </button>
+            ))}
+          </div>
+        ) : (
+          <div className="p-8 text-center bg-black/20 rounded-2xl border border-dashed border-white/5">
+            <p className="text-gray-500 text-xs italic">No authorized workshops available.</p>
+          </div>
+        )}
+      </div>
+
       {/* Sticky Bottom Summary */}
+
       <div className="fixed bottom-0 left-0 right-0 glass border-t border-primary/20 z-50">
         <div className="max-w-4xl mx-auto px-6 py-8 flex items-center justify-between">
           <div>
