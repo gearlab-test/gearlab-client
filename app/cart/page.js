@@ -7,7 +7,7 @@ import { ArrowLeft, Trash2, Edit3, ShoppingBag, Loader2, ChevronRight } from 'lu
 
 export default function CartPage() {
   const router = useRouter();
-  const { user } = useStore();
+  const { user, sessionLoading } = useStore();
   const [cart, setCart] = useState(null);
   const [loading, setLoading] = useState(true);
   const [removing, setRemoving] = useState(null);
@@ -25,12 +25,14 @@ export default function CartPage() {
   };
 
   useEffect(() => {
+    if (sessionLoading) return;
     if (!user) {
       router.push('/auth/login');
       return;
     }
     fetchCart();
-  }, [user]);
+  }, [user, sessionLoading]);
+
 
   const handleRemove = async (configId) => {
     setRemoving(configId);

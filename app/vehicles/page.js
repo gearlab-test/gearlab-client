@@ -13,11 +13,15 @@ function VehiclesList() {
 
   useEffect(() => {
     setLoading(true);
-    API.get(`/vehicles?type=${type}`)
+    const url = type ? `/vehicles?type=${type}` : '/vehicles';
+    API.get(url)
       .then(r => setVehicles(r.data))
       .catch(err => console.error('Could not fetch vehicles:', err.message))
       .finally(() => setLoading(false));
   }, [type]);
+
+  const categoryTitle = type ? (type === 'bike' ? 'Bikes' : 'Cars') : 'All Models';
+
 
   if (loading) return (
     <div className="flex flex-col items-center justify-center py-20 text-primary">
@@ -37,7 +41,7 @@ function VehiclesList() {
         </button>
         <div>
           <h2 className="font-orbitron text-3xl font-bold uppercase tracking-tight text-white">
-            Available <span className="text-primary">{type === 'bike' ? 'Bikes' : 'Cars'}</span>
+            Available <span className="text-primary">{categoryTitle}</span>
           </h2>
           <p className="text-gray-500 text-sm font-medium uppercase tracking-widest">{vehicles.length} Models Found</p>
         </div>
