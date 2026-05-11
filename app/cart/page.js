@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import API from '@/lib/api';
 import useStore from '@/store/useStore';
-import { ArrowLeft, Trash2, Edit3, ShoppingBag, Loader2, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Trash2, Edit3, ShoppingBag, Loader2, ChevronRight, Calendar, Phone, Mail } from 'lucide-react';
 
 export default function CartPage() {
   const router = useRouter();
@@ -14,6 +14,9 @@ export default function CartPage() {
   const [ordering, setOrdering] = useState(false);
   const [workshops, setWorkshops] = useState([]);
   const [selectedWorkshop, setSelectedWorkshop] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
+  const [customerPhone, setCustomerPhone] = useState(user?.phone || '');
+  const [customerEmail, setCustomerEmail] = useState(user?.email || '');
 
 
   const fetchCart = async () => {
@@ -63,17 +66,20 @@ export default function CartPage() {
   const handleOrder = async () => {
     if (!cart?.configurations?.length) return;
     if (!selectedWorkshop) return alert('Please select a workshop for your build.');
+    if (!selectedDate) return alert('Please select a preferred service date.');
+    if (!customerPhone) return alert('Please provide a contact phone number for the workshop.');
     
     setOrdering(true);
     try {
-      await API.post('/orders', {
+      const res = await API.post('/orders', {
         items: cart.configurations.map(c => c._id),
         totalPrice: grandTotal,
-        workshopId: selectedWorkshop
+        workshopId: selectedWorkshop,
+        bookingDate: selectedDate,
+        customerEmail,
+        customerPhone
       });
-      alert('🎉 Order placed successfully!');
-      await fetchCart();
-      router.push('/profile');
+      router.push(`/order-success/${res.data._id}`);
     } catch (err) {
       alert('Order failed: ' + (err.response?.data?.message || err.message));
     } finally {
@@ -198,39 +204,87 @@ export default function CartPage() {
         })}
       </div>
 
-      {/* Workshop Selection */}
-      <div className="mt-16 mb-12 bg-surface border border-border rounded-[2.5rem] p-10">
-        <h3 className="font-orbitron text-xl font-bold text-white uppercase tracking-tight mb-8 flex items-center gap-4">
-          <span className="w-10 h-10 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-sm font-black">02</span>
-          SELECT <span className="text-primary">AUTHORIZED WORKSHOP</span>
-        </h3>
-        
-        {workshops.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {workshops.map((ws) => (
-              <button
-                key={ws._id}
-                onClick={() => setSelectedWorkshop(ws._id)}
-                className={`p-6 rounded-2xl border text-left transition-all group ${
-                  selectedWorkshop === ws._id 
-                    ? 'bg-primary/5 border-primary shadow-[0_0_20px_rgba(0,255,136,0.1)]' 
-                    : 'bg-black/20 border-white/5 hover:border-white/20'
-                }`}
-              >
-                <div className="flex justify-between items-center mb-1">
-                  <p className={`font-bold uppercase tracking-tight transition-colors ${selectedWorkshop === ws._id ? 'text-primary' : 'text-gray-300'}`}>
-                    {ws.name}
-                  </p>
-                </div>
-                <p className="text-[10px] text-gray-600 font-medium">{ws.email}</p>
-              </button>
-            ))}
+      {/* Date & Workshop Selection */}
+      <div className="mt-16 mb-12 space-y-8">
+        <div className="bg-surface border border-border rounded-[2.5rem] p-10">
+          <h3 className="font-orbitron text-xl font-bold text-white uppercase tracking-tight mb-8 flex items-center gap-4">
+            <span className="w-10 h-10 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-sm font-black">02</span>
+            CONTACT <span className="text-primary">DETAILS</span>
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="relative">
+              <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-primary" size={20} />
+              <input 
+                type="tel" 
+                placeholder="Phone Number"
+                value={customerPhone}
+                onChange={(e) => setCustomerPhone(e.target.value)}
+                className="w-full bg-black/40 border border-white/10 rounded-2xl py-4 pl-12 pr-6 text-sm text-white focus:border-primary outline-none transition-all"
+              />
+            </div>
+            <div className="relative">
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-primary" size={20} />
+              <input 
+                type="email" 
+                placeholder="Email Address"
+                value={customerEmail}
+                onChange={(e) => setCustomerEmail(e.target.value)}
+                className="w-full bg-black/40 border border-white/10 rounded-2xl py-4 pl-12 pr-6 text-sm text-white focus:border-primary outline-none transition-all"
+              />
+            </div>
           </div>
-        ) : (
-          <div className="p-8 text-center bg-black/20 rounded-2xl border border-dashed border-white/5">
-            <p className="text-gray-500 text-xs italic">No authorized workshops available.</p>
+        </div>
+
+        <div className="bg-surface border border-border rounded-[2.5rem] p-10">
+          <h3 className="font-orbitron text-xl font-bold text-white uppercase tracking-tight mb-8 flex items-center gap-4">
+            <span className="w-10 h-10 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-sm font-black">03</span>
+            SELECT <span className="text-primary">SERVICE DATE</span>
+          </h3>
+          <div className="relative max-w-xs">
+            <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-primary" size={20} />
+            <input 
+              type="date" 
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+              min={new Date().toISOString().split('T')[0]}
+              className="w-full bg-black/40 border border-white/10 rounded-2xl py-4 pl-12 pr-6 text-sm text-white focus:border-primary outline-none transition-all appearance-none"
+            />
           </div>
-        )}
+        </div>
+
+        <div className="bg-surface border border-border rounded-[2.5rem] p-10">
+          <h3 className="font-orbitron text-xl font-bold text-white uppercase tracking-tight mb-8 flex items-center gap-4">
+            <span className="w-10 h-10 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-sm font-black">04</span>
+            SELECT <span className="text-primary">AUTHORIZED WORKSHOP</span>
+          </h3>
+          
+          {workshops.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {workshops.map((ws) => (
+                <button
+                  key={ws._id}
+                  onClick={() => setSelectedWorkshop(ws._id)}
+                  className={`p-6 rounded-2xl border text-left transition-all group ${
+                    selectedWorkshop === ws._id 
+                      ? 'bg-primary/5 border-primary shadow-[0_0_20px_rgba(0,255,136,0.1)]' 
+                      : 'bg-black/20 border-white/5 hover:border-white/20'
+                  }`}
+                >
+                  <div className="flex justify-between items-center mb-1">
+                    <p className={`font-bold uppercase tracking-tight transition-colors ${selectedWorkshop === ws._id ? 'text-primary' : 'text-gray-300'}`}>
+                      {ws.name}
+                    </p>
+                  </div>
+                  <p className="text-[10px] text-gray-600 font-medium">{ws.email}</p>
+                </button>
+              ))}
+            </div>
+          ) : (
+            <div className="p-8 text-center bg-black/20 rounded-2xl border border-dashed border-white/5">
+              <p className="text-gray-500 text-xs italic">No authorized workshops available.</p>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Sticky Bottom Summary */}

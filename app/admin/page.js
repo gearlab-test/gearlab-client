@@ -6,7 +6,7 @@ import useStore from '@/store/useStore';
 import { 
   Users, ShieldCheck, ShieldAlert, CheckCircle2, 
   XCircle, Loader2, Search, Filter, Mail, Calendar, 
-  Settings, UserCheck, UserX, ExternalLink, AlertCircle
+  Settings, UserCheck, UserX, ExternalLink, AlertCircle, Trash2
 } from 'lucide-react';
 
 
@@ -45,6 +45,19 @@ export default function AdminDashboard() {
       await fetchUsers();
     } catch (err) {
       alert('Failed to update approval status');
+    } finally {
+      setActioning(null);
+    }
+  };
+
+  const deleteUser = async (userId) => {
+    if (!confirm('Are you sure you want to delete this user? This action cannot be undone.')) return;
+    setActioning(userId);
+    try {
+      await API.delete(`/admin/users/${userId}`);
+      await fetchUsers();
+    } catch (err) {
+      alert('Failed to delete user');
     } finally {
       setActioning(null);
     }
@@ -173,23 +186,38 @@ export default function AdminDashboard() {
                   </td>
                   <td className="px-8 py-8 text-right">
                     {u.role !== 'admin' && (
-                      <button 
-                        onClick={() => toggleApproval(u._id, u.isApproved)}
-                        disabled={actioning === u._id}
-                        className={`px-6 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                          u.isApproved 
-                            ? 'bg-red-500/10 text-red-500 border border-red-500/20 hover:bg-red-500 hover:text-white' 
-                            : 'bg-primary/10 text-primary border border-primary/20 hover:bg-primary hover:text-background shadow-[0_0_20px_rgba(0,255,136,0.1)]'
-                        }`}
-                      >
-                        {actioning === u._id ? (
-                          <Loader2 size={14} className="animate-spin mx-auto" />
-                        ) : u.isApproved ? (
-                          <span className="flex items-center gap-2 justify-center"><UserX size={14} /> Revoke Access</span>
-                        ) : (
-                          <span className="flex items-center gap-2 justify-center"><UserCheck size={14} /> Grant Access</span>
-                        )}
-                      </button>
+                      <div className="flex justify-end gap-2">
+                        <button 
+                          onClick={() => toggleApproval(u._id, u.isApproved)}
+                          disabled={actioning === u._id}
+                          className={`px-6 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                            u.isApproved 
+                              ? 'bg-red-500/10 text-red-500 border border-red-500/20 hover:bg-red-500 hover:text-white' 
+                              : 'bg-primary/10 text-primary border border-primary/20 hover:bg-primary hover:text-background shadow-[0_0_20px_rgba(0,255,136,0.1)]'
+                          }`}
+                        >
+                          {actioning === u._id ? (
+                            <Loader2 size={14} className="animate-spin mx-auto" />
+                          ) : u.isApproved ? (
+                            <span className="flex items-center gap-2 justify-center"><UserX size={14} /> Revoke Access</span>
+                          ) : (
+                            <span className="flex items-center gap-2 justify-center"><UserCheck size={14} /> Grant Access</span>
+                          )}
+                        </button>
+
+                        <button 
+                          onClick={() => deleteUser(u._id)}
+                          disabled={actioning === u._id}
+                          className="p-3 rounded-2xl bg-red-500/10 text-red-500 border border-red-500/20 hover:bg-red-500 hover:text-white transition-all"
+                          title="Delete User"
+                        >
+                          {actioning === u._id ? (
+                            <Loader2 size={14} className="animate-spin" />
+                          ) : (
+                            <Trash2 size={14} />
+                          )}
+                        </button>
+                      </div>
                     )}
                   </td>
                 </tr>

@@ -5,7 +5,7 @@ import API from '@/lib/api';
 import useStore from '@/store/useStore';
 import { 
   Package, Clock, CheckCircle, RefreshCw, 
-  Search, User as UserIcon, Loader2, AlertCircle, ExternalLink 
+  Search, User as UserIcon, Loader2, AlertCircle, ExternalLink, Calendar, Phone, Mail
 } from 'lucide-react';
 
 export default function WorkshopPage() {
@@ -125,6 +125,7 @@ export default function WorkshopPage() {
               <thead>
                 <tr className="bg-black/20 border-b border-border">
                   <th className="px-8 py-6 text-[10px] font-black text-gray-500 uppercase tracking-widest">Customer / ID</th>
+                  <th className="px-8 py-6 text-[10px] font-black text-gray-500 uppercase tracking-widest">Service Date</th>
                   <th className="px-8 py-6 text-[10px] font-black text-gray-500 uppercase tracking-widest">Build Specs</th>
                   <th className="px-8 py-6 text-[10px] font-black text-gray-500 uppercase tracking-widest">Total Value</th>
                   <th className="px-8 py-6 text-[10px] font-black text-gray-500 uppercase tracking-widest">Status</th>
@@ -145,9 +146,30 @@ export default function WorkshopPage() {
                           </div>
                           <div>
                             <p className="text-sm font-bold text-gray-200">{order.userId?.name}</p>
-                            <p className="text-[10px] text-gray-600 font-medium">{order.userId?.email}</p>
+                            <div className="flex flex-col gap-1 mt-1">
+                              <p className="text-[10px] text-gray-500 flex items-center gap-1.5 font-medium">
+                                <Mail size={10} className="text-primary" /> {order.customerEmail || order.userId?.email}
+                              </p>
+                              {order.customerPhone && (
+                                <p className="text-[10px] text-gray-500 flex items-center gap-1.5 font-medium">
+                                  <Phone size={10} className="text-primary" /> {order.customerPhone}
+                                </p>
+                              )}
+                            </div>
                           </div>
                         </div>
+                      </div>
+                    </td>
+                    <td className="px-8 py-8">
+                      <div className="flex items-center gap-2 text-primary">
+                        <Calendar size={16} />
+                        <p className="font-orbitron text-sm font-bold">
+                          {order.bookingDate ? new Date(order.bookingDate).toLocaleDateString('en-IN', {
+                            day: '2-digit',
+                            month: 'short',
+                            year: 'numeric'
+                          }).toUpperCase() : 'NOT SET'}
+                        </p>
                       </div>
                     </td>
                     <td className="px-8 py-8">
