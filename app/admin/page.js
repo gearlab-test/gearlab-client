@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import API from '@/lib/api';
 import useStore from '@/store/useStore';
+import useToast from '@/store/useToast';
 import { 
   Users, ShieldCheck, ShieldAlert, CheckCircle2, 
   XCircle, Loader2, Search, Filter, Mail, Calendar, 
@@ -13,10 +14,12 @@ import {
 export default function AdminDashboard() {
   const router = useRouter();
   const { user, sessionLoading } = useStore();
+  const { showSuccess, showError } = useToast();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('workshop'); // Show workshops by default
   const [actioning, setActioning] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const fetchUsers = async () => {
     try {
@@ -43,8 +46,9 @@ export default function AdminDashboard() {
     try {
       await API.patch(`/admin/users/${userId}/approve`, { isApproved: !currentStatus });
       await fetchUsers();
+      showSuccess(!currentStatus ? 'User access granted successfully.' : 'User access revoked.');
     } catch (err) {
-      alert('Failed to update approval status');
+      showError('Failed to update approval status.');
     } finally {
       setActioning(null);
     }
@@ -56,16 +60,20 @@ export default function AdminDashboard() {
     try {
       await API.delete(`/admin/users/${userId}`);
       await fetchUsers();
+      showSuccess('User deleted successfully.');
     } catch (err) {
-      alert('Failed to delete user');
+      showError('Failed to delete user.');
     } finally {
       setActioning(null);
     }
   };
 
   const filteredUsers = users.filter(u => {
-    if (filter === 'all') return true;
-    return u.role === filter;
+    const matchesRole = filter === 'all' || u.role === filter;
+    const matchesSearch = searchQuery.trim() === '' ||
+      u.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      u.email.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesRole && matchesSearch;
   });
 
   if (sessionLoading || loading) return (
@@ -112,7 +120,9 @@ export default function AdminDashboard() {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
             <input 
               type="text" 
-              placeholder="Search users..." 
+              placeholder="Search by name or email..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full bg-black/40 border border-white/10 rounded-2xl py-4 pl-12 pr-6 text-sm text-white focus:border-primary outline-none transition-all"
             />
           </div>
@@ -222,6 +232,14 @@ export default function AdminDashboard() {
                   </td>
                 </tr>
               ))}
+              {filteredUsers.length === 0 && (
+                <tr>
+                  <td colSpan={4} className="px-8 py-20 text-center">
+                    <AlertCircle className="mx-auto mb-4 text-gray-700" size={40} />
+                    <p className="text-gray-500 font-orbitron text-sm font-bold uppercase tracking-widest">No users match your search</p>
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

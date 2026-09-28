@@ -2,7 +2,9 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import API from '@/lib/api';
+import { getFallbackVehicleById } from '@/lib/fallbackVehicles';
 import useStore from '@/store/useStore';
+import useToast from '@/store/useToast';
 import { ArrowLeft, Check, ChevronRight, Loader2, Info } from 'lucide-react';
 
 const MULTI_SELECT_CATEGORIES = ['accessories', 'tyres', 'wrapping', 'services'];
@@ -10,16 +12,33 @@ const MULTI_SELECT_CATEGORIES = ['accessories', 'tyres', 'wrapping', 'services']
 export default function ConfiguratorPage() {
   const { id } = useParams();
   const router = useRouter();
-  const { user } = useStore();
+  const { user, fetchCartCount } = useStore();
+  const { showError, showSuccess } = useToast();
   const [vehicle, setVehicle] = useState(null);
   const [selected, setSelected] = useState({});
   const [multiSelected, setMultiSelected] = useState({});
   const [saving, setSaving] = useState(false);
+  const [activeImage, setActiveImage] = useState(0);
 
   useEffect(() => {
     API.get(`/vehicles/${id}`)
-      .then(r => setVehicle(r.data))
-      .catch(() => alert('Could not load vehicle'));
+      .then(r => {
+        if (r.data && (r.data._id || r.data.name)) {
+          setVehicle(r.data);
+        } else {
+          const fb = getFallbackVehicleById(id);
+          if (fb) setVehicle(fb);
+          else showError('Could not load vehicle details.');
+        }
+      })
+      .catch(() => {
+        const fb = getFallbackVehicleById(id);
+        if (fb) {
+          setVehicle(fb);
+        } else {
+          showError('Could not load vehicle details.');
+        }
+      });
   }, [id]);
 
   const handleSingleSelect = (category, option) => {
@@ -72,9 +91,11 @@ export default function ConfiguratorPage() {
         totalPrice
       });
       await API.post('/cart', { configId: config.data._id });
+      fetchCartCount();
+      showSuccess('Build saved and added to cart!');
       router.push('/cart');
     } catch (err) {
-      alert('Error saving build: ' + (err.response?.data?.message || err.message));
+      showError('Error saving build: ' + (err.response?.data?.message || err.message));
     } finally {
       setSaving(false);
     }
@@ -92,6 +113,8 @@ export default function ConfiguratorPage() {
     acc[opt.category].push(opt);
     return acc;
   }, {});
+
+  const images = vehicle.images || [];
 
   return (
     <main className="min-h-screen bg-background pb-32">
@@ -113,11 +136,18 @@ export default function ConfiguratorPage() {
         
         {/* Left Column: Visual & Summary */}
         <div className="lg:col-span-7 flex flex-col gap-8">
+          {/* Main Image */}
           <div className="relative aspect-video bg-black/40 rounded-3xl overflow-hidden border border-border group">
             <img 
-              src={vehicle.images?.[0]} 
+              src={images[activeImage] || images[0] || 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&q=80&w=800'} 
               alt={vehicle.name}
-              className="w-full h-full object-cover"
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = vehicle.type === 'bike'
+                  ? 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&q=80&w=800'
+                  : 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=800';
+              }}
+              className="w-full h-full object-cover transition-all duration-500"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent"></div>
             <div className="absolute bottom-6 left-8 flex gap-3">
@@ -126,6 +156,25 @@ export default function ConfiguratorPage() {
               </span>
             </div>
           </div>
+
+          {/* Thumbnail Gallery */}
+          {images.length > 1 && (
+            <div className="flex gap-3 overflow-x-auto pb-2">
+              {images.map((img, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActiveImage(i)}
+                  className={`flex-shrink-0 w-24 h-16 rounded-xl overflow-hidden border-2 transition-all ${
+                    activeImage === i
+                      ? 'border-primary shadow-[0_0_12px_rgba(0,255,136,0.3)]'
+                      : 'border-transparent opacity-50 hover:opacity-80'
+                  }`}
+                >
+                  <img src={img} alt={`${vehicle.name} view ${i + 1}`} className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
+          )}
 
           <div className="bg-surface/50 rounded-3xl p-8 border border-border">
             <h3 className="font-orbitron text-sm font-bold uppercase tracking-widest text-primary mb-6 flex items-center gap-2">
@@ -234,4 +283,4 @@ export default function ConfiguratorPage() {
       </div>
     </main>
   );
-}
+}

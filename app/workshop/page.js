@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import API from '@/lib/api';
 import useStore from '@/store/useStore';
+import useToast from '@/store/useToast';
 import { 
   Package, Clock, CheckCircle, RefreshCw, 
   Search, User as UserIcon, Loader2, AlertCircle, ExternalLink, Calendar, Phone, Mail
@@ -11,10 +12,12 @@ import {
 export default function WorkshopPage() {
   const router = useRouter();
   const { user, sessionLoading } = useStore();
+  const { showSuccess, showError } = useToast();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
   const [updating, setUpdating] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const fetchOrders = async () => {
     try {
@@ -41,16 +44,22 @@ export default function WorkshopPage() {
     try {
       await API.patch(`/orders/${orderId}/status`, { status: newStatus });
       await fetchOrders();
+      showSuccess(`Order ${newStatus === 'confirmed' ? 'confirmed' : 'marked as completed'} successfully.`);
     } catch (err) {
-      alert('Failed to update status');
+      showError('Failed to update order status.');
     } finally {
       setUpdating(null);
     }
   };
 
-  const filteredOrders = filter === 'all' 
-    ? orders 
-    : orders.filter(o => o.status === filter);
+  const filteredOrders = orders.filter(o => {
+    const matchesStatus = filter === 'all' || o.status === filter;
+    const query = searchQuery.trim().toLowerCase();
+    const matchesSearch = query === '' ||
+      o.userId?.name?.toLowerCase().includes(query) ||
+      o._id.toLowerCase().includes(query);
+    return matchesStatus && matchesSearch;
+  });
 
   if (sessionLoading || loading) return (
     <div className="min-h-screen flex flex-col items-center justify-center text-primary bg-background">
@@ -90,7 +99,9 @@ export default function WorkshopPage() {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
             <input 
               type="text" 
-              placeholder="Filter by Customer or ID..." 
+              placeholder="Search by customer or order ID..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full bg-black/40 border border-white/10 rounded-xl py-3 pl-12 pr-6 text-sm text-white focus:border-primary outline-none transition-all"
             />
           </div>
@@ -201,17 +212,19 @@ export default function WorkshopPage() {
                         {order.status === 'pending' && (
                           <button 
                             onClick={() => updateStatus(order._id, 'confirmed')}
-                            className="px-6 py-2 bg-primary text-background text-[10px] font-black uppercase tracking-widest rounded-xl hover:scale-105 transition-all shadow-[0_0_15px_rgba(0,255,136,0.2)]"
+                            disabled={updating === order._id}
+                            className="px-6 py-2 bg-primary text-background text-[10px] font-black uppercase tracking-widest rounded-xl hover:scale-105 transition-all shadow-[0_0_15px_rgba(0,255,136,0.2)] disabled:opacity-50"
                           >
-                            Confirm Job
+                            {updating === order._id ? <Loader2 size={14} className="animate-spin" /> : 'Confirm Job'}
                           </button>
                         )}
                         {order.status === 'confirmed' && (
                           <button 
                             onClick={() => updateStatus(order._id, 'completed')}
-                            className="px-6 py-2 bg-secondary text-background text-[10px] font-black uppercase tracking-widest rounded-xl hover:scale-105 transition-all"
+                            disabled={updating === order._id}
+                            className="px-6 py-2 bg-secondary text-background text-[10px] font-black uppercase tracking-widest rounded-xl hover:scale-105 transition-all disabled:opacity-50"
                           >
-                            Mark Complete
+                            {updating === order._id ? <Loader2 size={14} className="animate-spin" /> : 'Mark Complete'}
                           </button>
                         )}
                         {order.status === 'completed' && (

@@ -131,7 +131,10 @@ export default function ProfilePage() {
                         <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Total Value</p>
                         <p className="font-orbitron text-xl font-bold text-white">₹{order.totalPrice.toLocaleString()}</p>
                       </div>
-                      <button className="p-4 rounded-2xl bg-white/5 border border-white/5 text-gray-400 hover:text-primary hover:border-primary/50 transition-all">
+                      <button 
+                        onClick={() => router.push(`/profile/orders/${order._id}`)}
+                        className="p-4 rounded-2xl bg-white/5 border border-white/5 text-gray-400 hover:text-primary hover:border-primary/50 transition-all"
+                      >
                         <ChevronRight size={20} />
                       </button>
                     </div>

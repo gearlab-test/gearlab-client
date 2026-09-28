@@ -3,11 +3,13 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import API from '@/lib/api';
 import useStore from '@/store/useStore';
+import useToast from '@/store/useToast';
 import { ArrowLeft, Trash2, Edit3, ShoppingBag, Loader2, ChevronRight, Calendar, Phone, Mail } from 'lucide-react';
 
 export default function CartPage() {
   const router = useRouter();
-  const { user, sessionLoading } = useStore();
+  const { user, sessionLoading, fetchCartCount } = useStore();
+  const { showError, showSuccess } = useToast();
   const [cart, setCart] = useState(null);
   const [loading, setLoading] = useState(true);
   const [removing, setRemoving] = useState(null);
@@ -56,8 +58,10 @@ export default function CartPage() {
     try {
       await API.delete(`/cart/${configId}`);
       await fetchCart();
+      fetchCartCount();
+      showSuccess('Item removed from cart.');
     } catch (err) {
-      alert('Could not remove item: ' + (err.response?.data?.message || err.message));
+      showError('Could not remove item: ' + (err.response?.data?.message || err.message));
     } finally {
       setRemoving(null);
     }
@@ -65,9 +69,9 @@ export default function CartPage() {
 
   const handleOrder = async () => {
     if (!cart?.configurations?.length) return;
-    if (!selectedWorkshop) return alert('Please select a workshop for your build.');
-    if (!selectedDate) return alert('Please select a preferred service date.');
-    if (!customerPhone) return alert('Please provide a contact phone number for the workshop.');
+    if (!selectedWorkshop) return showError('Please select a workshop for your build.');
+    if (!selectedDate) return showError('Please select a preferred service date.');
+    if (!customerPhone) return showError('Please provide a contact phone number for the workshop.');
     
     setOrdering(true);
     try {
@@ -79,9 +83,10 @@ export default function CartPage() {
         customerEmail,
         customerPhone
       });
+      fetchCartCount();
       router.push(`/order-success/${res.data._id}`);
     } catch (err) {
-      alert('Order failed: ' + (err.response?.data?.message || err.message));
+      showError('Order failed: ' + (err.response?.data?.message || err.message));
     } finally {
       setOrdering(false);
     }
@@ -106,7 +111,7 @@ export default function CartPage() {
       </div>
       <h2 className="font-orbitron text-3xl font-bold text-white mb-3">YOUR HANGAR IS EMPTY</h2>
       <p className="text-gray-500 max-w-sm mb-10 leading-relaxed">
-        You haven't configured any vehicles yet. Start a new build to see it here.
+        You haven&apos;t configured any vehicles yet. Start a new build to see it here.
       </p>
       <button
         onClick={() => router.push('/category')}

@@ -2,6 +2,7 @@
 import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import API from '@/lib/api';
+import { getFallbackVehicles } from '@/lib/fallbackVehicles';
 import { ArrowLeft, Loader2, Plus } from 'lucide-react';
 
 function VehiclesList() {
@@ -15,8 +16,17 @@ function VehiclesList() {
     setLoading(true);
     const url = type ? `/vehicles?type=${type}` : '/vehicles';
     API.get(url)
-      .then(r => setVehicles(r.data))
-      .catch(err => console.error('Could not fetch vehicles:', err.message))
+      .then(r => {
+        if (Array.isArray(r.data) && r.data.length > 0) {
+          setVehicles(r.data);
+        } else {
+          setVehicles(getFallbackVehicles(type));
+        }
+      })
+      .catch(err => {
+        console.warn('Could not fetch vehicles from API, using catalog fallback:', err.message);
+        setVehicles(getFallbackVehicles(type));
+      })
       .finally(() => setLoading(false));
   }, [type]);
 
@@ -55,8 +65,17 @@ function VehiclesList() {
           >
             <div className="aspect-video overflow-hidden bg-black/40 relative">
               {v.images?.[0] ? (
-                <img src={v.images[0]} alt={v.name}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <img 
+                  src={v.images[0]} 
+                  alt={v.name}
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = v.type === 'bike'
+                      ? 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&q=80&w=800'
+                      : 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=800';
+                  }}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-gray-700">
                   <Plus size={48} />

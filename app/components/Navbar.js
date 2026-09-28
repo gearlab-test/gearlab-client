@@ -3,10 +3,10 @@ import { useState, useEffect } from 'react';
 
 import Link from 'next/link';
 import useStore from '@/store/useStore';
-import { User, LogOut, ShoppingCart, Menu, X, Package } from 'lucide-react';
+import { User, LogOut, ShoppingCart, Menu, X, Package, ShieldCheck } from 'lucide-react';
 
 export default function Navbar() {
-  const { user, logout, initialize } = useStore();
+  const { user, logout, initialize, cartCount } = useStore();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -26,8 +26,15 @@ export default function Navbar() {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium">
           <Link href="/category" className="hover:text-primary transition-colors uppercase tracking-widest text-[10px] font-bold">Vehicles</Link>
-          <Link href="/cart" className="hover:text-primary transition-colors flex items-center gap-2 uppercase tracking-widest text-[10px] font-bold">
-            <ShoppingCart size={16} />
+          <Link href="/cart" className="hover:text-primary transition-colors flex items-center gap-2 uppercase tracking-widest text-[10px] font-bold relative">
+            <div className="relative">
+              <ShoppingCart size={16} />
+              {cartCount > 0 && (
+                <span className="absolute -top-2.5 -right-2.5 w-5 h-5 bg-primary text-background text-[9px] font-black rounded-full flex items-center justify-center animate-count-up shadow-[0_0_8px_rgba(0,255,136,0.4)]">
+                  {cartCount}
+                </span>
+              )}
+            </div>
             Cart
           </Link>
 
@@ -91,7 +98,15 @@ export default function Navbar() {
               onClick={closeMobileMenu}
               className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 text-gray-300 hover:text-primary transition-all font-bold uppercase tracking-widest text-xs"
             >
-              <ShoppingCart size={18} /> Cart
+              <div className="relative">
+                <ShoppingCart size={18} />
+                {cartCount > 0 && (
+                  <span className="absolute -top-2 -right-2 w-5 h-5 bg-primary text-background text-[9px] font-black rounded-full flex items-center justify-center">
+                    {cartCount}
+                  </span>
+                )}
+              </div>
+              Cart
             </Link>
 
             {user?.role === 'workshop' && (
@@ -123,7 +138,7 @@ export default function Navbar() {
                   onClick={closeMobileMenu}
                   className="flex items-center gap-4 p-4 rounded-2xl bg-primary/10 text-primary border border-primary/20 font-bold uppercase tracking-widest text-xs"
                 >
-                  <User size={18} /> {user.name}'s Profile
+                  <User size={18} /> {user.name}&apos;s Profile
                 </Link>
                 <button 
                   onClick={() => { logout(); closeMobileMenu(); }}
