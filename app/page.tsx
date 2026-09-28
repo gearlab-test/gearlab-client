@@ -1,7 +1,21 @@
 'use client';
 import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
-import { ChevronRight, ShieldCheck, Zap, Cog, Star, ArrowRight, Sparkles, Users, Award, Clock } from 'lucide-react';
+import { 
+  ChevronRight, 
+  ShieldCheck, 
+  Zap, 
+  Cog, 
+  Star, 
+  ArrowRight, 
+  Sparkles, 
+  Users, 
+  Award, 
+  Clock, 
+  Wrench, 
+  Layers,
+  CheckCircle2
+} from 'lucide-react';
 import ScrollReveal from './components/ScrollReveal';
 import API from '@/lib/api';
 import { getFallbackVehicles } from '@/lib/fallbackVehicles';
@@ -115,8 +129,8 @@ function TestimonialCard({ name, role, text, rating }: TestimonialCardProps) {
 /* ─── Featured Vehicle Card ─── */
 function VehicleShowcaseCard({ vehicle }: { vehicle: any }) {
   return (
-    <Link href={`/configurator/${vehicle._id}`} className="group flex-shrink-0 w-[320px] md:w-[360px]">
-      <div className="bg-surface border border-border rounded-3xl overflow-hidden transition-all hover:border-primary/30 card-glow">
+    <div className="group flex-shrink-0 w-[320px] md:w-[360px] bg-surface border border-border rounded-3xl overflow-hidden transition-all hover:border-primary/30 card-glow flex flex-col justify-between">
+      <div>
         <div className="aspect-video overflow-hidden bg-black/40 relative">
           {vehicle.images?.[0] ? (
             <img 
@@ -136,16 +150,39 @@ function VehicleShowcaseCard({ vehicle }: { vehicle: any }) {
             </div>
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-60"></div>
+          <div className="absolute top-4 left-4">
+            <span className="px-3 py-1 bg-black/70 backdrop-blur-md text-[10px] font-bold text-primary uppercase tracking-widest rounded-full border border-primary/20">
+              {vehicle.type}
+            </span>
+          </div>
         </div>
+
         <div className="p-6">
           <h4 className="font-orbitron text-lg font-bold text-white group-hover:text-primary transition-colors mb-1">{vehicle.name}</h4>
-          <div className="flex justify-between items-center">
-            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">{vehicle.type}</p>
+          <div className="flex justify-between items-center mb-6">
+            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Base Rate</p>
             <p className="font-orbitron text-sm font-bold text-primary">₹{vehicle.basePrice.toLocaleString()}</p>
           </div>
         </div>
       </div>
-    </Link>
+
+      <div className="p-6 pt-0 grid grid-cols-2 gap-3 border-t border-border/50">
+        <Link 
+          href={`/configurator/${vehicle._id}?mode=maintenance`}
+          className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-white/5 hover:bg-primary/20 hover:text-primary text-gray-300 text-xs font-bold transition-all border border-white/5 hover:border-primary/40 text-center"
+        >
+          <Wrench size={13} className="text-primary" />
+          <span>Service</span>
+        </Link>
+        <Link 
+          href={`/configurator/${vehicle._id}?mode=customize`}
+          className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-primary text-background hover:brightness-110 text-xs font-black uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(0,255,136,0.2)] text-center"
+        >
+          <Zap size={13} />
+          <span>Modify</span>
+        </Link>
+      </div>
+    </div>
   );
 }
 
@@ -187,30 +224,49 @@ export default function HomePage() {
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
           <div className="animate-fade-in space-y-6">
-            <div className="inline-block px-4 py-1 rounded-full border border-primary/30 bg-primary/5 text-primary text-xs font-bold uppercase tracking-[0.3em] mb-4 backdrop-blur-md">
-              The Future of Customization
+            <div className="inline-block px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-xs font-bold uppercase tracking-[0.3em] mb-4 backdrop-blur-md">
+              Automotive Engineering & Care
             </div>
 
-            <h1 className="font-orbitron text-6xl md:text-9xl font-black tracking-tighter text-white mb-6 uppercase leading-[0.8] animate-floating">
-              Define Your <br />
+            <h1 className="font-orbitron text-5xl md:text-8xl lg:text-9xl font-black tracking-tighter text-white mb-6 uppercase leading-[0.85] animate-floating">
+              Choose Your <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-primary bg-[length:200%_auto] animate-gradient-x neon-glow">
-                Legacy
+                Experience
               </span>
             </h1>
 
-            <p className="text-xl md:text-2xl text-gray-200 max-w-2xl mx-auto mb-10 leading-relaxed font-light drop-shadow-lg">
-              Engineered for the bold. Maintain, customize, and book premium services for your vehicle in a few clicks.
+            <p className="text-lg md:text-2xl text-gray-200 max-w-3xl mx-auto mb-10 leading-relaxed font-light drop-shadow-lg">
+              Whether you need routine certified maintenance or extreme performance modifications, GearLab provides complete, transparent workshop booking.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-4">
-              <Link href="/category" className="group relative px-10 py-5 bg-primary text-background font-bold text-lg rounded-full overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(0,255,136,0.4)] active:scale-95">
-                <span className="relative z-10 flex items-center gap-2">
-                  Get Started <ChevronRight size={22} className="group-hover:translate-x-1 transition-transform" />
-                </span>
+            {/* Direct Dual Action Buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-5 pt-4">
+              <Link 
+                href="/category?mode=maintenance" 
+                className="w-full sm:w-auto group relative px-8 py-5 bg-surface border border-primary/40 hover:border-primary text-white font-bold text-base md:text-lg rounded-full overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(0,255,136,0.3)] active:scale-95 flex items-center justify-center gap-3 backdrop-blur-md"
+              >
+                <div className="p-2 rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-background transition-colors">
+                  <Wrench size={20} />
+                </div>
+                <div className="text-left">
+                  <span className="block text-[10px] text-gray-400 uppercase tracking-widest font-semibold">Periodic Care</span>
+                  <span className="text-white group-hover:text-primary transition-colors">Regular Maintenance</span>
+                </div>
+                <ChevronRight size={18} className="text-gray-400 group-hover:translate-x-1 group-hover:text-primary transition-all ml-1" />
               </Link>
-              <Link href="/vehicles" className="group px-10 py-5 border border-white/20 hover:border-primary/50 text-white font-medium text-lg rounded-full backdrop-blur-md transition-all hover:bg-white/5 flex items-center gap-2">
-                <span>Explore Fleet</span>
-                <div className="w-2 h-2 rounded-full bg-primary animate-pulse group-hover:scale-150 transition-transform"></div>
+
+              <Link 
+                href="/category?mode=customize" 
+                className="w-full sm:w-auto group relative px-8 py-5 bg-primary text-background font-black text-base md:text-lg rounded-full overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_35px_rgba(0,255,136,0.5)] active:scale-95 flex items-center justify-center gap-3"
+              >
+                <div className="p-2 rounded-full bg-background/20 text-background group-hover:bg-background group-hover:text-primary transition-colors">
+                  <Zap size={20} />
+                </div>
+                <div className="text-left">
+                  <span className="block text-[10px] text-background/80 uppercase tracking-widest font-black">Performance & Mods</span>
+                  <span>Vehicle Customization</span>
+                </div>
+                <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform ml-1" />
               </Link>
             </div>
           </div>
@@ -221,15 +277,144 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── Two Distinct Paths (Maintenance vs Customize) ── */}
+      <section className="py-20 px-6 border-y border-border bg-gradient-to-b from-surface/20 to-background">
+        <div className="max-w-7xl mx-auto">
+          <ScrollReveal>
+            <div className="text-center mb-16">
+              <span className="text-primary text-xs font-black uppercase tracking-[0.25em] mb-2 block">Choose Your Requirement</span>
+              <h2 className="font-orbitron text-3xl md:text-5xl font-black text-white uppercase tracking-tight">
+                Two Purpose-Built <span className="text-primary neon-glow">Tracks</span>
+              </h2>
+              <p className="text-gray-400 max-w-xl mx-auto mt-3 text-sm md:text-base">
+                Select whether you need standard routine servicing or want to build a fully customized, aftermarket machine.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            {/* Track 1: Regular Maintenance */}
+            <ScrollReveal variant="fade-up" delay={100}>
+              <div className="relative p-8 md:p-10 rounded-[2.5rem] bg-surface border border-border hover:border-primary/50 transition-all duration-300 card-glow flex flex-col justify-between h-full group">
+                <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
+                  <Wrench size={140} />
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                      <Wrench size={32} />
+                    </div>
+                    <span className="px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-widest text-primary">
+                      Routine Care
+                    </span>
+                  </div>
+
+                  <h3 className="font-orbitron text-2xl md:text-3xl font-bold text-white mb-3">
+                    Regular Maintenance
+                  </h3>
+                  <p className="text-gray-400 text-sm leading-relaxed mb-6 font-light">
+                    Keep your ride performing at peak mechanical safety and efficiency. Comprehensive diagnostic evaluations, fluid replacements, and periodic servicing by vetted multi-brand mechanics.
+                  </p>
+
+                  <div className="space-y-3 mb-8">
+                    <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Included Services:</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      {[
+                        'Complete Multi-Point Diagnostics',
+                        'Synthetic Engine Oil & Filter Change',
+                        'Brake Pad & Rotor Overhaul',
+                        'AC Deep Cleaning & Cabin Sanitization',
+                        'Chain Cleaning, Tensioning & Lubing',
+                        'Factory Fluid Flushing & Top-up'
+                      ].map((service, idx) => (
+                        <div key={idx} className="flex items-center gap-2 text-xs text-gray-300">
+                          <CheckCircle2 size={15} className="text-primary flex-shrink-0" />
+                          <span>{service}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <Link
+                  href="/category?mode=maintenance"
+                  className="w-full py-4 rounded-2xl bg-surface-hover hover:bg-primary hover:text-background border border-border group-hover:border-primary/50 text-white font-bold text-sm tracking-wider uppercase flex items-center justify-center gap-2 transition-all shadow-md"
+                >
+                  <span>Book Periodic Maintenance</span>
+                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+            </ScrollReveal>
+
+            {/* Track 2: Customization & Mods */}
+            <ScrollReveal variant="fade-up" delay={200}>
+              <div className="relative p-8 md:p-10 rounded-[2.5rem] bg-surface border border-border hover:border-primary/50 transition-all duration-300 card-glow flex flex-col justify-between h-full group">
+                <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
+                  <Zap size={140} />
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="w-16 h-16 rounded-2xl bg-secondary/10 border border-secondary/20 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                      <Zap size={32} />
+                    </div>
+                    <span className="px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-[10px] font-black uppercase tracking-widest text-primary">
+                      Aftermarket Builds
+                    </span>
+                  </div>
+
+                  <h3 className="font-orbitron text-2xl md:text-3xl font-bold text-white mb-3">
+                    Parts & Customization
+                  </h3>
+                  <p className="text-gray-400 text-sm leading-relaxed mb-6 font-light">
+                    Transform your machine with high-performance parts, bespoke aesthetics, and visual upgrades. Tune your exhaust note, apply custom vinyl wraps, and configure aftermarket body kits.
+                  </p>
+
+                  <div className="space-y-3 mb-8">
+                    <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Included Modifications:</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      {[
+                        'Performance Exhausts (Akrapovic, Arrow)',
+                        'Matte, Gloss & Custom Color Wraps',
+                        'Lightweight Forged & Diamond Cut Alloys',
+                        'High-Performance & All-Terrain Tyres',
+                        'Aero Trunk Spoilers & Sunroofs',
+                        'Bull Bars, Crash Guards & Touring Kits'
+                      ].map((mod, idx) => (
+                        <div key={idx} className="flex items-center gap-2 text-xs text-gray-300">
+                          <Zap size={14} className="text-primary flex-shrink-0" />
+                          <span>{mod}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <Link
+                  href="/category?mode=customize"
+                  className="w-full py-4 rounded-2xl bg-primary text-background font-black text-sm tracking-wider uppercase flex items-center justify-center gap-2 transition-all hover:scale-[1.02] shadow-[0_0_25px_rgba(0,255,136,0.3)]"
+                >
+                  <span>Launch Customization Studio</span>
+                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+            </ScrollReveal>
+
+          </div>
+        </div>
+      </section>
+
       {/* ── Stats Counter Section ── */}
       <section className="py-16 px-6 border-b border-border">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { value: 500, suffix: '+', label: 'Builds Completed', icon: <Sparkles size={24} className="text-primary" /> },
-              { value: 50, suffix: '+', label: 'Partner Workshops', icon: <Users size={24} className="text-primary" /> },
-              { value: 98, suffix: '%', label: 'Client Satisfaction', icon: <Award size={24} className="text-primary" /> },
-              { value: 24, suffix: '/7', label: 'Support Available', icon: <Clock size={24} className="text-primary" /> },
+              { value: 500, suffix: '+', label: 'Builds & Services', icon: <Sparkles size={24} className="text-primary" /> },
+              { value: 50, suffix: '+', label: 'Certified Workshops', icon: <Users size={24} className="text-primary" /> },
+              { value: 98, suffix: '%', label: 'Customer Satisfaction', icon: <Award size={24} className="text-primary" /> },
+              { value: 24, suffix: '/7', label: 'Support & Tracking', icon: <Clock size={24} className="text-primary" /> },
             ].map((stat, i) => (
               <ScrollReveal key={i} variant="fade-up" delay={i * 100}>
                 <div className="text-center space-y-3">
@@ -259,9 +444,9 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { icon: <Zap className="text-primary" size={32} />, title: "Next-Gen Performance", description: "Every component is optimized for maximum efficiency and raw power output." },
-              { icon: <Cog className="text-primary" size={32} />, title: "Total Control", description: "Millions of combinations to make your vehicle truly one-of-a-kind." },
-              { icon: <ShieldCheck className="text-primary" size={32} />, title: "Built to Last", description: "Premium materials and rigorous testing ensure your legacy endures." },
+              { icon: <Zap className="text-primary" size={32} />, title: "Certified Excellence", description: "All maintenance tasks and modifications are carried out by certified partner workshops." },
+              { icon: <Cog className="text-primary" size={32} />, title: "Full Custom Control", description: "Configure exhausts, wraps, accessories, and parts with real-time pricing breakdowns." },
+              { icon: <ShieldCheck className="text-primary" size={32} />, title: "Guaranteed Fitment", description: "Every aftermarket component and maintenance fluid meets exact OEM specifications." },
             ].map((feature, i) => (
               <ScrollReveal key={i} variant="fade-up" delay={i * 150}>
                 <FeatureCard {...feature} />
@@ -279,17 +464,17 @@ export default function HomePage() {
               <div className="flex items-end justify-between mb-12">
                 <div>
                   <h2 className="font-orbitron text-3xl md:text-4xl font-bold mb-2">Featured <span className="text-primary">Fleet</span></h2>
-                  <p className="text-gray-500 text-sm">Explore our most popular vehicles and start configuring.</p>
+                  <p className="text-gray-500 text-sm">Select any model to book routine maintenance or start modifying.</p>
                 </div>
-                <Link href="/category" className="hidden md:flex items-center gap-2 text-primary font-bold text-sm hover:gap-3 transition-all">
-                  View All <ArrowRight size={16} />
+                <Link href="/vehicles" className="hidden md:flex items-center gap-2 text-primary font-bold text-sm hover:gap-3 transition-all">
+                  View All Models <ArrowRight size={16} />
                 </Link>
               </div>
             </ScrollReveal>
 
             <div className="flex gap-6 overflow-x-auto pb-6 scrollbar-hide -mx-6 px-6 snap-x snap-mandatory">
-              {vehicles.map((v, i) => (
-                <ScrollReveal key={v._id} variant="fade-up" delay={i * 100}>
+              {vehicles.map((v) => (
+                <ScrollReveal key={v._id} variant="fade-up">
                   <div className="snap-start">
                     <VehicleShowcaseCard vehicle={v} />
                   </div>
@@ -297,7 +482,7 @@ export default function HomePage() {
               ))}
             </div>
 
-            <Link href="/category" className="mt-8 md:hidden flex items-center justify-center gap-2 text-primary font-bold text-sm">
+            <Link href="/vehicles" className="mt-8 md:hidden flex items-center justify-center gap-2 text-primary font-bold text-sm">
               View All Vehicles <ArrowRight size={16} />
             </Link>
           </div>
@@ -310,16 +495,16 @@ export default function HomePage() {
           <ScrollReveal>
             <div className="text-center mb-16">
               <h2 className="font-orbitron text-3xl md:text-4xl font-bold mb-4">How It <span className="text-primary">Works</span></h2>
-              <p className="text-gray-500 max-w-lg mx-auto">Four simple steps from dream to reality.</p>
+              <p className="text-gray-500 max-w-lg mx-auto">Simple, transparent, four-step booking workflow.</p>
             </div>
           </ScrollReveal>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6">
             {[
-              { number: '01', title: 'Choose', description: 'Pick your vehicle from our curated fleet.', icon: <Sparkles size={28} /> },
-              { number: '02', title: 'Configure', description: 'Customize colors, parts, and services.', icon: <Cog size={28} /> },
-              { number: '03', title: 'Book', description: 'Select a workshop and schedule your visit.', icon: <Clock size={28} /> },
-              { number: '04', title: 'Drive', description: 'Collect your custom build and hit the road.', icon: <Zap size={28} /> },
+              { number: '01', title: 'Choose Track', description: 'Pick Regular Maintenance or Custom Mods.', icon: <Layers size={28} /> },
+              { number: '02', title: 'Select Vehicle', description: 'Choose your exact bike or car model.', icon: <Sparkles size={28} /> },
+              { number: '03', title: 'Configure', description: 'Add services or performance upgrades.', icon: <Cog size={28} /> },
+              { number: '04', title: 'Book Workshop', description: 'Schedule with an approved specialist.', icon: <Clock size={28} /> },
             ].map((step, i) => (
               <ScrollReveal key={i} variant="scale-in" delay={i * 150}>
                 <StepCard {...step} />
@@ -341,9 +526,9 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { name: 'Arjun Reddy', role: 'KTM Duke 390 Owner', rating: 5, text: 'The configurator is insanely detailed. Got an Akrapovic exhaust and ceramic coating — the workshop did a flawless job. My Duke sounds and looks like a beast now.' },
-              { name: 'Priya Sharma', role: 'Hyundai Creta Owner', rating: 5, text: 'Booking was seamless. Selected my workshop, picked a date, and the panoramic sunroof installation was done perfectly. Premium experience end to end.' },
-              { name: 'Vikram Joshi', role: 'Royal Enfield Meteor Owner', rating: 4, text: 'Love the platform. The build summary and pricing transparency is excellent. My Meteor now has touring saddlebags and a performance exhaust. Road trips leveled up!' },
+              { name: 'Arjun Reddy', role: 'KTM Duke 390 Owner', rating: 5, text: 'The customizer is insanely detailed. Got an Akrapovic exhaust and ceramic coating — the workshop did a flawless job. Sounds and looks like a beast.' },
+              { name: 'Priya Sharma', role: 'Hyundai Creta Owner', rating: 5, text: 'I only needed scheduled periodic maintenance and synthetic oil service. Booked through the Maintenance track, dropped off the car, and got it back spotless.' },
+              { name: 'Vikram Joshi', role: 'Royal Enfield Meteor Owner', rating: 5, text: 'Great division between standard service and custom parts. I added touring saddlebags and had a full health check completed in a single workshop visit.' },
             ].map((testimonial, i) => (
               <ScrollReveal key={i} variant="fade-up" delay={i * 150}>
                 <TestimonialCard {...testimonial} />
@@ -357,20 +542,25 @@ export default function HomePage() {
       <section className="py-24 px-6">
         <ScrollReveal variant="scale-in">
           <div className="max-w-5xl mx-auto relative overflow-hidden rounded-[3rem] bg-gradient-to-br from-primary/10 via-surface to-secondary/10 border border-primary/20 p-12 md:p-20 text-center">
-            {/* Glow effects */}
             <div className="absolute top-0 left-1/4 w-60 h-60 bg-primary/15 rounded-full blur-[100px] pointer-events-none"></div>
             <div className="absolute bottom-0 right-1/4 w-60 h-60 bg-secondary/15 rounded-full blur-[100px] pointer-events-none"></div>
 
             <div className="relative z-10">
               <h2 className="font-orbitron text-3xl md:text-5xl font-black text-white uppercase tracking-tight mb-4">
-                Ready to Build Your <span className="text-primary neon-glow">Legacy</span>?
+                Ready to Upgrade Your <span className="text-primary neon-glow">Vehicle</span>?
               </h2>
               <p className="text-gray-400 text-lg max-w-xl mx-auto mb-10">
-                Join hundreds of enthusiasts who have already transformed their ride. Start your custom build today.
+                Book scheduled service or start engineering your dream build today.
               </p>
-              <Link href="/category" className="group inline-flex items-center gap-3 px-12 py-5 bg-primary text-background font-black uppercase tracking-widest text-sm rounded-full hover:scale-105 active:scale-95 transition-all shadow-[0_0_40px_rgba(0,255,136,0.25)]">
-                Start Customizing <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" />
-              </Link>
+              
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Link href="/category?mode=maintenance" className="px-8 py-4 bg-surface hover:bg-surface-hover border border-border hover:border-primary text-white font-bold uppercase tracking-wider text-xs rounded-full transition-all flex items-center gap-2">
+                  <Wrench size={16} className="text-primary" /> Book Maintenance
+                </Link>
+                <Link href="/category?mode=customize" className="px-8 py-4 bg-primary text-background font-black uppercase tracking-widest text-xs rounded-full hover:scale-105 active:scale-95 transition-all shadow-[0_0_30px_rgba(0,255,136,0.3)] flex items-center gap-2">
+                  <Zap size={16} /> Start Customizing <ChevronRight size={16} />
+                </Link>
+              </div>
             </div>
           </div>
         </ScrollReveal>

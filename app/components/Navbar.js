@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 
 import Link from 'next/link';
 import useStore from '@/store/useStore';
-import { User, LogOut, ShoppingCart, Menu, X, Package, ShieldCheck } from 'lucide-react';
+import { User, LogOut, ShoppingCart, Menu, X, Package, ShieldCheck, Wrench, Zap } from 'lucide-react';
 
 export default function Navbar() {
   const { user, logout, initialize, cartCount } = useStore();
@@ -24,8 +24,14 @@ export default function Navbar() {
         </Link>
         
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium">
-          <Link href="/category" className="hover:text-primary transition-colors uppercase tracking-widest text-[10px] font-bold">Vehicles</Link>
+        <div className="hidden md:flex items-center gap-7 text-sm font-medium">
+          <Link href="/category?mode=maintenance" className="hover:text-primary transition-colors uppercase tracking-widest text-[10px] font-bold flex items-center gap-1.5 text-gray-300">
+            <Wrench size={12} className="text-primary" /> Maintenance
+          </Link>
+          <Link href="/category?mode=customize" className="hover:text-primary transition-colors uppercase tracking-widest text-[10px] font-bold flex items-center gap-1.5 text-gray-300">
+            <Zap size={12} className="text-primary" /> Customize
+          </Link>
+          <Link href="/vehicles" className="hover:text-primary transition-colors uppercase tracking-widest text-[10px] font-bold text-gray-400">Fleet</Link>
           <Link href="/cart" className="hover:text-primary transition-colors flex items-center gap-2 uppercase tracking-widest text-[10px] font-bold relative">
             <div className="relative">
               <ShoppingCart size={16} />
@@ -85,13 +91,27 @@ export default function Navbar() {
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div className="md:hidden glass absolute top-20 left-0 w-full border-b border-border animate-fade-in">
-          <div className="flex flex-col p-6 gap-4">
+          <div className="flex flex-col p-6 gap-3">
             <Link 
-              href="/category" 
+              href="/category?mode=maintenance" 
               onClick={closeMobileMenu}
               className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 text-gray-300 hover:text-primary transition-all font-bold uppercase tracking-widest text-xs"
             >
-              <Package size={18} /> Vehicles
+              <Wrench size={18} className="text-primary" /> Maintenance Service
+            </Link>
+            <Link 
+              href="/category?mode=customize" 
+              onClick={closeMobileMenu}
+              className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 text-gray-300 hover:text-primary transition-all font-bold uppercase tracking-widest text-xs"
+            >
+              <Zap size={18} className="text-primary" /> Vehicle Customizer
+            </Link>
+            <Link 
+              href="/vehicles" 
+              onClick={closeMobileMenu}
+              className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 text-gray-300 hover:text-primary transition-all font-bold uppercase tracking-widest text-xs"
+            >
+              <Package size={18} /> All Fleet
             </Link>
             <Link 
               href="/cart" 
