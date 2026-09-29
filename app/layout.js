@@ -20,24 +20,24 @@ export default function RootLayout({ children }) {
           {children}
         </main>
 
-        {/* ── Enhanced Footer ── */}
-        <footer className="border-t border-border bg-surface relative overflow-hidden">
-          {/* Subtle glow decoration */}
-          <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[500px] h-40 bg-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
+        {/* ── Footer ── */}
+        <footer className="border-t border-white/[0.04] bg-[#0c0c0c] relative overflow-hidden">
+          {/* Ambient glow */}
+          <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[400px] h-32 bg-primary/[0.03] rounded-full blur-[80px] pointer-events-none" />
 
-          <div className="max-w-7xl mx-auto px-6 pt-16 pb-10 relative z-10">
+          <div className="max-w-7xl mx-auto px-6 pt-14 pb-8 relative z-10">
             {/* Top Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
 
               {/* Brand */}
-              <div className="space-y-4">
-                <Link href="/" className="font-orbitron text-2xl font-bold text-primary tracking-tighter hover:opacity-80 transition-opacity">
+              <div className="space-y-3.5">
+                <Link href="/" className="font-orbitron text-xl font-bold text-primary tracking-tight hover:opacity-80 transition-opacity">
                   GEARLAB
                 </Link>
-                <p className="text-sm text-gray-500 leading-relaxed">
+                <p className="text-sm text-gray-600 leading-relaxed">
                   Premium vehicle customization, servicing, and performance engineering. Built for the bold.
                 </p>
-                <div className="flex gap-3 pt-2">
+                <div className="flex gap-2 pt-1">
                   {[
                     { label: 'GitHub', href: '#', icon: (
                       <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -56,7 +56,7 @@ export default function RootLayout({ children }) {
                       key={label}
                       href={href}
                       aria-label={label}
-                      className="w-10 h-10 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-gray-500 hover:text-primary hover:border-primary/30 hover:bg-primary/5 transition-all"
+                      className="w-9 h-9 rounded-lg bg-white/[0.03] border border-white/[0.04] flex items-center justify-center text-gray-600 hover:text-primary hover:border-primary/20 hover:bg-primary/[0.04] transition-all"
                     >
                       {icon}
                     </a>
@@ -66,8 +66,8 @@ export default function RootLayout({ children }) {
 
               {/* Quick Links */}
               <div>
-                <h4 className="font-orbitron text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-6">Quick Links</h4>
-                <ul className="space-y-3">
+                <h4 className="text-[11px] font-semibold uppercase tracking-wider text-gray-500 mb-5">Quick Links</h4>
+                <ul className="space-y-2.5">
                   {[
                     { label: 'Browse Vehicles', href: '/category' },
                     { label: 'Bikes Collection', href: '/vehicles?type=bike' },
@@ -76,7 +76,7 @@ export default function RootLayout({ children }) {
                     { label: 'Your Profile', href: '/profile' },
                   ].map(({ label, href }) => (
                     <li key={label}>
-                      <Link href={href} className="text-sm text-gray-500 hover:text-primary transition-colors">
+                      <Link href={href} className="text-sm text-gray-600 hover:text-white transition-colors">
                         {label}
                       </Link>
                     </li>
@@ -86,8 +86,8 @@ export default function RootLayout({ children }) {
 
               {/* Support */}
               <div>
-                <h4 className="font-orbitron text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-6">Support</h4>
-                <ul className="space-y-3">
+                <h4 className="text-[11px] font-semibold uppercase tracking-wider text-gray-500 mb-5">Support</h4>
+                <ul className="space-y-2.5">
                   {[
                     { label: 'Contact Us', href: '#' },
                     { label: 'FAQ', href: '#' },
@@ -96,7 +96,7 @@ export default function RootLayout({ children }) {
                     { label: 'Workshop Registration', href: '/auth/register' },
                   ].map(({ label, href }) => (
                     <li key={label}>
-                      <Link href={href} className="text-sm text-gray-500 hover:text-primary transition-colors">
+                      <Link href={href} className="text-sm text-gray-600 hover:text-white transition-colors">
                         {label}
                       </Link>
                     </li>
@@ -106,15 +106,15 @@ export default function RootLayout({ children }) {
 
               {/* Newsletter */}
               <div>
-                <h4 className="font-orbitron text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-6">Stay Updated</h4>
-                <p className="text-sm text-gray-500 mb-4 leading-relaxed">Get the latest on new vehicles, services, and exclusive offers.</p>
+                <h4 className="text-[11px] font-semibold uppercase tracking-wider text-gray-500 mb-5">Stay Updated</h4>
+                <p className="text-sm text-gray-600 mb-4 leading-relaxed">Get the latest on new vehicles, services, and exclusive offers.</p>
                 <div className="flex gap-2">
                   <input
                     type="email"
                     placeholder="you@email.com"
-                    className="flex-1 bg-black/40 border border-white/10 rounded-xl py-3 px-4 text-sm text-white placeholder-gray-600 focus:border-primary outline-none transition-all"
+                    className="flex-1 bg-white/[0.03] border border-white/[0.06] rounded-lg py-2.5 px-4 text-sm text-white placeholder-gray-600 focus:border-primary/50 outline-none transition-all"
                   />
-                  <button className="px-5 py-3 bg-primary text-background font-bold text-xs rounded-xl hover:scale-105 active:scale-95 transition-all uppercase tracking-widest">
+                  <button className="px-4 py-2.5 bg-primary text-background font-bold text-xs rounded-lg hover:brightness-110 active:scale-95 transition-all">
                     Go
                   </button>
                 </div>
@@ -123,10 +123,10 @@ export default function RootLayout({ children }) {
             </div>
 
             {/* Divider */}
-            <div className="h-px w-full bg-gradient-to-r from-transparent via-primary/20 to-transparent mb-8"></div>
+            <div className="h-px w-full bg-white/[0.04] mb-6" />
 
             {/* Bottom Bar */}
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-600">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-3 text-xs text-gray-600">
               <p>© 2026 GearLab Industries. All rights reserved.</p>
               <p className="text-gray-700">
                 Engineered with precision. Built with passion.

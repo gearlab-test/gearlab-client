@@ -70,12 +70,12 @@ interface FeatureCardProps {
 
 function FeatureCard({ icon, title, description }: FeatureCardProps) {
   return (
-    <div className="p-8 rounded-3xl bg-surface border border-border hover:border-primary/30 transition-all group card-glow">
-      <div className="mb-6 p-4 rounded-2xl bg-primary/5 inline-block group-hover:bg-primary/10 transition-colors">
+    <div className="p-8 rounded-2xl bg-surface border border-border hover:border-primary/20 transition-all group card-glow">
+      <div className="mb-5 p-3.5 rounded-xl bg-primary/[0.06] inline-block group-hover:bg-primary/10 transition-colors">
         {icon}
       </div>
-      <h3 className="font-orbitron text-xl font-bold mb-3">{title}</h3>
-      <p className="text-gray-400 leading-relaxed font-light">{description}</p>
+      <h3 className="font-orbitron text-lg font-bold mb-2.5 text-white">{title}</h3>
+      <p className="text-gray-500 leading-relaxed text-sm">{description}</p>
     </div>
   );
 }
@@ -91,14 +91,14 @@ interface StepCardProps {
 function StepCard({ number, title, description, icon }: StepCardProps) {
   return (
     <div className="relative text-center group">
-      <div className="mx-auto mb-6 w-20 h-20 rounded-3xl bg-surface border border-border group-hover:border-primary/30 flex items-center justify-center text-primary transition-all card-glow">
+      <div className="mx-auto mb-5 w-16 h-16 rounded-2xl bg-surface border border-border group-hover:border-primary/20 flex items-center justify-center text-primary transition-all card-glow">
         {icon}
       </div>
-      <div className="absolute -top-3 -right-1 w-8 h-8 rounded-full bg-primary text-background flex items-center justify-center text-xs font-black font-orbitron">
+      <div className="absolute -top-2 -right-0.5 w-7 h-7 rounded-full bg-primary text-background flex items-center justify-center text-[10px] font-bold font-orbitron">
         {number}
       </div>
-      <h4 className="font-orbitron text-sm font-bold uppercase tracking-tight mb-2">{title}</h4>
-      <p className="text-gray-500 text-sm leading-relaxed">{description}</p>
+      <h4 className="font-orbitron text-xs font-bold uppercase tracking-tight mb-1.5 text-white">{title}</h4>
+      <p className="text-gray-500 text-[13px] leading-relaxed">{description}</p>
     </div>
   );
 }
@@ -113,16 +113,16 @@ interface TestimonialCardProps {
 
 function TestimonialCard({ name, role, text, rating }: TestimonialCardProps) {
   return (
-    <div className="p-8 rounded-3xl bg-surface border border-border hover:border-primary/20 transition-all card-glow">
-      <div className="flex gap-1 mb-4">
+    <div className="p-7 rounded-2xl bg-surface border border-border hover:border-white/[0.08] transition-all card-glow">
+      <div className="flex gap-0.5 mb-4">
         {Array.from({ length: 5 }).map((_, i) => (
-          <Star key={i} size={16} className={i < rating ? 'text-primary fill-primary' : 'text-gray-700'} />
+          <Star key={i} size={14} className={i < rating ? 'text-primary fill-primary' : 'text-white/[0.06]'} />
         ))}
       </div>
-      <p className="text-gray-300 text-sm leading-relaxed mb-6 italic">&ldquo;{text}&rdquo;</p>
+      <p className="text-gray-400 text-sm leading-relaxed mb-5">&ldquo;{text}&rdquo;</p>
       <div>
-        <p className="font-bold text-white text-sm">{name}</p>
-        <p className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">{role}</p>
+        <p className="font-semibold text-white text-sm">{name}</p>
+        <p className="text-[11px] text-gray-500 tracking-wide mt-0.5">{role}</p>
       </div>
     </div>
   );
@@ -131,9 +131,9 @@ function TestimonialCard({ name, role, text, rating }: TestimonialCardProps) {
 /* ─── Featured Vehicle Card ─── */
 function VehicleShowcaseCard({ vehicle }: { vehicle: any }) {
   return (
-    <div className="group flex-shrink-0 w-[320px] md:w-[360px] bg-surface border border-border rounded-3xl overflow-hidden transition-all hover:border-primary/30 card-glow flex flex-col justify-between">
+    <div className="group flex-shrink-0 w-[300px] md:w-[340px] bg-surface border border-border rounded-2xl overflow-hidden transition-all hover:border-primary/20 card-glow flex flex-col justify-between">
       <div>
-        <div className="aspect-video overflow-hidden bg-black/40 relative">
+        <div className="aspect-[16/10] overflow-hidden bg-black/30 relative">
           {vehicle.images?.[0] ? (
             <img 
               src={vehicle.images[0]} 
@@ -144,44 +144,44 @@ function VehicleShowcaseCard({ vehicle }: { vehicle: any }) {
                   ? 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&q=80&w=800'
                   : 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=800';
               }}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-gray-700">
-              <Cog size={48} />
+              <Cog size={40} />
             </div>
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-60"></div>
-          <div className="absolute top-4 left-4">
-            <span className="px-3 py-1 bg-black/70 backdrop-blur-md text-[10px] font-bold text-primary uppercase tracking-widest rounded-full border border-primary/20">
-              {vehicle.type === 'car' ? '🚗 Car' : '🏍️ Bike'}
+          <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-70" />
+          <div className="absolute top-3.5 left-3.5">
+            <span className="px-2.5 py-1 bg-black/60 backdrop-blur-md text-[10px] font-semibold text-gray-300 uppercase tracking-wider rounded-md border border-white/[0.06]">
+              {vehicle.type === 'car' ? 'Car' : 'Bike'}
             </span>
           </div>
         </div>
 
-        <div className="p-6">
-          <h4 className="font-orbitron text-lg font-bold text-white group-hover:text-primary transition-colors mb-1">{vehicle.name}</h4>
-          <div className="flex justify-between items-center mb-6">
-            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Base Rate</p>
+        <div className="p-5 pb-4">
+          <h4 className="font-orbitron text-base font-bold text-white group-hover:text-primary transition-colors mb-1">{vehicle.name}</h4>
+          <div className="flex justify-between items-center">
+            <p className="text-[11px] text-gray-500 font-medium tracking-wide">Starting from</p>
             <p className="font-orbitron text-sm font-bold text-primary">₹{vehicle.basePrice.toLocaleString()}</p>
           </div>
         </div>
       </div>
 
-      <div className="p-6 pt-0 grid grid-cols-2 gap-3 border-t border-border/50">
+      <div className="px-5 pb-5 grid grid-cols-2 gap-2.5 border-t border-border/50 pt-4">
         <Link 
           href={`/configurator/${vehicle._id}?mode=maintenance`}
-          className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-white/5 hover:bg-primary/20 hover:text-primary text-gray-300 text-xs font-bold transition-all border border-white/5 hover:border-primary/40 text-center"
+          className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg bg-white/[0.03] hover:bg-primary/10 hover:text-primary text-gray-400 text-[11px] font-semibold transition-all border border-white/[0.04] hover:border-primary/25"
         >
-          <Wrench size={13} className="text-primary" />
-          <span>Service</span>
+          <Wrench size={12} className="text-primary/60" />
+          Service
         </Link>
         <Link 
           href={`/configurator/${vehicle._id}?mode=customize`}
-          className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-primary text-background hover:brightness-110 text-xs font-black uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(0,255,136,0.2)] text-center"
+          className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg bg-primary text-background hover:brightness-110 text-[11px] font-bold uppercase tracking-wide transition-all"
         >
-          <Zap size={13} />
-          <span>Modify</span>
+          <Zap size={12} />
+          Modify
         </Link>
       </div>
     </div>
@@ -233,116 +233,116 @@ export default function HomePage() {
     <div className="flex flex-col">
 
       {/* ── Hero Section ── */}
-      <section className="relative min-h-[95vh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden">
         <div
-          className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat transition-transform duration-[10s] hover:scale-110"
+          className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: 'url("/images/hero_v2.png")' }}
         >
-          <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/40 to-background"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_#0a0a0a_80%)] opacity-60"></div>
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[120px] animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/30 to-background" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_0%,_#0a0a0a_75%)] opacity-50" />
+          <div className="absolute top-1/3 left-1/3 w-[500px] h-[500px] bg-primary/[0.06] rounded-full blur-[150px]" />
+          <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-secondary/[0.05] rounded-full blur-[130px]" />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
-          <div className="animate-fade-in space-y-6">
-            <div className="inline-block px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-xs font-bold uppercase tracking-[0.3em] mb-4 backdrop-blur-md">
+        <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
+          <div className="animate-fade-in space-y-5">
+            <div className="inline-block px-4 py-1.5 rounded-full border border-primary/20 bg-primary/[0.04] text-primary text-[11px] font-semibold uppercase tracking-widest mb-2 backdrop-blur-sm">
               Automotive Engineering & Care
             </div>
 
-            <h1 className="font-orbitron text-5xl md:text-8xl lg:text-9xl font-black tracking-tighter text-white mb-6 uppercase leading-[0.85] animate-floating">
+            <h1 className="font-orbitron text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white mb-4 uppercase leading-[0.9]">
               Choose Your <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-primary bg-[length:200%_auto] animate-gradient-x neon-glow">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-primary bg-[length:200%_auto] animate-gradient-x">
                 Experience
               </span>
             </h1>
 
-            <p className="text-lg md:text-2xl text-gray-200 max-w-3xl mx-auto mb-10 leading-relaxed font-light drop-shadow-lg">
+            <p className="text-base md:text-xl text-gray-400 max-w-2xl mx-auto mb-8 leading-relaxed">
               Whether you need routine certified maintenance or extreme performance modifications, GearLab provides complete, transparent workshop booking.
             </p>
 
-            {/* Direct Dual Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-5 pt-4">
+            {/* Dual Action Buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
               <Link 
                 href="/category?mode=maintenance" 
-                className="w-full sm:w-auto group relative px-8 py-5 bg-surface border border-primary/40 hover:border-primary text-white font-bold text-base md:text-lg rounded-full overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(0,255,136,0.3)] active:scale-95 flex items-center justify-center gap-3 backdrop-blur-md"
+                className="w-full sm:w-auto group relative px-7 py-4 bg-white/[0.04] border border-white/[0.08] hover:border-primary/40 text-white rounded-xl overflow-hidden transition-all hover:bg-white/[0.06] active:scale-[0.98] flex items-center justify-center gap-3 backdrop-blur-sm"
               >
-                <div className="p-2 rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-background transition-colors">
-                  <Wrench size={20} />
+                <div className="p-2 rounded-lg bg-primary/[0.08] text-primary group-hover:bg-primary group-hover:text-background transition-colors">
+                  <Wrench size={18} />
                 </div>
                 <div className="text-left">
-                  <span className="block text-[10px] text-gray-400 uppercase tracking-widest font-semibold">Periodic Care</span>
-                  <span className="text-white group-hover:text-primary transition-colors">Regular Maintenance</span>
+                  <span className="block text-[10px] text-gray-500 uppercase tracking-wider font-medium">Periodic Care</span>
+                  <span className="text-sm font-semibold text-white group-hover:text-primary transition-colors">Regular Maintenance</span>
                 </div>
-                <ChevronRight size={18} className="text-gray-400 group-hover:translate-x-1 group-hover:text-primary transition-all ml-1" />
+                <ChevronRight size={16} className="text-gray-600 group-hover:translate-x-0.5 group-hover:text-primary transition-all ml-1" />
               </Link>
 
               <Link 
                 href="/category?mode=customize" 
-                className="w-full sm:w-auto group relative px-8 py-5 bg-primary text-background font-black text-base md:text-lg rounded-full overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_35px_rgba(0,255,136,0.5)] active:scale-95 flex items-center justify-center gap-3"
+                className="w-full sm:w-auto group relative px-7 py-4 bg-primary text-background font-bold rounded-xl overflow-hidden transition-all hover:brightness-110 active:scale-[0.98] flex items-center justify-center gap-3"
               >
-                <div className="p-2 rounded-full bg-background/20 text-background group-hover:bg-background group-hover:text-primary transition-colors">
-                  <Zap size={20} />
+                <div className="p-2 rounded-lg bg-background/15 text-background group-hover:bg-background/25 transition-colors">
+                  <Zap size={18} />
                 </div>
                 <div className="text-left">
-                  <span className="block text-[10px] text-background/80 uppercase tracking-widest font-black">Performance & Mods</span>
-                  <span>Vehicle Customization</span>
+                  <span className="block text-[10px] text-background/70 uppercase tracking-wider font-bold">Performance & Mods</span>
+                  <span className="text-sm font-bold">Vehicle Customization</span>
                 </div>
-                <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform ml-1" />
+                <ChevronRight size={16} className="group-hover:translate-x-0.5 transition-transform ml-1" />
               </Link>
             </div>
           </div>
         </div>
 
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-50">
-          <div className="w-1 h-12 rounded-full bg-gradient-to-b from-primary to-transparent"></div>
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 opacity-30">
+          <div className="w-px h-10 bg-gradient-to-b from-primary/50 to-transparent" />
         </div>
       </section>
 
-      {/* ── Two Distinct Paths (Maintenance vs Customize) ── */}
-      <section className="py-20 px-6 border-y border-border bg-gradient-to-b from-surface/20 to-background">
+      {/* ── Two Distinct Tracks ── */}
+      <section className="py-20 px-6 border-t border-border/50">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal>
-            <div className="text-center mb-16">
-              <span className="text-primary text-xs font-black uppercase tracking-[0.25em] mb-2 block">Choose Your Requirement</span>
-              <h2 className="font-orbitron text-3xl md:text-5xl font-black text-white uppercase tracking-tight">
-                Two Purpose-Built <span className="text-primary neon-glow">Tracks</span>
+            <div className="text-center mb-14">
+              <span className="text-primary text-[11px] font-semibold uppercase tracking-widest mb-2 block">Choose Your Requirement</span>
+              <h2 className="font-orbitron text-3xl md:text-4xl font-bold text-white tracking-tight">
+                Two Purpose-Built <span className="text-primary">Tracks</span>
               </h2>
-              <p className="text-gray-400 max-w-xl mx-auto mt-3 text-sm md:text-base">
+              <p className="text-gray-500 max-w-xl mx-auto mt-3 text-sm">
                 Select whether you need standard routine servicing or want to build a fully customized, aftermarket machine.
               </p>
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             
             {/* Track 1: Regular Maintenance */}
             <ScrollReveal variant="fade-up" delay={100}>
-              <div className="relative p-8 md:p-10 rounded-[2.5rem] bg-surface border border-border hover:border-primary/50 transition-all duration-300 card-glow flex flex-col justify-between h-full group">
-                <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
-                  <Wrench size={140} />
+              <div className="relative p-8 md:p-10 rounded-2xl bg-surface border border-border hover:border-primary/30 transition-all duration-300 card-glow flex flex-col justify-between h-full group">
+                <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity">
+                  <Wrench size={120} />
                 </div>
 
                 <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-                      <Wrench size={32} />
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="w-14 h-14 rounded-xl bg-primary/[0.06] border border-primary/15 flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
+                      <Wrench size={28} />
                     </div>
-                    <span className="px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-widest text-primary">
+                    <span className="px-3 py-1 rounded-md bg-white/[0.03] border border-white/[0.06] text-[10px] font-semibold uppercase tracking-wider text-gray-400">
                       Routine Care
                     </span>
                   </div>
 
-                  <h3 className="font-orbitron text-2xl md:text-3xl font-bold text-white mb-3">
+                  <h3 className="font-orbitron text-xl md:text-2xl font-bold text-white mb-2.5">
                     Regular Maintenance
                   </h3>
-                  <p className="text-gray-400 text-sm leading-relaxed mb-6 font-light">
+                  <p className="text-gray-500 text-sm leading-relaxed mb-6">
                     Keep your ride performing at peak mechanical safety and efficiency. Comprehensive diagnostic evaluations, fluid replacements, and periodic servicing by vetted multi-brand mechanics.
                   </p>
 
                   <div className="space-y-3 mb-8">
-                    <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Included Services:</p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <p className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider">Included Services</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {[
                         'Complete Multi-Point Diagnostics',
                         'Synthetic Engine Oil & Filter Change',
@@ -351,8 +351,8 @@ export default function HomePage() {
                         'Chain Cleaning, Tensioning & Lubing',
                         'Factory Fluid Flushing & Top-up'
                       ].map((service, idx) => (
-                        <div key={idx} className="flex items-center gap-2 text-xs text-gray-300">
-                          <CheckCircle2 size={15} className="text-primary flex-shrink-0" />
+                        <div key={idx} className="flex items-center gap-2 text-[13px] text-gray-400">
+                          <CheckCircle2 size={14} className="text-primary/60 flex-shrink-0" />
                           <span>{service}</span>
                         </div>
                       ))}
@@ -362,41 +362,41 @@ export default function HomePage() {
 
                 <Link
                   href="/category?mode=maintenance"
-                  className="w-full py-4 rounded-2xl bg-surface-hover hover:bg-primary hover:text-background border border-border group-hover:border-primary/50 text-white font-bold text-sm tracking-wider uppercase flex items-center justify-center gap-2 transition-all shadow-md"
+                  className="w-full py-3.5 rounded-xl bg-white/[0.04] hover:bg-primary hover:text-background border border-white/[0.06] hover:border-primary text-white font-semibold text-sm tracking-wide flex items-center justify-center gap-2 transition-all"
                 >
-                  <span>Book Periodic Maintenance</span>
-                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                  Book Periodic Maintenance
+                  <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
                 </Link>
               </div>
             </ScrollReveal>
 
-            {/* Track 2: Customization & Mods */}
+            {/* Track 2: Customization */}
             <ScrollReveal variant="fade-up" delay={200}>
-              <div className="relative p-8 md:p-10 rounded-[2.5rem] bg-surface border border-border hover:border-primary/50 transition-all duration-300 card-glow flex flex-col justify-between h-full group">
-                <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
-                  <Zap size={140} />
+              <div className="relative p-8 md:p-10 rounded-2xl bg-surface border border-border hover:border-primary/30 transition-all duration-300 card-glow flex flex-col justify-between h-full group">
+                <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity">
+                  <Zap size={120} />
                 </div>
 
                 <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="w-16 h-16 rounded-2xl bg-secondary/10 border border-secondary/20 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-                      <Zap size={32} />
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="w-14 h-14 rounded-xl bg-secondary/[0.06] border border-secondary/15 flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
+                      <Zap size={28} />
                     </div>
-                    <span className="px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-[10px] font-black uppercase tracking-widest text-primary">
+                    <span className="px-3 py-1 rounded-md bg-primary/[0.04] border border-primary/15 text-[10px] font-semibold uppercase tracking-wider text-primary">
                       Aftermarket Builds
                     </span>
                   </div>
 
-                  <h3 className="font-orbitron text-2xl md:text-3xl font-bold text-white mb-3">
+                  <h3 className="font-orbitron text-xl md:text-2xl font-bold text-white mb-2.5">
                     Parts & Customization
                   </h3>
-                  <p className="text-gray-400 text-sm leading-relaxed mb-6 font-light">
+                  <p className="text-gray-500 text-sm leading-relaxed mb-6">
                     Transform your machine with high-performance parts, bespoke aesthetics, and visual upgrades. Tune your exhaust note, apply custom vinyl wraps, and configure aftermarket body kits.
                   </p>
 
                   <div className="space-y-3 mb-8">
-                    <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Included Modifications:</p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <p className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider">Included Modifications</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {[
                         'Performance Exhausts (Akrapovic, Arrow)',
                         'Matte, Gloss & Custom Color Wraps',
@@ -405,8 +405,8 @@ export default function HomePage() {
                         'Aero Trunk Spoilers & Sunroofs',
                         'Bull Bars, Crash Guards & Touring Kits'
                       ].map((mod, idx) => (
-                        <div key={idx} className="flex items-center gap-2 text-xs text-gray-300">
-                          <Zap size={14} className="text-primary flex-shrink-0" />
+                        <div key={idx} className="flex items-center gap-2 text-[13px] text-gray-400">
+                          <Zap size={13} className="text-primary/60 flex-shrink-0" />
                           <span>{mod}</span>
                         </div>
                       ))}
@@ -416,10 +416,10 @@ export default function HomePage() {
 
                 <Link
                   href="/category?mode=customize"
-                  className="w-full py-4 rounded-2xl bg-primary text-background font-black text-sm tracking-wider uppercase flex items-center justify-center gap-2 transition-all hover:scale-[1.02] shadow-[0_0_25px_rgba(0,255,136,0.3)]"
+                  className="w-full py-3.5 rounded-xl bg-primary text-background font-bold text-sm tracking-wide flex items-center justify-center gap-2 transition-all hover:brightness-110"
                 >
-                  <span>Launch Customization Studio</span>
-                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                  Launch Customization Studio
+                  <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
                 </Link>
               </div>
             </ScrollReveal>
@@ -429,24 +429,24 @@ export default function HomePage() {
       </section>
 
       {/* ── Stats Counter Section ── */}
-      <section className="py-16 px-6 border-b border-border">
+      <section className="py-16 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { value: 500, suffix: '+', label: 'Builds & Services', icon: <Sparkles size={24} className="text-primary" /> },
-              { value: 50, suffix: '+', label: 'Certified Workshops', icon: <Users size={24} className="text-primary" /> },
-              { value: 98, suffix: '%', label: 'Customer Satisfaction', icon: <Award size={24} className="text-primary" /> },
-              { value: 24, suffix: '/7', label: 'Support & Tracking', icon: <Clock size={24} className="text-primary" /> },
+              { value: 500, suffix: '+', label: 'Builds & Services', icon: <Sparkles size={22} className="text-primary" /> },
+              { value: 50, suffix: '+', label: 'Certified Workshops', icon: <Users size={22} className="text-primary" /> },
+              { value: 98, suffix: '%', label: 'Customer Satisfaction', icon: <Award size={22} className="text-primary" /> },
+              { value: 24, suffix: '/7', label: 'Support & Tracking', icon: <Clock size={22} className="text-primary" /> },
             ].map((stat, i) => (
               <ScrollReveal key={i} variant="fade-up" delay={i * 100}>
-                <div className="text-center space-y-3">
-                  <div className="mx-auto w-14 h-14 rounded-2xl bg-primary/5 border border-primary/10 flex items-center justify-center">
+                <div className="text-center space-y-2.5">
+                  <div className="mx-auto w-12 h-12 rounded-xl bg-primary/[0.05] border border-primary/10 flex items-center justify-center">
                     {stat.icon}
                   </div>
-                  <p className="font-orbitron text-3xl md:text-4xl font-black text-white">
+                  <p className="font-orbitron text-2xl md:text-3xl font-bold text-white">
                     <AnimatedCounter target={stat.value} suffix={stat.suffix} />
                   </p>
-                  <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">{stat.label}</p>
+                  <p className="text-[11px] text-gray-500 font-medium tracking-wide">{stat.label}</p>
                 </div>
               </ScrollReveal>
             ))}
@@ -455,22 +455,22 @@ export default function HomePage() {
       </section>
 
       {/* ── Features Section ── */}
-      <section className="py-24 px-6 bg-surface/30">
+      <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal>
-            <div className="text-center mb-16">
-              <h2 className="font-orbitron text-3xl md:text-4xl font-bold mb-4">Precision Engineering</h2>
-              <div className="h-1 w-20 bg-primary mx-auto"></div>
+            <div className="text-center mb-14">
+              <h2 className="font-orbitron text-2xl md:text-3xl font-bold mb-3 text-white">Precision Engineering</h2>
+              <div className="h-0.5 w-14 bg-primary/50 mx-auto rounded-full" />
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { icon: <Zap className="text-primary" size={32} />, title: "Certified Excellence", description: "All maintenance tasks and modifications are carried out by certified partner workshops." },
-              { icon: <Cog className="text-primary" size={32} />, title: "Full Custom Control", description: "Configure exhausts, wraps, accessories, and parts with real-time pricing breakdowns." },
-              { icon: <ShieldCheck className="text-primary" size={32} />, title: "Guaranteed Fitment", description: "Every aftermarket component and maintenance fluid meets exact OEM specifications." },
+              { icon: <Zap className="text-primary" size={28} />, title: "Certified Excellence", description: "All maintenance tasks and modifications are carried out by certified partner workshops." },
+              { icon: <Cog className="text-primary" size={28} />, title: "Full Custom Control", description: "Configure exhausts, wraps, accessories, and parts with real-time pricing breakdowns." },
+              { icon: <ShieldCheck className="text-primary" size={28} />, title: "Guaranteed Fitment", description: "Every aftermarket component and maintenance fluid meets exact OEM specifications." },
             ].map((feature, i) => (
-              <ScrollReveal key={i} variant="fade-up" delay={i * 150}>
+              <ScrollReveal key={i} variant="fade-up" delay={i * 120}>
                 <FeatureCard {...feature} />
               </ScrollReveal>
             ))}
@@ -480,55 +480,46 @@ export default function HomePage() {
 
       {/* ── Featured Vehicles Showcase ── */}
       {displayedVehicles.length > 0 && (
-        <section className="py-24 px-6">
+        <section className="py-20 px-6 border-t border-border/50">
           <div className="max-w-7xl mx-auto">
             <ScrollReveal>
-              <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-5 mb-10">
                 <div>
-                  <h2 className="font-orbitron text-3xl md:text-4xl font-bold mb-2">Featured <span className="text-primary">Fleet</span></h2>
+                  <h2 className="font-orbitron text-2xl md:text-3xl font-bold mb-1.5 text-white">Featured <span className="text-primary">Fleet</span></h2>
                   <p className="text-gray-500 text-sm">Select any model to book routine maintenance or start modifying.</p>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-4">
+                <div className="flex flex-wrap items-center gap-3">
                   {/* Fleet Type Switcher */}
-                  <div className="flex p-1 bg-surface border border-border rounded-xl">
-                    <button
-                      onClick={() => setFleetType('all')}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-bold font-orbitron uppercase tracking-wider flex items-center gap-1.5 transition-all ${
-                        fleetType === 'all' ? 'bg-primary text-background shadow-md' : 'text-gray-400 hover:text-white'
-                      }`}
-                    >
-                      <Layers size={13} /> All
-                    </button>
-                    <button
-                      onClick={() => setFleetType('car')}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-bold font-orbitron uppercase tracking-wider flex items-center gap-1.5 transition-all ${
-                        fleetType === 'car' ? 'bg-primary text-background shadow-md' : 'text-gray-400 hover:text-white'
-                      }`}
-                    >
-                      <Car size={13} /> Cars
-                    </button>
-                    <button
-                      onClick={() => setFleetType('bike')}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-bold font-orbitron uppercase tracking-wider flex items-center gap-1.5 transition-all ${
-                        fleetType === 'bike' ? 'bg-primary text-background shadow-md' : 'text-gray-400 hover:text-white'
-                      }`}
-                    >
-                      <Bike size={13} /> Bikes
-                    </button>
+                  <div className="flex p-0.5 bg-surface border border-border rounded-lg">
+                    {[
+                      { key: 'all', label: 'All', icon: <Layers size={12} /> },
+                      { key: 'car', label: 'Cars', icon: <Car size={12} /> },
+                      { key: 'bike', label: 'Bikes', icon: <Bike size={12} /> },
+                    ].map(({ key, label, icon }) => (
+                      <button
+                        key={key}
+                        onClick={() => setFleetType(key as any)}
+                        className={`px-3 py-1.5 rounded-md text-[11px] font-semibold tracking-wide flex items-center gap-1.5 transition-all ${
+                          fleetType === key ? 'bg-primary text-background' : 'text-gray-500 hover:text-white'
+                        }`}
+                      >
+                        {icon} {label}
+                      </button>
+                    ))}
                   </div>
 
                   <Link 
                     href={fleetType === 'all' ? '/vehicles' : `/vehicles?type=${fleetType}`} 
-                    className="hidden md:flex items-center gap-2 text-primary font-bold text-sm hover:gap-3 transition-all"
+                    className="hidden md:flex items-center gap-1.5 text-primary font-semibold text-sm hover:gap-2 transition-all"
                   >
-                    View All {fleetType === 'car' ? 'Cars' : fleetType === 'bike' ? 'Bikes' : 'Models'} <ArrowRight size={16} />
+                    View All {fleetType === 'car' ? 'Cars' : fleetType === 'bike' ? 'Bikes' : 'Models'} <ArrowRight size={15} />
                   </Link>
                 </div>
               </div>
             </ScrollReveal>
 
-            <div className="flex gap-6 overflow-x-auto pb-6 scrollbar-hide -mx-6 px-6 snap-x snap-mandatory">
+            <div className="flex gap-5 overflow-x-auto pb-4 scrollbar-hide -mx-6 px-6 snap-x snap-mandatory">
               {displayedVehicles.map((v) => (
                 <ScrollReveal key={v._id} variant="fade-up">
                   <div className="snap-start">
@@ -540,32 +531,32 @@ export default function HomePage() {
 
             <Link 
               href={fleetType === 'all' ? '/vehicles' : `/vehicles?type=${fleetType}`} 
-              className="mt-8 md:hidden flex items-center justify-center gap-2 text-primary font-bold text-sm"
+              className="mt-6 md:hidden flex items-center justify-center gap-1.5 text-primary font-semibold text-sm"
             >
-              View All {fleetType === 'car' ? 'Cars' : fleetType === 'bike' ? 'Bikes' : 'Vehicles'} <ArrowRight size={16} />
+              View All {fleetType === 'car' ? 'Cars' : fleetType === 'bike' ? 'Bikes' : 'Vehicles'} <ArrowRight size={15} />
             </Link>
           </div>
         </section>
       )}
 
       {/* ── How It Works ── */}
-      <section className="py-24 px-6 bg-surface/30">
+      <section className="py-20 px-6">
         <div className="max-w-5xl mx-auto">
           <ScrollReveal>
-            <div className="text-center mb-16">
-              <h2 className="font-orbitron text-3xl md:text-4xl font-bold mb-4">How It <span className="text-primary">Works</span></h2>
-              <p className="text-gray-500 max-w-lg mx-auto">Simple, transparent, four-step booking workflow.</p>
+            <div className="text-center mb-14">
+              <h2 className="font-orbitron text-2xl md:text-3xl font-bold mb-3 text-white">How It <span className="text-primary">Works</span></h2>
+              <p className="text-gray-500 max-w-md mx-auto text-sm">Simple, transparent, four-step booking workflow.</p>
             </div>
           </ScrollReveal>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6">
             {[
-              { number: '01', title: 'Choose Track', description: 'Pick Regular Maintenance or Custom Mods.', icon: <Layers size={28} /> },
-              { number: '02', title: 'Select Vehicle', description: 'Choose your exact bike or car model.', icon: <Sparkles size={28} /> },
-              { number: '03', title: 'Configure', description: 'Add services or performance upgrades.', icon: <Cog size={28} /> },
-              { number: '04', title: 'Book Workshop', description: 'Schedule with an approved specialist.', icon: <Clock size={28} /> },
+              { number: '01', title: 'Choose Track', description: 'Pick Regular Maintenance or Custom Mods.', icon: <Layers size={24} /> },
+              { number: '02', title: 'Select Vehicle', description: 'Choose your exact bike or car model.', icon: <Sparkles size={24} /> },
+              { number: '03', title: 'Configure', description: 'Add services or performance upgrades.', icon: <Cog size={24} /> },
+              { number: '04', title: 'Book Workshop', description: 'Schedule with an approved specialist.', icon: <Clock size={24} /> },
             ].map((step, i) => (
-              <ScrollReveal key={i} variant="scale-in" delay={i * 150}>
+              <ScrollReveal key={i} variant="scale-in" delay={i * 120}>
                 <StepCard {...step} />
               </ScrollReveal>
             ))}
@@ -574,22 +565,22 @@ export default function HomePage() {
       </section>
 
       {/* ── Testimonials ── */}
-      <section className="py-24 px-6">
+      <section className="py-20 px-6 border-t border-border/50">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal>
-            <div className="text-center mb-16">
-              <h2 className="font-orbitron text-3xl md:text-4xl font-bold mb-4">What Riders <span className="text-primary">Say</span></h2>
-              <p className="text-gray-500 max-w-lg mx-auto">Trusted by hundreds of car and bike enthusiasts across the country.</p>
+            <div className="text-center mb-14">
+              <h2 className="font-orbitron text-2xl md:text-3xl font-bold mb-3 text-white">What Riders <span className="text-primary">Say</span></h2>
+              <p className="text-gray-500 max-w-md mx-auto text-sm">Trusted by hundreds of car and bike enthusiasts across the country.</p>
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               { name: 'Arjun Reddy', role: 'KTM Duke 390 Owner', rating: 5, text: 'The customizer is insanely detailed. Got an Akrapovic exhaust and ceramic coating — the workshop did a flawless job. Sounds and looks like a beast.' },
               { name: 'Priya Sharma', role: 'Hyundai Creta Owner', rating: 5, text: 'I only needed scheduled periodic maintenance and synthetic oil service. Booked through the Maintenance track, dropped off the car, and got it back spotless.' },
               { name: 'Vikram Joshi', role: 'Royal Enfield Meteor Owner', rating: 5, text: 'Great division between standard service and custom parts. I added touring saddlebags and had a full health check completed in a single workshop visit.' },
             ].map((testimonial, i) => (
-              <ScrollReveal key={i} variant="fade-up" delay={i * 150}>
+              <ScrollReveal key={i} variant="fade-up" delay={i * 120}>
                 <TestimonialCard {...testimonial} />
               </ScrollReveal>
             ))}
@@ -598,26 +589,26 @@ export default function HomePage() {
       </section>
 
       {/* ── CTA Banner ── */}
-      <section className="py-24 px-6">
+      <section className="py-20 px-6">
         <ScrollReveal variant="scale-in">
-          <div className="max-w-5xl mx-auto relative overflow-hidden rounded-[3rem] bg-gradient-to-br from-primary/10 via-surface to-secondary/10 border border-primary/20 p-12 md:p-20 text-center">
-            <div className="absolute top-0 left-1/4 w-60 h-60 bg-primary/15 rounded-full blur-[100px] pointer-events-none"></div>
-            <div className="absolute bottom-0 right-1/4 w-60 h-60 bg-secondary/15 rounded-full blur-[100px] pointer-events-none"></div>
+          <div className="max-w-4xl mx-auto relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/[0.06] via-surface to-secondary/[0.04] border border-white/[0.06] p-10 md:p-16 text-center">
+            <div className="absolute top-0 left-1/4 w-48 h-48 bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
+            <div className="absolute bottom-0 right-1/4 w-48 h-48 bg-secondary/10 rounded-full blur-[80px] pointer-events-none" />
 
             <div className="relative z-10">
-              <h2 className="font-orbitron text-3xl md:text-5xl font-black text-white uppercase tracking-tight mb-4">
-                Ready to Upgrade Your <span className="text-primary neon-glow">Vehicle</span>?
+              <h2 className="font-orbitron text-2xl md:text-4xl font-bold text-white tracking-tight mb-3">
+                Ready to Upgrade Your <span className="text-primary">Vehicle</span>?
               </h2>
-              <p className="text-gray-400 text-lg max-w-xl mx-auto mb-10">
+              <p className="text-gray-500 text-base max-w-lg mx-auto mb-8">
                 Book scheduled service or start engineering your dream build today.
               </p>
               
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Link href="/category?mode=maintenance" className="px-8 py-4 bg-surface hover:bg-surface-hover border border-border hover:border-primary text-white font-bold uppercase tracking-wider text-xs rounded-full transition-all flex items-center gap-2">
-                  <Wrench size={16} className="text-primary" /> Book Maintenance
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <Link href="/category?mode=maintenance" className="px-7 py-3.5 bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] hover:border-primary/30 text-white font-semibold text-sm rounded-xl transition-all flex items-center gap-2">
+                  <Wrench size={15} className="text-primary/70" /> Book Maintenance
                 </Link>
-                <Link href="/category?mode=customize" className="px-8 py-4 bg-primary text-background font-black uppercase tracking-widest text-xs rounded-full hover:scale-105 active:scale-95 transition-all shadow-[0_0_30px_rgba(0,255,136,0.3)] flex items-center gap-2">
-                  <Zap size={16} /> Start Customizing <ChevronRight size={16} />
+                <Link href="/category?mode=customize" className="px-7 py-3.5 bg-primary text-background font-bold text-sm rounded-xl hover:brightness-110 transition-all flex items-center gap-2">
+                  <Zap size={15} /> Start Customizing <ChevronRight size={15} />
                 </Link>
               </div>
             </div>

@@ -35,58 +35,58 @@ export default function ProfilePage() {
   if (sessionLoading || !user) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center text-primary bg-background">
-        <Loader2 className="animate-spin mb-4" size={48} />
-        <p className="font-orbitron tracking-widest uppercase animate-pulse">Accessing Secure Vault...</p>
+        <Loader2 className="animate-spin mb-4" size={40} />
+        <p className="font-orbitron text-sm tracking-wider uppercase opacity-70">Accessing Profile...</p>
       </div>
     );
   }
 
   return (
-    <main className="min-h-screen bg-background py-16 px-6">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
+    <main className="min-h-screen bg-background py-14 px-6">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10">
         
-        {/* Left Column: User Profile Card */}
-        <div className="lg:col-span-4 space-y-8">
-          <div className="relative group bg-surface border border-border rounded-[2.5rem] p-10 overflow-hidden">
+        {/* Left Column: Profile Card */}
+        <div className="lg:col-span-4 space-y-6">
+          <div className="relative group bg-surface border border-border rounded-2xl p-8 overflow-hidden">
             {/* Background Glow */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+            <div className="absolute top-0 right-0 w-28 h-28 bg-primary/[0.06] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
             
             <div className="relative z-10 flex flex-col items-center text-center">
-              <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-secondary p-1 mb-6">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary/80 to-secondary/60 p-[2px] mb-5">
                 <div className="w-full h-full rounded-full bg-surface flex items-center justify-center text-primary">
-                  <User size={48} />
+                  <User size={40} />
                 </div>
               </div>
               
-              <h2 className="font-orbitron text-2xl font-black text-white mb-2 uppercase tracking-tight">{user.name}</h2>
-              <p className="text-[10px] font-black text-primary uppercase tracking-[0.3em] mb-8 bg-primary/10 px-3 py-1 rounded-full">Elite Member</p>
+              <h2 className="font-orbitron text-xl font-bold text-white mb-1.5 tracking-tight">{user.name}</h2>
+              <p className="text-[11px] font-semibold text-primary uppercase tracking-wider mb-6 bg-primary/[0.06] px-3 py-1 rounded-md">Member</p>
               
-              <div className="w-full space-y-4 text-left">
-                <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5">
-                  <Mail size={18} className="text-gray-500" />
+              <div className="w-full space-y-3 text-left">
+                <div className="flex items-center gap-3.5 p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                  <Mail size={16} className="text-gray-500" />
                   <div>
-                    <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Email Address</p>
-                    <p className="text-sm text-white font-medium">{user.email}</p>
+                    <p className="text-[10px] text-gray-500 font-medium tracking-wide">Email</p>
+                    <p className="text-sm text-white">{user.email}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5">
-                  <Calendar size={18} className="text-gray-500" />
+                <div className="flex items-center gap-3.5 p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                  <Calendar size={16} className="text-gray-500" />
                   <div>
-                    <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Member Since</p>
-                    <p className="text-sm text-white font-medium">{new Date(user.createdAt || Date.now()).toLocaleDateString()}</p>
+                    <p className="text-[10px] text-gray-500 font-medium tracking-wide">Member Since</p>
+                    <p className="text-sm text-white">{new Date(user.createdAt || Date.now()).toLocaleDateString()}</p>
                   </div>
                 </div>
               </div>
 
-              <div className="w-full pt-8 flex flex-col gap-4">
-                <button className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-bold uppercase tracking-widest text-xs hover:bg-white/10 transition-all">
-                  <Settings size={16} /> Edit Profile
+              <div className="w-full pt-6 flex flex-col gap-3">
+                <button className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white font-semibold text-sm hover:bg-white/[0.06] transition-all">
+                  <Settings size={15} /> Edit Profile
                 </button>
                 <button 
                   onClick={() => { logout(); router.push('/'); }}
-                  className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 font-bold uppercase tracking-widest text-xs hover:bg-red-500 hover:text-white transition-all"
+                  className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-red-500/[0.06] border border-red-500/15 text-red-400 font-semibold text-sm hover:bg-red-500 hover:text-white transition-all"
                 >
-                  <LogOut size={16} /> Sign Out
+                  <LogOut size={15} /> Sign Out
                 </button>
               </div>
             </div>
@@ -95,47 +95,47 @@ export default function ProfilePage() {
 
         {/* Right Column: Order History */}
         <div className="lg:col-span-8">
-          <div className="flex items-center justify-between mb-8">
-            <h3 className="font-orbitron text-2xl font-bold text-white uppercase tracking-tight flex items-center gap-4">
-              <Package className="text-primary" size={28} />
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="font-orbitron text-xl font-bold text-white tracking-tight flex items-center gap-3">
+              <Package className="text-primary" size={24} />
               Booking <span className="text-primary">History</span>
             </h3>
-            <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest bg-surface border border-border px-4 py-2 rounded-xl">
-              {orders.length} TOTAL RECORDS
+            <span className="text-[11px] font-semibold text-gray-500 tracking-wide bg-surface border border-border px-3.5 py-1.5 rounded-lg">
+              {orders.length} Records
             </span>
           </div>
 
           {loadingOrders ? (
-            <div className="p-20 text-center bg-surface border border-border rounded-[2.5rem]">
-              <Loader2 className="animate-spin mx-auto mb-4 text-primary" size={32} />
-              <p className="text-gray-500 uppercase tracking-widest text-[10px] font-bold">Retrieving Archive...</p>
+            <div className="p-16 text-center bg-surface border border-border rounded-2xl">
+              <Loader2 className="animate-spin mx-auto mb-3 text-primary" size={28} />
+              <p className="text-gray-500 text-sm">Loading order history...</p>
             </div>
           ) : orders.length > 0 ? (
-            <div className="space-y-6">
+            <div className="space-y-4">
               {orders.map((order, idx) => (
-                <div key={order._id} className="group bg-surface border border-border rounded-[2rem] p-8 transition-all hover:border-primary/20 animate-fade-in" style={{ animationDelay: `${idx * 0.1}s` }}>
-                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-                    <div className="flex items-center gap-6">
-                      <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
-                        <Package size={24} />
+                <div key={order._id} className="group bg-surface border border-border rounded-2xl p-6 transition-all hover:border-primary/15 animate-fade-in card-glow" style={{ animationDelay: `${idx * 0.08}s` }}>
+                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-5">
+                    <div className="flex items-center gap-5">
+                      <div className="w-13 h-13 rounded-xl bg-primary/[0.06] flex items-center justify-center text-primary border border-primary/15">
+                        <Package size={22} />
                       </div>
                       <div>
-                        <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest mb-1">Order #{order._id.slice(-8).toUpperCase()}</p>
-                        <h4 className="font-orbitron text-lg font-bold text-white uppercase">{order.items?.length} Item(s) Configured</h4>
-                        <p className="text-xs text-gray-500 mt-1">{new Date(order.createdAt).toLocaleDateString()} · {order.status.toUpperCase()}</p>
+                        <p className="text-[10px] text-gray-500 font-medium tracking-wide mb-0.5">Order #{order._id.slice(-8).toUpperCase()}</p>
+                        <h4 className="font-orbitron text-base font-bold text-white">{order.items?.length} Item(s) Configured</h4>
+                        <p className="text-[11px] text-gray-500 mt-0.5">{new Date(order.createdAt).toLocaleDateString()} · {order.status.toUpperCase()}</p>
                       </div>
                     </div>
                     
-                    <div className="flex items-center gap-8 w-full md:w-auto justify-between md:justify-end border-t md:border-t-0 border-white/5 pt-6 md:pt-0">
+                    <div className="flex items-center gap-6 w-full md:w-auto justify-between md:justify-end border-t md:border-t-0 border-white/[0.04] pt-4 md:pt-0">
                       <div className="text-right">
-                        <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Total Value</p>
-                        <p className="font-orbitron text-xl font-bold text-white">₹{order.totalPrice.toLocaleString()}</p>
+                        <p className="text-[10px] text-gray-500 font-medium tracking-wide">Total</p>
+                        <p className="font-orbitron text-lg font-bold text-white">₹{order.totalPrice.toLocaleString()}</p>
                       </div>
                       <button 
                         onClick={() => router.push(`/profile/orders/${order._id}`)}
-                        className="p-4 rounded-2xl bg-white/5 border border-white/5 text-gray-400 hover:text-primary hover:border-primary/50 transition-all"
+                        className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.04] text-gray-500 hover:text-primary hover:border-primary/20 transition-all"
                       >
-                        <ChevronRight size={20} />
+                        <ChevronRight size={18} />
                       </button>
                     </div>
                   </div>
@@ -143,11 +143,11 @@ export default function ProfilePage() {
               ))}
             </div>
           ) : (
-            <div className="p-20 text-center bg-surface border border-border border-dashed rounded-[2.5rem]">
-              <p className="text-gray-500 mb-6">No previous bookings found in your profile.</p>
+            <div className="p-16 text-center bg-surface border border-border border-dashed rounded-2xl">
+              <p className="text-gray-500 mb-5">No previous bookings found in your profile.</p>
               <button 
                 onClick={() => router.push('/category')}
-                className="px-8 py-4 bg-primary text-background font-black uppercase tracking-widest text-xs rounded-2xl hover:scale-105 transition-all"
+                className="px-6 py-3 bg-primary text-background font-bold text-sm rounded-xl hover:brightness-110 transition-all"
               >
                 Create Your First Build
               </button>

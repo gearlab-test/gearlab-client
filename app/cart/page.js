@@ -99,23 +99,23 @@ export default function CartPage() {
 
   if (loading) return (
     <div className="min-h-screen flex flex-col items-center justify-center text-primary bg-background">
-      <Loader2 className="animate-spin mb-4" size={48} />
-      <p className="font-orbitron tracking-widest uppercase animate-pulse">Syncing Inventory...</p>
+      <Loader2 className="animate-spin mb-4" size={40} />
+      <p className="font-orbitron text-sm tracking-wider uppercase opacity-70">Syncing Inventory...</p>
     </div>
   );
 
   if (!cart?.configurations?.length) return (
     <main className="min-h-[80vh] flex flex-col items-center justify-center px-6 text-center bg-background">
-      <div className="w-24 h-24 bg-surface rounded-full flex items-center justify-center text-gray-700 mb-8 border border-border">
-        <ShoppingBag size={40} />
+      <div className="w-20 h-20 bg-surface rounded-full flex items-center justify-center text-gray-700 mb-6 border border-border">
+        <ShoppingBag size={36} />
       </div>
-      <h2 className="font-orbitron text-3xl font-bold text-white mb-3">YOUR HANGAR IS EMPTY</h2>
-      <p className="text-gray-500 max-w-sm mb-10 leading-relaxed">
+      <h2 className="font-orbitron text-2xl font-bold text-white mb-2">Your Cart is Empty</h2>
+      <p className="text-gray-500 max-w-sm mb-8 leading-relaxed text-sm">
         You haven&apos;t configured any vehicles yet. Start a new build to see it here.
       </p>
       <button
         onClick={() => router.push('/category')}
-        className="px-8 py-4 bg-primary text-background font-black uppercase tracking-widest rounded-2xl hover:scale-105 active:scale-95 transition-all"
+        className="px-6 py-3.5 bg-primary text-background font-bold text-sm rounded-xl hover:brightness-110 active:scale-[0.98] transition-all"
       >
         Start Customizing
       </button>
@@ -123,61 +123,61 @@ export default function CartPage() {
   );
 
   return (
-    <main className="max-w-4xl mx-auto px-6 py-16 min-h-screen pb-40">
+    <main className="max-w-4xl mx-auto px-6 py-14 min-h-screen pb-36">
       {/* Header */}
-      <div className="flex items-center justify-between mb-12">
-        <div className="flex items-center gap-4">
+      <div className="flex items-center justify-between mb-10">
+        <div className="flex items-center gap-3.5">
           <button 
             onClick={() => router.back()}
-            className="p-3 rounded-full bg-surface border border-border text-gray-400 hover:text-white transition-all"
+            className="p-2.5 rounded-xl bg-surface border border-border text-gray-500 hover:text-white transition-all"
           >
-            <ArrowLeft size={20} />
+            <ArrowLeft size={18} />
           </button>
           <div>
-            <h1 className="font-orbitron text-3xl font-bold uppercase tracking-tight text-white">Your <span className="text-primary">Cart</span></h1>
-            <p className="text-gray-500 text-[10px] font-black uppercase tracking-widest">{cart.configurations.length} BUILD(S) READY</p>
+            <h1 className="font-orbitron text-2xl font-bold tracking-tight text-white">Your <span className="text-primary">Cart</span></h1>
+            <p className="text-gray-500 text-[11px] font-medium tracking-wide">{cart.configurations.length} build(s) ready</p>
           </div>
         </div>
       </div>
 
       {/* Cart items */}
-      <div className="space-y-6">
+      <div className="space-y-4">
         {cart.configurations.map((config, idx) => {
           const vehicle = config.vehicleId;
           const isRemoving = removing === config._id;
 
           return (
-            <div key={config._id} className="group relative bg-surface border border-border rounded-3xl p-8 transition-all hover:border-primary/20 animate-fade-in" style={{ animationDelay: `${idx * 0.1}s` }}>
-              <div className="flex flex-col md:flex-row gap-8 items-start">
+            <div key={config._id} className="group relative bg-surface border border-border rounded-2xl p-6 transition-all hover:border-primary/15 animate-fade-in card-glow" style={{ animationDelay: `${idx * 0.08}s` }}>
+              <div className="flex flex-col md:flex-row gap-6 items-start">
                 {/* Vehicle Image */}
-                <div className="w-full md:w-48 aspect-video rounded-2xl overflow-hidden bg-black/40 border border-white/5 flex-shrink-0">
+                <div className="w-full md:w-44 aspect-video rounded-xl overflow-hidden bg-black/30 border border-white/[0.04] flex-shrink-0">
                   {vehicle?.images?.[0] ? (
                     <img src={vehicle.images[0]} alt={vehicle.name} className="w-full h-full object-cover" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-gray-700">
-                      <ShoppingBag size={24} />
+                      <ShoppingBag size={22} />
                     </div>
                   )}
                 </div>
 
                 {/* Content */}
-                <div className="flex-1 space-y-4">
+                <div className="flex-1 space-y-3">
                   <div className="flex justify-between items-start">
                     <div>
-                      <h3 className="font-orbitron text-xl font-bold text-white group-hover:text-primary transition-colors">{vehicle?.name || 'Unknown Vehicle'}</h3>
-                      <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">{vehicle?.brand} · {vehicle?.type}</p>
+                      <h3 className="font-orbitron text-lg font-bold text-white group-hover:text-primary transition-colors">{vehicle?.name || 'Unknown Vehicle'}</h3>
+                      <p className="text-[11px] text-gray-500 font-medium tracking-wide">{vehicle?.brand} · {vehicle?.type}</p>
                     </div>
                     <div className="text-right">
-                      <p className="font-orbitron text-xl font-bold text-white">₹{config.totalPrice?.toLocaleString()}</p>
-                      <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest">Build Total</p>
+                      <p className="font-orbitron text-lg font-bold text-white">₹{config.totalPrice?.toLocaleString()}</p>
+                      <p className="text-[10px] text-gray-600 font-medium tracking-wide">Build Total</p>
                     </div>
                   </div>
 
                   {/* Options Chips */}
                   {config.selectedOptions?.length > 0 && (
-                    <div className="flex flex-wrap gap-2 pt-2">
+                    <div className="flex flex-wrap gap-1.5 pt-1">
                       {config.selectedOptions.map((opt, i) => (
-                        <span key={i} className="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[10px] text-gray-400 font-medium tracking-wide">
+                        <span key={i} className="px-2.5 py-0.5 bg-white/[0.03] border border-white/[0.06] rounded-md text-[10px] text-gray-400 font-medium">
                           {opt.name} {opt.price > 0 && `(+₹${opt.price.toLocaleString()})`}
                         </span>
                       ))}
@@ -185,13 +185,13 @@ export default function CartPage() {
                   )}
 
                   {/* Actions */}
-                  <div className="flex gap-4 pt-4 border-t border-white/5">
+                  <div className="flex gap-4 pt-3 border-t border-white/[0.04]">
                     <button
                       onClick={() => handleRemove(config._id)}
                       disabled={isRemoving}
-                      className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-red-500 hover:text-red-400 transition-colors disabled:opacity-50"
+                      className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-red-500 hover:text-red-400 transition-colors disabled:opacity-50"
                     >
-                      {isRemoving ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
+                      {isRemoving ? <Loader2 size={13} className="animate-spin" /> : <Trash2 size={13} />}
                       Remove
                     </button>
                     <button
@@ -200,9 +200,9 @@ export default function CartPage() {
                         const editMode = hasCustomize ? 'customize' : 'maintenance';
                         router.push(`/configurator/${vehicle?._id}?mode=${editMode}`);
                       }}
-                      className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-white transition-colors"
+                      className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-gray-500 hover:text-white transition-colors"
                     >
-                      <Edit3 size={14} />
+                      <Edit3 size={13} />
                       Edit Build
                     </button>
                   </div>
@@ -214,108 +214,105 @@ export default function CartPage() {
       </div>
 
       {/* Date & Workshop Selection */}
-      <div className="mt-16 mb-12 space-y-8">
-        <div className="bg-surface border border-border rounded-[2.5rem] p-10">
-          <h3 className="font-orbitron text-xl font-bold text-white uppercase tracking-tight mb-8 flex items-center gap-4">
-            <span className="w-10 h-10 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-sm font-black">02</span>
-            CONTACT <span className="text-primary">DETAILS</span>
+      <div className="mt-12 mb-10 space-y-6">
+        <div className="bg-surface border border-border rounded-2xl p-8">
+          <h3 className="font-orbitron text-lg font-bold text-white tracking-tight mb-6 flex items-center gap-3">
+            <span className="w-8 h-8 rounded-lg bg-primary/[0.08] text-primary flex items-center justify-center text-xs font-bold">02</span>
+            Contact <span className="text-primary">Details</span>
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="relative">
-              <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-primary" size={20} />
+              <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600" size={16} />
               <input 
                 type="tel" 
                 placeholder="Phone Number"
                 value={customerPhone}
                 onChange={(e) => setCustomerPhone(e.target.value)}
-                className="w-full bg-black/40 border border-white/10 rounded-2xl py-4 pl-12 pr-6 text-sm text-white focus:border-primary outline-none transition-all"
+                className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl py-3.5 pl-11 pr-5 text-sm text-white focus:border-primary/50 outline-none transition-all"
               />
             </div>
             <div className="relative">
-              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-primary" size={20} />
+              <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600" size={16} />
               <input 
                 type="email" 
                 placeholder="Email Address"
                 value={customerEmail}
                 onChange={(e) => setCustomerEmail(e.target.value)}
-                className="w-full bg-black/40 border border-white/10 rounded-2xl py-4 pl-12 pr-6 text-sm text-white focus:border-primary outline-none transition-all"
+                className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl py-3.5 pl-11 pr-5 text-sm text-white focus:border-primary/50 outline-none transition-all"
               />
             </div>
           </div>
         </div>
 
-        <div className="bg-surface border border-border rounded-[2.5rem] p-10">
-          <h3 className="font-orbitron text-xl font-bold text-white uppercase tracking-tight mb-8 flex items-center gap-4">
-            <span className="w-10 h-10 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-sm font-black">03</span>
-            SELECT <span className="text-primary">SERVICE DATE</span>
+        <div className="bg-surface border border-border rounded-2xl p-8">
+          <h3 className="font-orbitron text-lg font-bold text-white tracking-tight mb-6 flex items-center gap-3">
+            <span className="w-8 h-8 rounded-lg bg-primary/[0.08] text-primary flex items-center justify-center text-xs font-bold">03</span>
+            Service <span className="text-primary">Date</span>
           </h3>
           <div className="relative max-w-xs">
-            <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-primary" size={20} />
+            <Calendar className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600" size={16} />
             <input 
               type="date" 
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
               min={new Date().toISOString().split('T')[0]}
-              className="w-full bg-black/40 border border-white/10 rounded-2xl py-4 pl-12 pr-6 text-sm text-white focus:border-primary outline-none transition-all appearance-none"
+              className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl py-3.5 pl-11 pr-5 text-sm text-white focus:border-primary/50 outline-none transition-all appearance-none"
             />
           </div>
         </div>
 
-        <div className="bg-surface border border-border rounded-[2.5rem] p-10">
-          <h3 className="font-orbitron text-xl font-bold text-white uppercase tracking-tight mb-8 flex items-center gap-4">
-            <span className="w-10 h-10 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-sm font-black">04</span>
-            SELECT <span className="text-primary">AUTHORIZED WORKSHOP</span>
+        <div className="bg-surface border border-border rounded-2xl p-8">
+          <h3 className="font-orbitron text-lg font-bold text-white tracking-tight mb-6 flex items-center gap-3">
+            <span className="w-8 h-8 rounded-lg bg-primary/[0.08] text-primary flex items-center justify-center text-xs font-bold">04</span>
+            Authorized <span className="text-primary">Workshop</span>
           </h3>
           
           {workshops.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {workshops.map((ws) => (
                 <button
                   key={ws._id}
                   onClick={() => setSelectedWorkshop(ws._id)}
-                  className={`p-6 rounded-2xl border text-left transition-all group ${
+                  className={`p-5 rounded-xl border text-left transition-all ${
                     selectedWorkshop === ws._id 
-                      ? 'bg-primary/5 border-primary shadow-[0_0_20px_rgba(0,255,136,0.1)]' 
-                      : 'bg-black/20 border-white/5 hover:border-white/20'
+                      ? 'bg-primary/[0.04] border-primary/40' 
+                      : 'bg-white/[0.02] border-white/[0.04] hover:border-white/10'
                   }`}
                 >
-                  <div className="flex justify-between items-center mb-1">
-                    <p className={`font-bold uppercase tracking-tight transition-colors ${selectedWorkshop === ws._id ? 'text-primary' : 'text-gray-300'}`}>
-                      {ws.name}
-                    </p>
-                  </div>
-                  <p className="text-[10px] text-gray-600 font-medium">{ws.email}</p>
+                  <p className={`font-semibold tracking-tight transition-colors ${selectedWorkshop === ws._id ? 'text-primary' : 'text-gray-300'}`}>
+                    {ws.name}
+                  </p>
+                  <p className="text-[11px] text-gray-600 mt-0.5">{ws.email}</p>
                 </button>
               ))}
             </div>
           ) : (
-            <div className="p-8 text-center bg-black/20 rounded-2xl border border-dashed border-white/5">
-              <p className="text-gray-500 text-xs italic">No authorized workshops available.</p>
+            <div className="p-6 text-center bg-white/[0.01] rounded-xl border border-dashed border-white/[0.04]">
+              <p className="text-gray-500 text-sm">No authorized workshops available.</p>
             </div>
           )}
         </div>
       </div>
 
       {/* Sticky Bottom Summary */}
-
-      <div className="fixed bottom-0 left-0 right-0 glass border-t border-primary/20 z-50">
-        <div className="max-w-4xl mx-auto px-6 py-8 flex items-center justify-between">
+      <div className="fixed bottom-0 left-0 right-0 glass border-t border-white/[0.06] z-50">
+        <div className="max-w-4xl mx-auto px-6 py-5 flex items-center justify-between">
           <div>
-            <p className="text-[10px] text-gray-500 font-black uppercase tracking-[0.2em] mb-1">Final Investment</p>
-            <p className="font-orbitron text-3xl font-black text-primary neon-glow">
+            <p className="text-[10px] text-gray-500 font-medium tracking-wide mb-0.5">Total Investment</p>
+            <p className="font-orbitron text-2xl font-bold text-primary">
               ₹{grandTotal.toLocaleString()}
             </p>
           </div>
           <button
             onClick={handleOrder}
             disabled={ordering}
-            className="group px-12 py-4 bg-primary text-background font-black uppercase tracking-widest text-sm rounded-2xl hover:scale-105 active:scale-95 transition-all disabled:opacity-50 flex items-center gap-3"
+            className="group px-8 py-3.5 bg-primary text-background font-bold uppercase tracking-wide text-sm rounded-xl hover:brightness-110 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center gap-2.5"
           >
             {ordering ? (
-              <Loader2 size={18} className="animate-spin" />
+              <Loader2 size={16} className="animate-spin" />
             ) : (
               <>
-                Confirm Order <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                Confirm Order <ChevronRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
               </>
             )}
           </button>

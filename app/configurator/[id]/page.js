@@ -112,8 +112,8 @@ function ConfiguratorContent() {
 
   if (!vehicle) return (
     <div className="min-h-screen flex flex-col items-center justify-center text-primary bg-background">
-      <Loader2 className="animate-spin mb-4" size={48} />
-      <p className="font-orbitron tracking-widest uppercase animate-pulse">Assembling Workshop...</p>
+      <Loader2 className="animate-spin mb-4" size={40} />
+      <p className="font-orbitron text-sm tracking-wider uppercase opacity-70">Assembling Workshop...</p>
     </div>
   );
 
@@ -138,9 +138,9 @@ function ConfiguratorContent() {
   const images = vehicle.images || [];
 
   return (
-    <main className="min-h-screen bg-background pb-36">
+    <main className="min-h-screen bg-background pb-32">
       {/* Top Navigation Bar */}
-      <div className="glass sticky top-20 z-40 border-b border-white/5 py-4 px-6 mb-8">
+      <div className="glass sticky top-[72px] z-40 border-b border-white/[0.04] py-3.5 px-6 mb-6">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <button 
             onClick={() => {
@@ -150,28 +150,28 @@ function ConfiguratorContent() {
               const q = params.toString();
               router.push(q ? `/vehicles?${q}` : '/vehicles');
             }} 
-            className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors group"
+            className="flex items-center gap-2 text-gray-500 hover:text-white transition-colors group"
           >
-            <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+            <ArrowLeft size={16} className="group-hover:-translate-x-0.5 transition-transform" />
             <span className="text-sm font-medium">
               Return to {vehicle?.type === 'car' ? 'Cars' : vehicle?.type === 'bike' ? 'Bikes' : 'Fleet'}
             </span>
           </button>
           <div className="text-right">
-            <h1 className="font-orbitron text-xl font-bold uppercase tracking-tighter text-white">{vehicle.name}</h1>
-            <p className="text-[10px] text-primary font-bold uppercase tracking-[0.2em]">
-              {activeMode === 'maintenance' ? '🔧 Maintenance Mode' : activeMode === 'customize' ? '⚡ Customization Mode' : 'Studio Mode'}
+            <h1 className="font-orbitron text-lg font-bold tracking-tight text-white">{vehicle.name}</h1>
+            <p className="text-[10px] text-primary font-semibold uppercase tracking-wider">
+              {activeMode === 'maintenance' ? 'Maintenance Mode' : activeMode === 'customize' ? 'Customization Mode' : 'Studio Mode'}
             </p>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10">
         
         {/* Left Column: Visual & Job Summary */}
-        <div className="lg:col-span-6 flex flex-col gap-6">
+        <div className="lg:col-span-6 flex flex-col gap-5">
           {/* Main Vehicle Image */}
-          <div className="relative aspect-video bg-black/40 rounded-3xl overflow-hidden border border-border group">
+          <div className="relative aspect-video bg-black/30 rounded-2xl overflow-hidden border border-border group">
             <img 
               src={images[activeImage] || images[0] || 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&q=80&w=800'} 
               alt={vehicle.name}
@@ -183,28 +183,25 @@ function ConfiguratorContent() {
               }}
               className="w-full h-full object-cover transition-all duration-500"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent"></div>
-            <div className="absolute bottom-6 left-8 flex gap-2">
-              <span className="px-3 py-1 bg-black/70 backdrop-blur-md rounded-full text-[10px] font-bold text-primary uppercase tracking-widest border border-primary/20">
+            <div className="absolute inset-0 bg-gradient-to-t from-background/30 to-transparent" />
+            <div className="absolute bottom-5 left-6 flex gap-2">
+              <span className="px-2.5 py-1 bg-black/60 backdrop-blur-md rounded-md text-[10px] font-semibold text-gray-300 uppercase tracking-wider border border-white/[0.06]">
                 {vehicle.type}
-              </span>
-              <span className="px-3 py-1 bg-black/60 backdrop-blur-md rounded-full text-[10px] font-bold text-gray-300 uppercase tracking-widest border border-white/10">
-                4K Render
               </span>
             </div>
           </div>
 
           {/* Thumbnail Gallery */}
           {images.length > 1 && (
-            <div className="flex gap-3 overflow-x-auto pb-2">
+            <div className="flex gap-2.5 overflow-x-auto pb-1">
               {images.map((img, i) => (
                 <button
                   key={i}
                   onClick={() => setActiveImage(i)}
-                  className={`flex-shrink-0 w-24 h-16 rounded-xl overflow-hidden border-2 transition-all ${
+                  className={`flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden border-2 transition-all ${
                     activeImage === i
-                      ? 'border-primary shadow-[0_0_12px_rgba(0,255,136,0.3)]'
-                      : 'border-transparent opacity-50 hover:opacity-80'
+                      ? 'border-primary/60'
+                      : 'border-transparent opacity-40 hover:opacity-70'
                   }`}
                 >
                   <img src={img} alt={`${vehicle.name} view ${i + 1}`} className="w-full h-full object-cover" />
@@ -215,52 +212,52 @@ function ConfiguratorContent() {
 
           {/* Mode Highlights Banner */}
           {activeMode === 'maintenance' && (
-            <div className="p-5 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-xs text-blue-300 flex items-start gap-3">
-              <Wrench size={18} className="text-blue-400 flex-shrink-0 mt-0.5" />
+            <div className="p-4 rounded-xl bg-blue-500/[0.06] border border-blue-500/15 text-[13px] text-blue-300/80 flex items-start gap-3">
+              <Wrench size={16} className="text-blue-400 flex-shrink-0 mt-0.5" />
               <div>
-                <p className="font-bold uppercase tracking-wider text-white mb-1">Periodic Maintenance Track Active</p>
-                <p className="leading-relaxed opacity-90">
-                  Select the required routine maintenance items (multi-point health check, oil service, brake overhaul, etc.) to keep your warranty and vehicle in top shape.
+                <p className="font-semibold text-white mb-0.5 text-sm">Periodic Maintenance Track</p>
+                <p className="leading-relaxed">
+                  Select the required routine maintenance items to keep your warranty and vehicle in top shape.
                 </p>
               </div>
             </div>
           )}
 
           {activeMode === 'customize' && (
-            <div className="p-5 rounded-2xl bg-primary/10 border border-primary/20 text-xs text-emerald-300 flex items-start gap-3">
-              <Zap size={18} className="text-primary flex-shrink-0 mt-0.5" />
+            <div className="p-4 rounded-xl bg-primary/[0.06] border border-primary/15 text-[13px] text-emerald-300/80 flex items-start gap-3">
+              <Zap size={16} className="text-primary flex-shrink-0 mt-0.5" />
               <div>
-                <p className="font-bold uppercase tracking-wider text-white mb-1">Customization & Parts Track Active</p>
-                <p className="leading-relaxed opacity-90">
-                  Select aftermarket exhausts, vinyl wraps, alloy wheels, spoilers, and performance parts to craft your custom build.
+                <p className="font-semibold text-white mb-0.5 text-sm">Customization & Parts Track</p>
+                <p className="leading-relaxed">
+                  Select aftermarket exhausts, vinyl wraps, alloy wheels, spoilers, and performance parts for your build.
                 </p>
               </div>
             </div>
           )}
 
           {/* Job Summary */}
-          <div className="bg-surface/60 rounded-3xl p-8 border border-border">
-            <h3 className="font-orbitron text-sm font-bold uppercase tracking-widest text-primary mb-6 flex items-center justify-between">
-              <span className="flex items-center gap-2"><Info size={16} /> Job Breakdown</span>
-              <span className="text-[10px] text-gray-500 font-mono">{allChosenOptions.length} Items Selected</span>
+          <div className="bg-surface/50 rounded-2xl p-6 border border-border">
+            <h3 className="font-orbitron text-xs font-semibold uppercase tracking-wider text-primary mb-5 flex items-center justify-between">
+              <span className="flex items-center gap-1.5"><Info size={14} /> Job Breakdown</span>
+              <span className="text-[10px] text-gray-500 font-mono">{allChosenOptions.length} Items</span>
             </h3>
 
-            <div className="space-y-4">
-              <div className="flex justify-between items-center text-sm pb-3 border-b border-border/50">
-                <span className="text-gray-400 uppercase tracking-wide">Base Service Fee</span>
-                <span className="text-white font-medium font-orbitron">₹{vehicle.basePrice.toLocaleString()}</span>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center text-sm pb-2.5 border-b border-border/50">
+                <span className="text-gray-500">Base Service Fee</span>
+                <span className="text-white font-medium font-orbitron text-sm">₹{vehicle.basePrice.toLocaleString()}</span>
               </div>
 
               {/* Maintenance Services Summary */}
               {maintenanceOptions.length > 0 && (
-                <div className="space-y-2 pt-1">
-                  <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest flex items-center gap-1.5">
-                    <Wrench size={12} /> Maintenance Services ({maintenanceOptions.length})
+                <div className="space-y-1.5 pt-1">
+                  <p className="text-[10px] font-semibold text-blue-400 uppercase tracking-wider flex items-center gap-1.5">
+                    <Wrench size={11} /> Maintenance ({maintenanceOptions.length})
                   </p>
                   {maintenanceOptions.map((opt, i) => (
-                    <div key={i} className="flex justify-between items-center text-sm pl-3 border-l-2 border-blue-500/40">
-                      <span className="text-gray-300 capitalize">{opt.name}</span>
-                      <span className="text-white font-medium">
+                    <div key={i} className="flex justify-between items-center text-sm pl-3 border-l-2 border-blue-500/30">
+                      <span className="text-gray-400 capitalize">{opt.name}</span>
+                      <span className="text-white font-medium text-sm">
                         {opt.price > 0 ? `+₹${opt.price.toLocaleString()}` : 'Included'}
                       </span>
                     </div>
@@ -270,14 +267,14 @@ function ConfiguratorContent() {
 
               {/* Customization Options Summary */}
               {customizeOptions.length > 0 && (
-                <div className="space-y-2 pt-2">
-                  <p className="text-[10px] font-bold text-primary uppercase tracking-widest flex items-center gap-1.5">
-                    <Zap size={12} /> Custom Parts & Mods ({customizeOptions.length})
+                <div className="space-y-1.5 pt-1.5">
+                  <p className="text-[10px] font-semibold text-primary uppercase tracking-wider flex items-center gap-1.5">
+                    <Zap size={11} /> Custom Parts ({customizeOptions.length})
                   </p>
                   {customizeOptions.map((opt, i) => (
-                    <div key={i} className="flex justify-between items-center text-sm pl-3 border-l-2 border-primary/40">
-                      <span className="text-gray-300 capitalize">{opt.name}</span>
-                      <span className="text-white font-medium">
+                    <div key={i} className="flex justify-between items-center text-sm pl-3 border-l-2 border-primary/30">
+                      <span className="text-gray-400 capitalize">{opt.name}</span>
+                      <span className="text-white font-medium text-sm">
                         {opt.price > 0 ? `+₹${opt.price.toLocaleString()}` : 'Included'}
                       </span>
                     </div>
@@ -286,7 +283,7 @@ function ConfiguratorContent() {
               )}
 
               {allChosenOptions.length === 0 && (
-                <p className="text-gray-500 text-xs italic py-2">
+                <p className="text-gray-500 text-[13px] py-2">
                   No items selected yet. Choose from the available options on the right.
                 </p>
               )}
@@ -294,41 +291,41 @@ function ConfiguratorContent() {
           </div>
         </div>
 
-        {/* Right Column: Track Switcher & Options Selection */}
-        <div className="lg:col-span-6 space-y-8">
+        {/* Right Column: Track Switcher & Options */}
+        <div className="lg:col-span-6 space-y-6">
           
-          {/* Prominent Track Switcher */}
-          <div className="p-1.5 bg-surface border border-border rounded-2xl flex gap-1 shadow-lg">
+          {/* Track Switcher */}
+          <div className="p-1 bg-surface border border-border rounded-xl flex gap-0.5">
             <button
               onClick={() => setActiveMode('maintenance')}
-              className={`flex-1 py-3 px-3 rounded-xl font-orbitron text-xs font-bold uppercase transition-all flex items-center justify-center gap-2 ${
+              className={`flex-1 py-2.5 px-3 rounded-lg font-orbitron text-[11px] font-semibold uppercase transition-all flex items-center justify-center gap-1.5 ${
                 activeMode === 'maintenance'
-                  ? 'bg-blue-600 text-white shadow-md'
-                  : 'text-gray-400 hover:text-white hover:bg-white/5'
+                  ? 'bg-blue-600 text-white'
+                  : 'text-gray-500 hover:text-white hover:bg-white/[0.03]'
               }`}
             >
-              <Wrench size={15} />
-              <span>Maintenance ({maintenanceOptions.length})</span>
+              <Wrench size={13} />
+              Maintenance ({maintenanceOptions.length})
             </button>
 
             <button
               onClick={() => setActiveMode('customize')}
-              className={`flex-1 py-3 px-3 rounded-xl font-orbitron text-xs font-bold uppercase transition-all flex items-center justify-center gap-2 ${
+              className={`flex-1 py-2.5 px-3 rounded-lg font-orbitron text-[11px] font-semibold uppercase transition-all flex items-center justify-center gap-1.5 ${
                 activeMode === 'customize'
-                  ? 'bg-primary text-background shadow-md'
-                  : 'text-gray-400 hover:text-white hover:bg-white/5'
+                  ? 'bg-primary text-background'
+                  : 'text-gray-500 hover:text-white hover:bg-white/[0.03]'
               }`}
             >
-              <Zap size={15} />
-              <span>Customize ({customizeOptions.length})</span>
+              <Zap size={13} />
+              Customize ({customizeOptions.length})
             </button>
 
             <button
               onClick={() => setActiveMode('all')}
-              className={`py-3 px-4 rounded-xl font-orbitron text-xs font-bold uppercase transition-all ${
+              className={`py-2.5 px-3.5 rounded-lg font-orbitron text-[11px] font-semibold uppercase transition-all ${
                 activeMode === 'all'
-                  ? 'bg-white/10 text-white'
-                  : 'text-gray-500 hover:text-white'
+                  ? 'bg-white/[0.08] text-white'
+                  : 'text-gray-600 hover:text-white'
               }`}
             >
               All
@@ -337,11 +334,11 @@ function ConfiguratorContent() {
 
           {/* Options Categories */}
           {displayedCategories.length === 0 ? (
-            <div className="p-12 rounded-3xl bg-surface border border-dashed border-border text-center">
-              <p className="text-gray-400 mb-2 font-medium">No options available under this category.</p>
+            <div className="p-10 rounded-2xl bg-surface border border-dashed border-border text-center">
+              <p className="text-gray-500 mb-2 text-sm">No options available under this category.</p>
               <button 
                 onClick={() => setActiveMode('all')}
-                className="text-xs text-primary font-bold uppercase tracking-wider underline mt-2"
+                className="text-[11px] text-primary font-semibold uppercase tracking-wider underline mt-1"
               >
                 Switch to All Options
               </button>
@@ -353,63 +350,63 @@ function ConfiguratorContent() {
               const isMaintenanceCat = MAINTENANCE_CATEGORIES.includes(category);
 
               return (
-                <div key={category} className="animate-fade-in space-y-4" style={{ animationDelay: `${catIdx * 0.05}s` }}>
+                <div key={category} className="animate-fade-in space-y-3" style={{ animationDelay: `${catIdx * 0.04}s` }}>
                   <div className="flex items-center justify-between pb-2 border-b border-border/50">
-                    <div className="flex items-center gap-2.5">
-                      <div className={`p-1.5 rounded-lg ${isMaintenanceCat ? 'bg-blue-500/10 text-blue-400' : 'bg-primary/10 text-primary'}`}>
-                        {isMaintenanceCat ? <Wrench size={16} /> : <Zap size={16} />}
+                    <div className="flex items-center gap-2">
+                      <div className={`p-1.5 rounded-md ${isMaintenanceCat ? 'bg-blue-500/[0.08] text-blue-400' : 'bg-primary/[0.08] text-primary'}`}>
+                        {isMaintenanceCat ? <Wrench size={14} /> : <Zap size={14} />}
                       </div>
                       <div>
-                        <h3 className="font-orbitron text-base font-bold text-white uppercase tracking-tight">
+                        <h3 className="font-orbitron text-sm font-bold text-white uppercase tracking-tight">
                           {category}
                         </h3>
-                        <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">
-                          {isMaintenanceCat ? 'Routine Service Scope' : 'Aftermarket Part & Modification'}
+                        <p className="text-[10px] text-gray-500 font-medium tracking-wide">
+                          {isMaintenanceCat ? 'Routine Service' : 'Aftermarket Mod'}
                         </p>
                       </div>
                     </div>
 
-                    <span className={`text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-md ${
-                      isMulti ? 'bg-primary/10 text-primary border border-primary/20' : 'bg-white/5 text-gray-400'
+                    <span className={`text-[9px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-md ${
+                      isMulti ? 'bg-primary/[0.06] text-primary border border-primary/15' : 'bg-white/[0.03] text-gray-500'
                     }`}>
-                      {isMulti ? `MULTI-SELECT (${selectedCount})` : 'SINGLE CHOICE'}
+                      {isMulti ? `MULTI (${selectedCount})` : 'SINGLE'}
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     {options.map((opt, i) => {
                       const active = isSelected(category, opt);
                       return (
                         <button 
                           key={i}
                           onClick={() => isMulti ? handleMultiSelect(category, opt) : handleSingleSelect(category, opt)}
-                          className={`group relative p-4 rounded-2xl border transition-all text-left flex flex-col justify-between min-h-[95px] ${
+                          className={`group relative p-3.5 rounded-xl border transition-all text-left flex flex-col justify-between min-h-[85px] ${
                             active 
                               ? isMaintenanceCat 
-                                ? 'bg-blue-500/10 border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.2)]'
-                                : 'bg-primary/10 border-primary shadow-[0_0_20px_rgba(0,255,136,0.15)]' 
-                              : 'bg-surface border-border hover:border-gray-700 hover:bg-surface-hover'
+                                ? 'bg-blue-500/[0.08] border-blue-500/50'
+                                : 'bg-primary/[0.08] border-primary/50' 
+                              : 'bg-surface border-border hover:border-white/10 hover:bg-surface-hover'
                           }`}
                         >
                           <div className="flex justify-between items-start w-full gap-2">
-                            <span className={`font-semibold text-sm leading-snug transition-colors ${
+                            <span className={`font-medium text-sm leading-snug transition-colors ${
                               active ? (isMaintenanceCat ? 'text-blue-300' : 'text-primary') : 'text-gray-300'
                             }`}>
                               {opt.name}
                             </span>
                             {active && (
-                              <div className={`rounded-full p-1 text-background flex-shrink-0 ${isMaintenanceCat ? 'bg-blue-400' : 'bg-primary'}`}>
-                                <Check size={12} strokeWidth={4} />
+                              <div className={`rounded-full p-0.5 text-background flex-shrink-0 ${isMaintenanceCat ? 'bg-blue-400' : 'bg-primary'}`}>
+                                <Check size={11} strokeWidth={3} />
                               </div>
                             )}
                           </div>
                           
-                          <div className="mt-3 flex items-center justify-between">
-                            <span className={`text-xs font-orbitron font-bold ${active ? 'text-white' : 'text-gray-500'}`}>
-                              {opt.price > 0 ? `+₹${opt.price.toLocaleString()}` : 'Standard / Included'}
+                          <div className="mt-2.5 flex items-center justify-between">
+                            <span className={`text-[11px] font-orbitron font-semibold ${active ? 'text-white' : 'text-gray-500'}`}>
+                              {opt.price > 0 ? `+₹${opt.price.toLocaleString()}` : 'Included'}
                             </span>
                             {isMaintenanceCat && (
-                              <span className="text-[9px] uppercase tracking-wider text-gray-500">Service</span>
+                              <span className="text-[9px] uppercase tracking-wider text-gray-600">Service</span>
                             )}
                           </div>
                         </button>
@@ -424,40 +421,40 @@ function ConfiguratorContent() {
       </div>
 
       {/* Fixed Sticky Action Bar */}
-      <div className="fixed bottom-0 left-0 right-0 glass border-t border-primary/20 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between gap-4">
+      <div className="fixed bottom-0 left-0 right-0 glass border-t border-white/[0.06] z-50">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
           <div>
-            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.2em] mb-0.5">
-              {activeMode === 'maintenance' ? 'Total Service Estimate' : 'Total Build & Service Estimate'}
+            <p className="text-[10px] text-gray-500 font-medium tracking-wide mb-0.5">
+              {activeMode === 'maintenance' ? 'Service Estimate' : 'Build Estimate'}
             </p>
-            <p className="font-orbitron text-2xl font-black text-primary neon-glow">
+            <p className="font-orbitron text-xl font-bold text-primary">
               ₹{totalPrice.toLocaleString()}
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
             <button 
               onClick={saveAndAddToCart} 
               disabled={saving}
-              className={`group px-8 md:px-12 py-4 font-black uppercase tracking-widest text-xs md:text-sm rounded-2xl hover:scale-105 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg ${
+              className={`group px-8 md:px-10 py-3.5 font-bold uppercase tracking-wide text-sm rounded-xl hover:brightness-110 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 ${
                 activeMode === 'maintenance'
-                  ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-blue-500/25'
-                  : 'bg-primary text-background shadow-[0_0_25px_rgba(0,255,136,0.3)]'
+                  ? 'bg-blue-600 hover:bg-blue-500 text-white'
+                  : 'bg-primary text-background'
               }`}
             >
               {saving ? (
-                <Loader2 size={18} className="animate-spin" />
+                <Loader2 size={16} className="animate-spin" />
               ) : (
                 <>
                   <span>
                     {activeMode === 'maintenance' 
-                      ? 'Book Maintenance Service' 
+                      ? 'Book Service' 
                       : activeMode === 'customize' 
-                      ? 'Save Custom Build' 
-                      : 'Secure Build & Service'
+                      ? 'Save Build' 
+                      : 'Add to Cart'
                     }
                   </span>
-                  <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                  <ChevronRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
                 </>
               )}
             </button>
@@ -472,8 +469,8 @@ export default function ConfiguratorPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex flex-col items-center justify-center text-primary bg-background">
-        <Loader2 className="animate-spin mb-4" size={48} />
-        <p className="font-orbitron tracking-widest uppercase animate-pulse">Initializing Studio...</p>
+        <Loader2 className="animate-spin mb-4" size={40} />
+        <p className="font-orbitron text-sm tracking-wider uppercase opacity-70">Initializing Studio...</p>
       </div>
     }>
       <ConfiguratorContent />
