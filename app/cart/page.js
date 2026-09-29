@@ -195,7 +195,11 @@ export default function CartPage() {
                       Remove
                     </button>
                     <button
-                      onClick={() => router.push(`/configurator/${vehicle?._id}`)}
+                      onClick={() => {
+                        const hasCustomize = config.selectedOptions?.some(o => !['services', 'maintenance', 'inspection', 'diagnostics'].includes(o.category));
+                        const editMode = hasCustomize ? 'customize' : 'maintenance';
+                        router.push(`/configurator/${vehicle?._id}?mode=${editMode}`);
+                      }}
                       className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-white transition-colors"
                     >
                       <Edit3 size={14} />

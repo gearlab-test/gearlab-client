@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 
 import Link from 'next/link';
 import useStore from '@/store/useStore';
-import { User, LogOut, ShoppingCart, Menu, X, Package, ShieldCheck, Wrench, Zap } from 'lucide-react';
+import { User, LogOut, ShoppingCart, Menu, X, Package, ShieldCheck, Wrench, Zap, Car, Bike } from 'lucide-react';
 
 export default function Navbar() {
   const { user, logout, initialize, cartCount } = useStore();
@@ -31,7 +31,15 @@ export default function Navbar() {
           <Link href="/category?mode=customize" className="hover:text-primary transition-colors uppercase tracking-widest text-[10px] font-bold flex items-center gap-1.5 text-gray-300">
             <Zap size={12} className="text-primary" /> Customize
           </Link>
-          <Link href="/vehicles" className="hover:text-primary transition-colors uppercase tracking-widest text-[10px] font-bold text-gray-400">Fleet</Link>
+          <div className="flex items-center gap-2.5">
+            <Link href="/vehicles?type=car" className="hover:text-primary transition-colors uppercase tracking-widest text-[10px] font-bold text-gray-400 hover:text-white flex items-center gap-1">
+              <Car size={12} /> Cars
+            </Link>
+            <span className="text-gray-700">·</span>
+            <Link href="/vehicles?type=bike" className="hover:text-primary transition-colors uppercase tracking-widest text-[10px] font-bold text-gray-400 hover:text-white flex items-center gap-1">
+              <Bike size={12} /> Bikes
+            </Link>
+          </div>
           <Link href="/cart" className="hover:text-primary transition-colors flex items-center gap-2 uppercase tracking-widest text-[10px] font-bold relative">
             <div className="relative">
               <ShoppingCart size={16} />
@@ -106,13 +114,22 @@ export default function Navbar() {
             >
               <Zap size={18} className="text-primary" /> Vehicle Customizer
             </Link>
-            <Link 
-              href="/vehicles" 
-              onClick={closeMobileMenu}
-              className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 text-gray-300 hover:text-primary transition-all font-bold uppercase tracking-widest text-xs"
-            >
-              <Package size={18} /> All Fleet
-            </Link>
+            <div className="grid grid-cols-2 gap-3">
+              <Link 
+                href="/vehicles?type=car" 
+                onClick={closeMobileMenu}
+                className="flex items-center gap-2.5 p-4 rounded-2xl bg-white/5 text-gray-300 hover:text-primary transition-all font-bold uppercase tracking-widest text-xs justify-center border border-white/5"
+              >
+                <Car size={18} className="text-primary" /> Cars Fleet
+              </Link>
+              <Link 
+                href="/vehicles?type=bike" 
+                onClick={closeMobileMenu}
+                className="flex items-center gap-2.5 p-4 rounded-2xl bg-white/5 text-gray-300 hover:text-primary transition-all font-bold uppercase tracking-widest text-xs justify-center border border-white/5"
+              >
+                <Bike size={18} className="text-primary" /> Bikes Fleet
+              </Link>
+            </div>
             <Link 
               href="/cart" 
               onClick={closeMobileMenu}

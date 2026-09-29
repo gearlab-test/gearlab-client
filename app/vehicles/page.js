@@ -3,7 +3,7 @@ import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import API from '@/lib/api';
 import { getFallbackVehicles } from '@/lib/fallbackVehicles';
-import { ArrowLeft, Loader2, Plus, Wrench, Zap, Layers } from 'lucide-react';
+import { ArrowLeft, Loader2, Plus, Wrench, Zap, Layers, Car, Bike } from 'lucide-react';
 
 function VehiclesList() {
   const [vehicles, setVehicles] = useState([]);
@@ -43,6 +43,13 @@ function VehiclesList() {
     router.push(`/vehicles?${params.toString()}`);
   };
 
+  const setTypeFilter = (newType) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (!newType || newType === 'all') params.delete('type');
+    else params.set('type', newType);
+    router.push(`/vehicles?${params.toString()}`);
+  };
+
   if (loading) return (
     <div className="flex flex-col items-center justify-center py-20 text-primary">
       <Loader2 className="animate-spin mb-4" size={48} />
@@ -53,11 +60,11 @@ function VehiclesList() {
   return (
     <div className="animate-fade-in">
       {/* Header Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-12">
         <div className="flex items-center gap-4">
           <button 
             onClick={() => router.push(mode !== 'all' ? `/category?mode=${mode}` : '/category')}
-            className="p-3 rounded-full bg-surface border border-border text-gray-400 hover:text-primary hover:border-primary/50 transition-all"
+            className="p-3 rounded-full bg-surface border border-border text-gray-400 hover:text-primary hover:border-primary/50 transition-all flex-shrink-0"
             title="Back to Categories"
           >
             <ArrowLeft size={20} />
@@ -67,6 +74,11 @@ function VehiclesList() {
               <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
                 {isMaintenance ? 'Maintenance Track' : isCustomize ? 'Customization Track' : 'Full Catalog'}
               </span>
+              {type && (
+                <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-white/5 text-gray-300 border border-white/10">
+                  {type === 'car' ? '🚗 Cars Only' : '🏍️ Bikes Only'}
+                </span>
+              )}
             </div>
             <h2 className="font-orbitron text-2xl md:text-3xl font-bold uppercase tracking-tight text-white">
               {isMaintenance ? 'Periodic Service' : isCustomize ? 'Custom Studio' : 'Available'} <span className="text-primary">{categoryTitle}</span>
@@ -75,32 +87,63 @@ function VehiclesList() {
           </div>
         </div>
 
-        {/* Mode Switcher Filter */}
-        <div className="flex p-1 bg-surface border border-border rounded-xl self-start md:self-auto">
-          <button
-            onClick={() => setModeFilter('maintenance')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold font-orbitron uppercase tracking-wider flex items-center gap-1.5 transition-all ${
-              isMaintenance ? 'bg-primary text-background shadow-md' : 'text-gray-400 hover:text-white'
-            }`}
-          >
-            <Wrench size={13} /> Maintenance
-          </button>
-          <button
-            onClick={() => setModeFilter('customize')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold font-orbitron uppercase tracking-wider flex items-center gap-1.5 transition-all ${
-              isCustomize ? 'bg-primary text-background shadow-md' : 'text-gray-400 hover:text-white'
-            }`}
-          >
-            <Zap size={13} /> Customize
-          </button>
-          <button
-            onClick={() => setModeFilter('all')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold font-orbitron uppercase tracking-wider flex items-center gap-1.5 transition-all ${
-              mode === 'all' ? 'bg-primary text-background shadow-md' : 'text-gray-400 hover:text-white'
-            }`}
-          >
-            <Layers size={13} /> All
-          </button>
+        {/* Filter Controls: Vehicle Type & Service Mode */}
+        <div className="flex flex-wrap items-center gap-3">
+          {/* Vehicle Type Switcher */}
+          <div className="flex p-1 bg-surface border border-border rounded-xl">
+            <button
+              onClick={() => setTypeFilter('all')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold font-orbitron uppercase tracking-wider flex items-center gap-1.5 transition-all ${
+                !type || type === 'all' ? 'bg-primary text-background shadow-md' : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              <Layers size={13} /> All
+            </button>
+            <button
+              onClick={() => setTypeFilter('car')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold font-orbitron uppercase tracking-wider flex items-center gap-1.5 transition-all ${
+                type === 'car' ? 'bg-primary text-background shadow-md' : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              <Car size={13} /> Cars
+            </button>
+            <button
+              onClick={() => setTypeFilter('bike')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold font-orbitron uppercase tracking-wider flex items-center gap-1.5 transition-all ${
+                type === 'bike' ? 'bg-primary text-background shadow-md' : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              <Bike size={13} /> Bikes
+            </button>
+          </div>
+
+          {/* Mode Switcher Filter */}
+          <div className="flex p-1 bg-surface border border-border rounded-xl">
+            <button
+              onClick={() => setModeFilter('customize')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold font-orbitron uppercase tracking-wider flex items-center gap-1.5 transition-all ${
+                isCustomize ? 'bg-primary text-background shadow-md' : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              <Zap size={13} /> Customize
+            </button>
+            <button
+              onClick={() => setModeFilter('maintenance')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold font-orbitron uppercase tracking-wider flex items-center gap-1.5 transition-all ${
+                isMaintenance ? 'bg-primary text-background shadow-md' : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              <Wrench size={13} /> Maintenance
+            </button>
+            <button
+              onClick={() => setModeFilter('all')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold font-orbitron uppercase tracking-wider flex items-center gap-1.5 transition-all ${
+                mode === 'all' ? 'bg-primary text-background shadow-md' : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              <Layers size={13} /> All
+            </button>
+          </div>
         </div>
       </div>
 
@@ -131,6 +174,11 @@ function VehiclesList() {
                   </div>
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-60"></div>
+                <div className="absolute top-4 left-4">
+                  <span className="px-3 py-1 bg-black/70 backdrop-blur-md text-[10px] font-bold text-primary uppercase tracking-widest rounded-full border border-primary/20">
+                    {v.type === 'car' ? '🚗 Car' : '🏍️ Bike'}
+                  </span>
+                </div>
                 <div className="absolute bottom-4 left-6">
                   <span className={`px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-full ${
                     isMaintenance 

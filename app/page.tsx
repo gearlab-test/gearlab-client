@@ -14,7 +14,9 @@ import {
   Clock, 
   Wrench, 
   Layers,
-  CheckCircle2
+  CheckCircle2,
+  Car,
+  Bike
 } from 'lucide-react';
 import ScrollReveal from './components/ScrollReveal';
 import API from '@/lib/api';
@@ -152,7 +154,7 @@ function VehicleShowcaseCard({ vehicle }: { vehicle: any }) {
           <div className="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-60"></div>
           <div className="absolute top-4 left-4">
             <span className="px-3 py-1 bg-black/70 backdrop-blur-md text-[10px] font-bold text-primary uppercase tracking-widest rounded-full border border-primary/20">
-              {vehicle.type}
+              {vehicle.type === 'car' ? '🚗 Car' : '🏍️ Bike'}
             </span>
           </div>
         </div>
@@ -191,21 +193,41 @@ function VehicleShowcaseCard({ vehicle }: { vehicle: any }) {
    ═══════════════════════════════════════════════════════════════════ */
 
 export default function HomePage() {
-  const [vehicles, setVehicles] = useState<any[]>([]);
+  const [allVehicles, setAllVehicles] = useState<any[]>([]);
+  const [fleetType, setFleetType] = useState<'all' | 'car' | 'bike'>('all');
 
   useEffect(() => {
     API.get('/vehicles')
       .then(r => {
         if (Array.isArray(r.data) && r.data.length > 0) {
-          setVehicles(r.data.slice(0, 6));
+          setAllVehicles(r.data);
         } else {
-          setVehicles(getFallbackVehicles().slice(0, 6));
+          setAllVehicles(getFallbackVehicles());
         }
       })
       .catch(() => {
-        setVehicles(getFallbackVehicles().slice(0, 6));
+        setAllVehicles(getFallbackVehicles());
       });
   }, []);
+
+  const displayedVehicles = (() => {
+    if (fleetType === 'car') {
+      return allVehicles.filter(v => v.type === 'car').slice(0, 8);
+    }
+    if (fleetType === 'bike') {
+      return allVehicles.filter(v => v.type === 'bike').slice(0, 8);
+    }
+    // Balanced selection of cars and bikes for 'all'
+    const cars = allVehicles.filter(v => v.type === 'car').slice(0, 4);
+    const bikes = allVehicles.filter(v => v.type === 'bike').slice(0, 4);
+    const interleaved: any[] = [];
+    const max = Math.max(cars.length, bikes.length);
+    for (let i = 0; i < max; i++) {
+      if (cars[i]) interleaved.push(cars[i]);
+      if (bikes[i]) interleaved.push(bikes[i]);
+    }
+    return interleaved.length > 0 ? interleaved : allVehicles.slice(0, 8);
+  })();
 
   return (
     <div className="flex flex-col">
@@ -457,23 +479,57 @@ export default function HomePage() {
       </section>
 
       {/* ── Featured Vehicles Showcase ── */}
-      {vehicles.length > 0 && (
+      {displayedVehicles.length > 0 && (
         <section className="py-24 px-6">
           <div className="max-w-7xl mx-auto">
             <ScrollReveal>
-              <div className="flex items-end justify-between mb-12">
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
                 <div>
                   <h2 className="font-orbitron text-3xl md:text-4xl font-bold mb-2">Featured <span className="text-primary">Fleet</span></h2>
                   <p className="text-gray-500 text-sm">Select any model to book routine maintenance or start modifying.</p>
                 </div>
-                <Link href="/vehicles" className="hidden md:flex items-center gap-2 text-primary font-bold text-sm hover:gap-3 transition-all">
-                  View All Models <ArrowRight size={16} />
-                </Link>
+
+                <div className="flex flex-wrap items-center gap-4">
+                  {/* Fleet Type Switcher */}
+                  <div className="flex p-1 bg-surface border border-border rounded-xl">
+                    <button
+                      onClick={() => setFleetType('all')}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-bold font-orbitron uppercase tracking-wider flex items-center gap-1.5 transition-all ${
+                        fleetType === 'all' ? 'bg-primary text-background shadow-md' : 'text-gray-400 hover:text-white'
+                      }`}
+                    >
+                      <Layers size={13} /> All
+                    </button>
+                    <button
+                      onClick={() => setFleetType('car')}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-bold font-orbitron uppercase tracking-wider flex items-center gap-1.5 transition-all ${
+                        fleetType === 'car' ? 'bg-primary text-background shadow-md' : 'text-gray-400 hover:text-white'
+                      }`}
+                    >
+                      <Car size={13} /> Cars
+                    </button>
+                    <button
+                      onClick={() => setFleetType('bike')}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-bold font-orbitron uppercase tracking-wider flex items-center gap-1.5 transition-all ${
+                        fleetType === 'bike' ? 'bg-primary text-background shadow-md' : 'text-gray-400 hover:text-white'
+                      }`}
+                    >
+                      <Bike size={13} /> Bikes
+                    </button>
+                  </div>
+
+                  <Link 
+                    href={fleetType === 'all' ? '/vehicles' : `/vehicles?type=${fleetType}`} 
+                    className="hidden md:flex items-center gap-2 text-primary font-bold text-sm hover:gap-3 transition-all"
+                  >
+                    View All {fleetType === 'car' ? 'Cars' : fleetType === 'bike' ? 'Bikes' : 'Models'} <ArrowRight size={16} />
+                  </Link>
+                </div>
               </div>
             </ScrollReveal>
 
             <div className="flex gap-6 overflow-x-auto pb-6 scrollbar-hide -mx-6 px-6 snap-x snap-mandatory">
-              {vehicles.map((v) => (
+              {displayedVehicles.map((v) => (
                 <ScrollReveal key={v._id} variant="fade-up">
                   <div className="snap-start">
                     <VehicleShowcaseCard vehicle={v} />
@@ -482,8 +538,11 @@ export default function HomePage() {
               ))}
             </div>
 
-            <Link href="/vehicles" className="mt-8 md:hidden flex items-center justify-center gap-2 text-primary font-bold text-sm">
-              View All Vehicles <ArrowRight size={16} />
+            <Link 
+              href={fleetType === 'all' ? '/vehicles' : `/vehicles?type=${fleetType}`} 
+              className="mt-8 md:hidden flex items-center justify-center gap-2 text-primary font-bold text-sm"
+            >
+              View All {fleetType === 'car' ? 'Cars' : fleetType === 'bike' ? 'Bikes' : 'Vehicles'} <ArrowRight size={16} />
             </Link>
           </div>
         </section>

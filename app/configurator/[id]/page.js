@@ -143,11 +143,19 @@ function ConfiguratorContent() {
       <div className="glass sticky top-20 z-40 border-b border-white/5 py-4 px-6 mb-8">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <button 
-            onClick={() => router.push(activeMode !== 'all' ? `/vehicles?mode=${activeMode}` : '/vehicles')} 
+            onClick={() => {
+              const params = new URLSearchParams();
+              if (vehicle?.type) params.set('type', vehicle.type);
+              if (activeMode !== 'all') params.set('mode', activeMode);
+              const q = params.toString();
+              router.push(q ? `/vehicles?${q}` : '/vehicles');
+            }} 
             className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors group"
           >
             <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
-            <span className="text-sm font-medium">Return to Fleet</span>
+            <span className="text-sm font-medium">
+              Return to {vehicle?.type === 'car' ? 'Cars' : vehicle?.type === 'bike' ? 'Bikes' : 'Fleet'}
+            </span>
           </button>
           <div className="text-right">
             <h1 className="font-orbitron text-xl font-bold uppercase tracking-tighter text-white">{vehicle.name}</h1>
