@@ -105,36 +105,45 @@ export default function CartPage() {
   );
 
   if (!cart?.configurations?.length) return (
-    <main className="min-h-[80vh] flex flex-col items-center justify-center px-6 text-center bg-background">
-      <div className="w-20 h-20 bg-surface rounded-full flex items-center justify-center text-gray-700 mb-6 border border-border">
-        <ShoppingBag size={36} />
+    <main className="min-h-[85vh] flex flex-col items-center justify-center px-6 text-center bg-background relative overflow-hidden">
+      <div className="absolute top-1/4 -right-20 w-80 h-80 bg-primary/[0.04] rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -left-20 w-80 h-80 bg-secondary/[0.03] rounded-full blur-[140px] pointer-events-none" />
+
+      <div className="relative z-10 flex flex-col items-center">
+        <div className="w-20 h-20 bg-surface/80 rounded-2xl flex items-center justify-center text-primary/60 mb-6 border border-primary/20 shadow-[0_0_30px_rgba(0,255,136,0.06)]">
+          <ShoppingBag size={34} />
+        </div>
+        <h2 className="font-orbitron text-2xl md:text-3xl font-bold text-white mb-2">Your Cart is Empty</h2>
+        <p className="text-gray-500 max-w-sm mb-8 leading-relaxed text-sm">
+          You haven&apos;t configured any vehicles yet. Start a new custom build or select maintenance to get started.
+        </p>
+        <button
+          onClick={() => router.push('/category')}
+          className="magnetic-btn px-8 py-3.5 bg-primary text-background font-bold text-sm uppercase tracking-wider rounded-xl hover:brightness-110 active:scale-[0.98] transition-all duration-400 shadow-[0_0_24px_rgba(0,255,136,0.2)]"
+        >
+          Start Customizing
+        </button>
       </div>
-      <h2 className="font-orbitron text-2xl font-bold text-white mb-2">Your Cart is Empty</h2>
-      <p className="text-gray-500 max-w-sm mb-8 leading-relaxed text-sm">
-        You haven&apos;t configured any vehicles yet. Start a new build to see it here.
-      </p>
-      <button
-        onClick={() => router.push('/category')}
-        className="px-6 py-3.5 bg-primary text-background font-bold text-sm rounded-xl hover:brightness-110 active:scale-[0.98] transition-all"
-      >
-        Start Customizing
-      </button>
     </main>
   );
 
   return (
-    <main className="max-w-4xl mx-auto px-6 py-14 min-h-screen pb-36">
+    <main className="max-w-4xl mx-auto px-6 py-14 min-h-screen pb-36 relative">
+      {/* Ambient glow orbs */}
+      <div className="absolute top-20 right-0 w-96 h-96 bg-primary/[0.03] rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/2 -left-32 w-80 h-80 bg-secondary/[0.02] rounded-full blur-[140px] pointer-events-none" />
+
       {/* Header */}
-      <div className="flex items-center justify-between mb-10">
+      <div className="flex items-center justify-between mb-10 relative z-10 animate-fade-in">
         <div className="flex items-center gap-3.5">
           <button 
             onClick={() => router.back()}
-            className="p-2.5 rounded-xl bg-surface border border-border text-gray-500 hover:text-white transition-all"
+            className="p-2.5 rounded-xl bg-surface border border-border text-gray-500 hover:text-white transition-all duration-300 hover:scale-105"
           >
             <ArrowLeft size={18} />
           </button>
           <div>
-            <h1 className="font-orbitron text-2xl font-bold tracking-tight text-white">Your <span className="text-primary">Cart</span></h1>
+            <h1 className="font-orbitron text-2xl font-bold tracking-tight text-white">Your <span className="text-primary neon-glow">Cart</span></h1>
             <p className="text-gray-500 text-[11px] font-medium tracking-wide">{cart.configurations.length} build(s) ready</p>
           </div>
         </div>
@@ -268,21 +277,21 @@ export default function CartPage() {
           </h3>
           
           {workshops.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
               {workshops.map((ws) => (
                 <button
                   key={ws._id}
                   onClick={() => setSelectedWorkshop(ws._id)}
-                  className={`p-5 rounded-xl border text-left transition-all ${
+                  className={`p-5 rounded-xl border text-left transition-all duration-400 group ${
                     selectedWorkshop === ws._id 
-                      ? 'bg-primary/[0.04] border-primary/40' 
-                      : 'bg-white/[0.02] border-white/[0.04] hover:border-white/10'
+                      ? 'bg-primary/[0.06] border-primary/50 shadow-[0_0_20px_rgba(0,255,136,0.08)] scale-[1.01]' 
+                      : 'bg-white/[0.02] border-white/[0.05] hover:border-white/15 hover:bg-white/[0.04]'
                   }`}
                 >
-                  <p className={`font-semibold tracking-tight transition-colors ${selectedWorkshop === ws._id ? 'text-primary' : 'text-gray-300'}`}>
+                  <p className={`font-semibold tracking-tight transition-colors duration-300 ${selectedWorkshop === ws._id ? 'text-primary' : 'text-gray-300 group-hover:text-white'}`}>
                     {ws.name}
                   </p>
-                  <p className="text-[11px] text-gray-600 mt-0.5">{ws.email}</p>
+                  <p className="text-[11px] text-gray-500 mt-1">{ws.email}</p>
                 </button>
               ))}
             </div>
@@ -296,23 +305,24 @@ export default function CartPage() {
 
       {/* Sticky Bottom Summary */}
       <div className="fixed bottom-0 left-0 right-0 glass border-t border-white/[0.06] z-50">
-        <div className="max-w-4xl mx-auto px-6 py-5 flex items-center justify-between">
+        <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
           <div>
             <p className="text-[10px] text-gray-500 font-medium tracking-wide mb-0.5">Total Investment</p>
-            <p className="font-orbitron text-2xl font-bold text-primary">
+            <p className="font-orbitron text-2xl font-bold text-primary transition-all duration-300">
               ₹{grandTotal.toLocaleString()}
             </p>
           </div>
           <button
             onClick={handleOrder}
             disabled={ordering}
-            className="group px-8 py-3.5 bg-primary text-background font-bold uppercase tracking-wide text-sm rounded-xl hover:brightness-110 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center gap-2.5"
+            className="magnetic-btn group px-8 py-3.5 bg-primary text-background font-bold uppercase tracking-wide text-sm rounded-xl hover:brightness-110 active:scale-[0.98] transition-all duration-400 disabled:opacity-50 flex items-center gap-2.5 shadow-[0_0_24px_rgba(0,255,136,0.2)]"
           >
             {ordering ? (
               <Loader2 size={16} className="animate-spin" />
             ) : (
               <>
-                Confirm Order <ChevronRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
+                Confirm Order <ChevronRight size={16} className="group-hover:translate-x-0.5 transition-transform duration-300" />
               </>
             )}
           </button>

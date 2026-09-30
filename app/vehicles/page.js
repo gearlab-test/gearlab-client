@@ -4,6 +4,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import API from '@/lib/api';
 import { getFallbackVehicles } from '@/lib/fallbackVehicles';
 import { ArrowLeft, Loader2, Plus, Wrench, Zap, Layers, Car, Bike } from 'lucide-react';
+import ScrollReveal from '../components/ScrollReveal';
 
 function VehiclesList() {
   const [vehicles, setVehicles] = useState([]);
@@ -51,9 +52,12 @@ function VehiclesList() {
   };
 
   if (loading) return (
-    <div className="flex flex-col items-center justify-center py-24 text-primary">
-      <Loader2 className="animate-spin mb-4" size={40} />
-      <p className="font-orbitron text-sm tracking-wider uppercase opacity-70">Scanning Inventory...</p>
+    <div className="flex flex-col items-center justify-center py-32 text-primary">
+      <div className="relative">
+        <Loader2 className="animate-spin mb-4" size={40} />
+        <div className="absolute inset-0 bg-primary/10 rounded-full blur-xl animate-pulse-glow" />
+      </div>
+      <p className="font-orbitron text-sm tracking-wider uppercase opacity-70 mt-2">Scanning Inventory...</p>
     </div>
   );
 
@@ -99,7 +103,7 @@ function VehiclesList() {
               <button
                 key={key}
                 onClick={() => setTypeFilter(key)}
-                className={`px-3 py-1.5 rounded-md text-[11px] font-semibold tracking-wide flex items-center gap-1.5 transition-all ${
+                className={`px-3 py-1.5 rounded-md text-[11px] font-semibold tracking-wide flex items-center gap-1.5 transition-all duration-300 ${
                   active ? 'bg-primary text-background' : 'text-gray-500 hover:text-white'
                 }`}
               >
@@ -118,7 +122,7 @@ function VehiclesList() {
               <button
                 key={key}
                 onClick={() => setModeFilter(key)}
-                className={`px-3 py-1.5 rounded-md text-[11px] font-semibold tracking-wide flex items-center gap-1.5 transition-all ${
+                className={`px-3 py-1.5 rounded-md text-[11px] font-semibold tracking-wide flex items-center gap-1.5 transition-all duration-300 ${
                   active ? 'bg-primary text-background' : 'text-gray-500 hover:text-white'
                 }`}
               >
@@ -133,7 +137,7 @@ function VehiclesList() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {vehicles.map((v, idx) => (
           <div key={v._id}
-            className="group bg-surface border border-border rounded-2xl overflow-hidden transition-all hover:border-primary/20 hover:-translate-y-0.5 animate-fade-in flex flex-col justify-between card-glow"
+            className="group bg-surface border border-border rounded-2xl overflow-hidden transition-all duration-500 hover:border-primary/15 animate-fade-in flex flex-col justify-between card-glow"
             style={{ animationDelay: `${idx * 0.06}s` }}
           >
             <div>
@@ -148,7 +152,7 @@ function VehiclesList() {
                         ? 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&q=80&w=800'
                         : 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=800';
                     }}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                    className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110" 
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-gray-700">
@@ -199,7 +203,7 @@ function VehiclesList() {
                 {isMaintenance && (
                   <button
                     onClick={() => router.push(`/configurator/${v._id}?mode=maintenance`)}
-                    className="px-4 py-2 bg-primary/[0.08] hover:bg-primary hover:text-background text-primary text-[11px] font-semibold rounded-lg transition-all border border-primary/20 flex items-center gap-1.5"
+                    className="px-4 py-2 bg-primary/[0.08] hover:bg-primary hover:text-background text-primary text-[11px] font-semibold rounded-lg transition-all duration-400 border border-primary/20 flex items-center gap-1.5 magnetic-btn hover:shadow-[0_0_16px_rgba(0,255,136,0.15)]"
                   >
                     <Wrench size={13} />
                     Book Service
@@ -209,7 +213,7 @@ function VehiclesList() {
                 {isCustomize && (
                   <button
                     onClick={() => router.push(`/configurator/${v._id}?mode=customize`)}
-                    className="px-4 py-2 bg-primary text-background hover:brightness-110 text-[11px] font-bold uppercase tracking-wide rounded-lg transition-all flex items-center gap-1.5"
+                    className="px-4 py-2 bg-primary text-background hover:shadow-[0_0_20px_rgba(0,255,136,0.2)] text-[11px] font-bold uppercase tracking-wide rounded-lg transition-all duration-400 flex items-center gap-1.5 magnetic-btn"
                   >
                     <Zap size={13} />
                     Customize
@@ -220,7 +224,7 @@ function VehiclesList() {
                   <div className="flex gap-2">
                     <button
                       onClick={() => router.push(`/configurator/${v._id}?mode=maintenance`)}
-                      className="px-3 py-2 bg-white/[0.03] hover:bg-primary/10 hover:text-primary text-gray-400 text-[11px] font-semibold rounded-lg transition-all border border-white/[0.05] hover:border-primary/20 flex items-center gap-1"
+                      className="px-3 py-2 bg-white/[0.03] hover:bg-primary/10 hover:text-primary text-gray-400 text-[11px] font-semibold rounded-lg transition-all duration-400 border border-white/[0.05] hover:border-primary/20 flex items-center gap-1 magnetic-btn"
                       title="Maintenance"
                     >
                       <Wrench size={12} className="text-primary/60" />
@@ -228,7 +232,7 @@ function VehiclesList() {
                     </button>
                     <button
                       onClick={() => router.push(`/configurator/${v._id}?mode=customize`)}
-                      className="px-3 py-2 bg-primary text-background hover:brightness-110 text-[11px] font-bold uppercase tracking-wide rounded-lg transition-all flex items-center gap-1"
+                      className="px-3 py-2 bg-primary text-background hover:shadow-[0_0_16px_rgba(0,255,136,0.2)] text-[11px] font-bold uppercase tracking-wide rounded-lg transition-all duration-400 flex items-center gap-1 magnetic-btn"
                       title="Customize"
                     >
                       <Zap size={12} />

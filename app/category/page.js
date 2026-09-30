@@ -1,7 +1,7 @@
 'use client';
 import { Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Bike, Car, Wrench, Zap, Layers, ArrowLeft, Loader2 } from 'lucide-react';
+import { Bike, Car, Wrench, Zap, Layers, ArrowLeft, Loader2, ArrowRight } from 'lucide-react';
 
 function CategoryContent() {
   const router = useRouter();
@@ -12,18 +12,22 @@ function CategoryContent() {
   const isCustomize = mode === 'customize';
 
   return (
-    <main className="min-h-[85vh] flex flex-col items-center justify-center p-6 bg-background">
-      {/* Back button */}
-      <div className="w-full max-w-4xl mb-8 flex items-center justify-between">
+    <main className="min-h-[85vh] flex flex-col items-center justify-center p-6 bg-background relative overflow-hidden">
+      {/* Ambient background */}
+      <div className="absolute inset-0 gradient-mesh pointer-events-none opacity-30" />
+      <div className="absolute top-1/4 left-1/3 w-[400px] h-[400px] bg-primary/[0.02] rounded-full blur-[150px] animate-pulse-glow pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/3 w-[300px] h-[300px] bg-secondary/[0.02] rounded-full blur-[120px] animate-pulse-glow pointer-events-none" style={{ animationDelay: '2s' }} />
+
+      {/* Back button & Track Pills */}
+      <div className="w-full max-w-4xl mb-8 flex items-center justify-between relative z-10">
         <button 
           onClick={() => router.push('/')}
-          className="flex items-center gap-2 text-gray-500 hover:text-white transition-colors text-sm font-medium"
+          className="flex items-center gap-2 text-gray-500 hover:text-white transition-all duration-300 text-sm font-medium group"
         >
-          <ArrowLeft size={16} />
+          <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform duration-300" />
           <span>Home</span>
         </button>
 
-        {/* Track Pills */}
         <div className="flex p-0.5 bg-surface border border-border rounded-lg">
           {[
             { key: 'maintenance', label: 'Maintenance', icon: <Wrench size={12} /> },
@@ -33,8 +37,8 @@ function CategoryContent() {
             <button
               key={key}
               onClick={() => router.push(`/category?mode=${key}`)}
-              className={`px-3 py-1.5 rounded-md text-[11px] font-semibold tracking-wide flex items-center gap-1.5 transition-all ${
-                mode === key ? 'bg-primary text-background' : 'text-gray-500 hover:text-white'
+              className={`px-3.5 py-1.5 rounded-md text-[11px] font-semibold tracking-wide flex items-center gap-1.5 transition-all duration-300 ${
+                mode === key ? 'bg-primary text-background shadow-[0_0_8px_rgba(0,255,136,0.15)]' : 'text-gray-500 hover:text-white'
               }`}
             >
               {icon} {label}
@@ -43,15 +47,15 @@ function CategoryContent() {
         </div>
       </div>
 
-      <div className="text-center mb-10 animate-fade-in max-w-xl">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md bg-primary/[0.05] border border-primary/15 text-primary text-[11px] font-semibold uppercase tracking-wider mb-4">
+      <div className="text-center mb-10 animate-hero-reveal max-w-xl relative z-10">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/[0.04] border border-primary/12 text-primary text-[11px] font-semibold uppercase tracking-wider mb-5 animate-border-pulse">
           {isMaintenance && <><Wrench size={13} /> Maintenance & Service Track</>}
           {isCustomize && <><Zap size={13} /> Customization & Mods Track</>}
           {mode === 'all' && <><Layers size={13} /> All Automotive Services</>}
         </div>
 
         <h2 className="font-orbitron text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight">
-          Select Vehicle <span className="text-primary">Type</span>
+          Select Vehicle <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Type</span>
         </h2>
         
         <p className="text-gray-500 text-sm leading-relaxed">
@@ -62,9 +66,10 @@ function CategoryContent() {
             : 'Select a category to begin scheduling maintenance or designing custom modifications.'
           }
         </p>
+        <div className="h-0.5 w-14 bg-gradient-to-r from-transparent via-primary/40 to-transparent mx-auto mt-5 line-reveal" />
       </div>
 
-      <div className="flex flex-col md:flex-row gap-5 w-full max-w-4xl animate-fade-in" style={{ animationDelay: '0.1s' }}>
+      <div className="flex flex-col md:flex-row gap-5 w-full max-w-4xl relative z-10">
         {[
           { 
             type: 'bike', 
@@ -78,35 +83,39 @@ function CategoryContent() {
             title: 'Performance Cars', 
             subtitle: isMaintenance ? 'Synthetic oil service, brake check & AC deep cleaning' : 'Custom vinyl wraps, diamond cut alloys & spoilers'
           }
-        ].map(item => (
+        ].map((item, idx) => (
           <button 
             key={item.type} 
             onClick={() => router.push(`/vehicles?type=${item.type}&mode=${mode}`)}
-            className="flex-1 group relative p-8 md:p-10 bg-surface border border-border rounded-2xl overflow-hidden transition-all hover:border-primary/30 hover:bg-surface-hover hover:-translate-y-1 text-left flex flex-col justify-between card-glow"
+            className="flex-1 group relative p-8 md:p-10 bg-surface border border-border rounded-2xl overflow-hidden transition-all duration-600 hover:border-primary/20 text-left flex flex-col justify-between card-glow animate-fade-in"
+            style={{ animationDelay: `${idx * 0.12}s` }}
           >
-            <div className="absolute top-0 right-0 p-6 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity">
+            {/* Hover gradient */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            <div className="absolute top-0 right-0 p-6 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity duration-700">
               {item.icon}
             </div>
             
             <div className="relative z-10 flex flex-col items-start">
-              <div className="mb-6 p-5 rounded-xl bg-primary/[0.04] text-primary group-hover:bg-primary group-hover:text-background transition-all duration-300">
+              <div className="mb-6 p-5 rounded-xl bg-primary/[0.04] text-primary group-hover:bg-primary group-hover:text-background transition-all duration-500 group-hover:scale-110 group-hover:shadow-[0_0_24px_rgba(0,255,136,0.15)]">
                 {item.icon}
               </div>
-              <h3 className="font-orbitron text-xl font-bold mb-1.5 text-white group-hover:text-primary transition-colors capitalize">
+              <h3 className="font-orbitron text-xl font-bold mb-1.5 text-white group-hover:text-primary transition-colors duration-500 capitalize">
                 {item.type}s
               </h3>
               <p className="text-sm text-gray-400 font-medium mb-1">{item.title}</p>
               <p className="text-[13px] text-gray-500 leading-relaxed">{item.subtitle}</p>
             </div>
 
-            <div className="mt-6 pt-5 border-t border-border/50 flex items-center justify-between w-full">
+            <div className="relative z-10 mt-6 pt-5 border-t border-border/50 flex items-center justify-between w-full">
               <span className="text-[11px] font-orbitron font-semibold uppercase tracking-wider text-primary">
-                {isMaintenance ? 'View Maintenance Fleet' : isCustomize ? 'View Customizer Fleet' : 'Browse Inventory'}
+                {isMaintenance ? 'View Service Fleet' : isCustomize ? 'View Custom Fleet' : 'Browse Inventory'}
               </span>
-              <span className="text-primary text-base group-hover:translate-x-0.5 transition-transform">→</span>
+              <ArrowRight size={16} className="text-primary group-hover:translate-x-2 transition-transform duration-500" />
             </div>
 
-            <div className="absolute bottom-0 left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+            {/* Bottom accent line */}
+            <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-primary to-secondary scale-x-0 group-hover:scale-x-100 transition-transform duration-600 origin-left" />
           </button>
         ))}
       </div>

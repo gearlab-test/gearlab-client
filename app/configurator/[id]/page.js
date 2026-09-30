@@ -112,8 +112,11 @@ function ConfiguratorContent() {
 
   if (!vehicle) return (
     <div className="min-h-screen flex flex-col items-center justify-center text-primary bg-background">
-      <Loader2 className="animate-spin mb-4" size={40} />
-      <p className="font-orbitron text-sm tracking-wider uppercase opacity-70">Assembling Workshop...</p>
+      <div className="relative">
+        <Loader2 className="animate-spin mb-4" size={40} />
+        <div className="absolute inset-0 bg-primary/10 rounded-full blur-xl animate-pulse-glow" />
+      </div>
+      <p className="font-orbitron text-sm tracking-wider uppercase opacity-70 mt-2">Assembling Workshop...</p>
     </div>
   );
 
@@ -380,12 +383,12 @@ function ConfiguratorContent() {
                         <button 
                           key={i}
                           onClick={() => isMulti ? handleMultiSelect(category, opt) : handleSingleSelect(category, opt)}
-                          className={`group relative p-3.5 rounded-xl border transition-all text-left flex flex-col justify-between min-h-[85px] ${
+                          className={`group relative p-3.5 rounded-xl border transition-all duration-400 text-left flex flex-col justify-between min-h-[85px] ${
                             active 
                               ? isMaintenanceCat 
-                                ? 'bg-blue-500/[0.08] border-blue-500/50'
-                                : 'bg-primary/[0.08] border-primary/50' 
-                              : 'bg-surface border-border hover:border-white/10 hover:bg-surface-hover'
+                                ? 'bg-blue-500/[0.06] border-blue-500/40 shadow-[0_0_16px_rgba(59,130,246,0.06)]'
+                                : 'bg-primary/[0.06] border-primary/40 shadow-[0_0_16px_rgba(0,255,136,0.06)]' 
+                              : 'bg-surface border-border hover:border-white/10 hover:bg-surface-hover hover:scale-[1.01]'
                           }`}
                         >
                           <div className="flex justify-between items-start w-full gap-2">
@@ -422,12 +425,13 @@ function ConfiguratorContent() {
 
       {/* Fixed Sticky Action Bar */}
       <div className="fixed bottom-0 left-0 right-0 glass border-t border-white/[0.06] z-50">
+        <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
           <div>
             <p className="text-[10px] text-gray-500 font-medium tracking-wide mb-0.5">
               {activeMode === 'maintenance' ? 'Service Estimate' : 'Build Estimate'}
             </p>
-            <p className="font-orbitron text-xl font-bold text-primary">
+            <p className="font-orbitron text-xl font-bold text-primary transition-all duration-300">
               ₹{totalPrice.toLocaleString()}
             </p>
           </div>
@@ -436,10 +440,10 @@ function ConfiguratorContent() {
             <button 
               onClick={saveAndAddToCart} 
               disabled={saving}
-              className={`group px-8 md:px-10 py-3.5 font-bold uppercase tracking-wide text-sm rounded-xl hover:brightness-110 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 ${
+              className={`magnetic-btn group px-8 md:px-10 py-3.5 font-bold uppercase tracking-wide text-sm rounded-xl hover:brightness-110 active:scale-[0.98] transition-all duration-400 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 ${
                 activeMode === 'maintenance'
-                  ? 'bg-blue-600 hover:bg-blue-500 text-white'
-                  : 'bg-primary text-background'
+                  ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-[0_0_24px_rgba(37,99,235,0.25)]'
+                  : 'bg-primary text-background shadow-[0_0_24px_rgba(0,255,136,0.2)]'
               }`}
             >
               {saving ? (
@@ -454,7 +458,7 @@ function ConfiguratorContent() {
                       : 'Add to Cart'
                     }
                   </span>
-                  <ChevronRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
+                  <ChevronRight size={16} className="group-hover:translate-x-0.5 transition-transform duration-300" />
                 </>
               )}
             </button>

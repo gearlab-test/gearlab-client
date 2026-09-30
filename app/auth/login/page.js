@@ -32,14 +32,16 @@ export default function LoginPage() {
   return (
     <main className="min-h-[90vh] flex items-center justify-center px-6 py-16 relative overflow-hidden">
       {/* Background glow elements */}
-      <div className="absolute top-1/4 -left-20 w-72 h-72 bg-primary/[0.04] rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-1/4 -right-20 w-72 h-72 bg-secondary/[0.04] rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute inset-0 gradient-mesh pointer-events-none opacity-40" />
+      <div className="absolute top-1/4 -left-20 w-80 h-80 bg-primary/[0.04] rounded-full blur-[120px] pointer-events-none animate-pulse-glow" />
+      <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-secondary/[0.04] rounded-full blur-[120px] pointer-events-none animate-pulse-glow" style={{ animationDelay: '1.5s' }} />
 
-      <div className="w-full max-w-md animate-fade-in">
+      <div className="w-full max-w-md animate-hero-reveal relative z-10">
         {/* Header */}
         <div className="text-center mb-8">
-          <Link href="/" className="font-orbitron text-2xl font-bold text-primary tracking-tight inline-block mb-3 hover:opacity-80 transition-opacity">
-            GEARLAB
+          <Link href="/" className="font-orbitron text-2xl font-bold tracking-tight inline-flex items-center gap-1.5 mb-3 hover:opacity-80 transition-all duration-300 group">
+            <span className="text-primary group-hover:drop-shadow-[0_0_8px_rgba(0,255,136,0.3)] transition-all duration-500">GEAR</span>
+            <span className="text-white">LAB</span>
           </Link>
           <h1 className="font-orbitron text-xl font-bold text-white tracking-tight mb-1.5">Welcome Back</h1>
           <p className="text-sm text-gray-500">Sign in to access your garage and builds.</p>
@@ -91,7 +93,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="group w-full py-3.5 bg-primary text-background font-bold uppercase tracking-wide text-sm rounded-xl hover:brightness-110 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2.5"
+            className="group w-full py-3.5 bg-primary text-background font-bold uppercase tracking-wide text-sm rounded-xl transition-all duration-400 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2.5 magnetic-btn hover:shadow-[0_0_24px_rgba(0,255,136,0.2)]"
           >
             {loading ? (
               <Loader2 size={18} className="animate-spin" />
