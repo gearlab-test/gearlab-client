@@ -32,18 +32,34 @@ export default function Navbar() {
   const { user, logout, initialize, cartCount } = useStore();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const progressBarRef = useRef(null);
+  const scrolledRef = useRef(false);
 
   useEffect(() => {
     initialize();
   }, []);
 
-  // Track scroll for navbar elevation + page progress
+  // Track scroll for navbar elevation + page progress without frequent re-renders
   useEffect(() => {
+    let ticking = false;
     const onScroll = () => {
-      setScrolled(window.scrollY > 10);
-      const total = document.documentElement.scrollHeight - window.innerHeight;
-      setScrollProgress(total > 0 ? (window.scrollY / total) * 100 : 0);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const isOver = window.scrollY > 10;
+          if (scrolledRef.current !== isOver) {
+            scrolledRef.current = isOver;
+            setScrolled(isOver);
+          }
+
+          if (progressBarRef.current) {
+            const total = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = total > 0 ? (window.scrollY / total) * 100 : 0;
+            progressBarRef.current.style.width = `${progress}%`;
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -54,13 +70,13 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`sticky top-0 z-50 transition-all duration-500 ease-out ${
+      <nav className={`sticky top-0 z-50 transition-all duration-300 ease-out ${
         scrolled
           ? 'glass shadow-[0_2px_32px_rgba(0,0,0,0.5)]'
           : 'bg-transparent'
       }`}>
         {/* Scroll progress bar */}
-        <div className="absolute bottom-0 left-0 h-[1px] bg-primary/40 transition-all duration-150" style={{ width: `${scrollProgress}%` }} />
+        <div ref={progressBarRef} className="absolute bottom-0 left-0 h-[1px] bg-primary/40 pointer-events-none" style={{ width: '0%' }} />
 
         <div className="max-w-7xl mx-auto px-6 h-[72px] flex items-center justify-between">
           {/* Logo */}

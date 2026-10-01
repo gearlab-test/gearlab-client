@@ -11,32 +11,41 @@ import { getFallbackVehicles } from '@/lib/fallbackVehicles';
 
 /* ─── Parallax Hero Background ─── */
 function ParallaxHero() {
-  const [offset, setOffset] = useState(0);
+  const bgRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
+    let ticking = false;
     const onScroll = () => {
-      setOffset(window.scrollY * 0.35);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          if (bgRef.current) {
+            const offset = window.scrollY * 0.3;
+            bgRef.current.style.transform = `translate3d(0, ${offset}px, 0) scale(1.08)`;
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   return (
-    <div className="absolute inset-0 z-0 overflow-hidden">
+    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-110"
+        ref={bgRef}
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105"
         style={{ 
           backgroundImage: 'url("/images/hero_v2.png")',
-          transform: `translateY(${offset}px) scale(1.1)`,
-          willChange: 'transform',
+          transform: 'translate3d(0, 0, 0) scale(1.08)',
         }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/20 to-background" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_0%,_#060606_70%)] opacity-60" />
-      {/* Animated gradient orbs */}
-      <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-primary/[0.04] rounded-full blur-[200px] animate-pulse-glow" />
-      <div className="absolute bottom-1/4 right-1/5 w-[500px] h-[500px] bg-secondary/[0.03] rounded-full blur-[180px] animate-pulse-glow" style={{ animationDelay: '1.5s' }} />
-      <div className="absolute top-1/2 right-1/3 w-[300px] h-[300px] bg-accent/[0.02] rounded-full blur-[120px] animate-pulse-glow" style={{ animationDelay: '3s' }} />
+      {/* Ambient gradient orbs */}
+      <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-primary/[0.03] rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/5 w-[400px] h-[400px] bg-secondary/[0.02] rounded-full blur-[90px] pointer-events-none" />
     </div>
   );
 }
@@ -48,7 +57,7 @@ interface AnimatedCounterProps {
   duration?: number;
 }
 
-function AnimatedCounter({ target, suffix = '', duration = 2200 }: AnimatedCounterProps) {
+function AnimatedCounter({ target, suffix = '', duration = 1600 }: AnimatedCounterProps) {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
   const started = useRef(false);
@@ -64,15 +73,14 @@ function AnimatedCounter({ target, suffix = '', duration = 2200 }: AnimatedCount
           const tick = () => {
             const elapsed = Date.now() - start;
             const progress = Math.min(elapsed / duration, 1);
-            // Smooth expo-out ease
-            const eased = 1 - Math.pow(1 - progress, 4);
+            const eased = 1 - Math.pow(1 - progress, 3);
             setCount(Math.floor(eased * target));
             if (progress < 1) requestAnimationFrame(tick);
           };
           tick();
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -84,42 +92,37 @@ function AnimatedCounter({ target, suffix = '', duration = 2200 }: AnimatedCount
 /* ─── Feature Card with hover glow ─── */
 function FeatureCard({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
+  const glowRef = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!cardRef.current) return;
+    if (!cardRef.current || !glowRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
-    setMousePos({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    glowRef.current.style.transform = `translate3d(${x - 80}px, ${y - 80}px, 0)`;
   }, []);
 
   return (
     <div
       ref={cardRef}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className="relative p-8 rounded-2xl bg-surface border border-border hover:border-primary/15 transition-all duration-500 group card-glow overflow-hidden"
+      className="relative p-8 rounded-2xl bg-surface border border-border hover:border-primary/20 transition-all duration-300 group card-glow overflow-hidden"
     >
-      {/* Mouse-following glow */}
-      {isHovered && (
-        <div
-          className="absolute w-48 h-48 rounded-full pointer-events-none transition-opacity duration-500"
-          style={{
-            background: 'radial-gradient(circle, rgba(0,255,136,0.06) 0%, transparent 70%)',
-            left: mousePos.x - 96,
-            top: mousePos.y - 96,
-          }}
-        />
-      )}
+      {/* Hardware-accelerated mouse glow without React re-renders */}
+      <div
+        ref={glowRef}
+        className="absolute w-40 h-40 rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        style={{
+          background: 'radial-gradient(circle, rgba(0,255,136,0.08) 0%, transparent 70%)',
+          top: 0,
+          left: 0,
+        }}
+      />
       <div className="relative z-10">
-        <div className="mb-5 p-4 rounded-xl bg-primary/[0.05] inline-flex group-hover:bg-primary/[0.08] group-hover:scale-110 transition-all duration-500">
+        <div className="mb-5 p-4 rounded-xl bg-primary/[0.05] inline-flex group-hover:bg-primary/[0.08] group-hover:scale-105 transition-all duration-300">
           {icon}
         </div>
-        <h3 className="font-orbitron text-lg font-bold mb-2.5 text-white group-hover:text-primary transition-colors duration-500">{title}</h3>
+        <h3 className="font-orbitron text-lg font-bold mb-2.5 text-white group-hover:text-primary transition-colors duration-300">{title}</h3>
         <p className="text-gray-500 leading-relaxed text-sm">{description}</p>
       </div>
     </div>
@@ -185,8 +188,8 @@ function VehicleShowcaseCard({ vehicle }: { vehicle: any }) {
                   : 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=800';
                 setImgLoaded(true);
               }}
-              className={`w-full h-full object-cover transition-all duration-[1200ms] ease-out group-hover:scale-110 ${
-                imgLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
+              className={`w-full h-full object-cover transition-all duration-400 ease-out group-hover:scale-105 ${
+                imgLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-102'
               }`}
             />
           ) : (
