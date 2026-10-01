@@ -16,6 +16,15 @@ export default function OrderSuccessPage() {
   useEffect(() => {
     const fetchOrder = async () => {
       try {
+        try {
+          const res = await API.get(`/orders/${id}`);
+          if (res.data && res.data._id) {
+            setOrder(res.data);
+            return;
+          }
+        } catch (e) {
+          // fallback to fetching all orders
+        }
         const res = await API.get('/orders');
         const found = res.data.find(o => o._id === id);
         setOrder(found);
