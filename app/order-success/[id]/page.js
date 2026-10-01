@@ -54,8 +54,8 @@ export default function OrderSuccessPage() {
   return (
     <main className="min-h-screen py-20 px-6 bg-background relative overflow-hidden">
       {/* Ambient background glow elements */}
-      <div className="absolute top-20 right-10 w-96 h-96 bg-primary/[0.04] rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-20 left-10 w-96 h-96 bg-secondary/[0.03] rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-20 right-10 w-96 h-96 glow-orb-primary rounded-full pointer-events-none" />
+      <div className="absolute bottom-20 left-10 w-96 h-96 glow-orb-secondary rounded-full pointer-events-none" />
 
       <div className="max-w-3xl mx-auto space-y-10 relative z-10 animate-hero-reveal">
         {/* Success Header */}

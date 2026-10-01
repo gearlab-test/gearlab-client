@@ -144,8 +144,8 @@ export default function CartPage() {
 
   if (!cart?.configurations?.length) return (
     <main className="min-h-[85vh] flex flex-col items-center justify-center px-6 text-center bg-background relative overflow-hidden">
-      <div className="absolute top-1/4 -right-20 w-80 h-80 bg-primary/[0.04] rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-1/4 -left-20 w-80 h-80 bg-secondary/[0.03] rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/4 -right-20 w-80 h-80 glow-orb-primary rounded-full pointer-events-none" />
+      <div className="absolute bottom-1/4 -left-20 w-80 h-80 glow-orb-secondary rounded-full pointer-events-none" />
 
       <div className="relative z-10 flex flex-col items-center">
         <div className="w-20 h-20 bg-surface/80 rounded-2xl flex items-center justify-center text-primary/60 mb-6 border border-primary/20 shadow-[0_0_30px_rgba(0,255,136,0.06)]">
@@ -168,8 +168,8 @@ export default function CartPage() {
   return (
     <main className="max-w-4xl mx-auto px-6 py-14 min-h-screen pb-36 relative">
       {/* Ambient glow orbs */}
-      <div className="absolute top-20 right-0 w-96 h-96 bg-primary/[0.03] rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute top-1/2 -left-32 w-80 h-80 bg-secondary/[0.02] rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-20 right-0 w-96 h-96 glow-orb-primary rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 -left-32 w-80 h-80 glow-orb-secondary rounded-full pointer-events-none" />
 
       {/* Header */}
       <div className="flex items-center justify-between mb-10 relative z-10 animate-fade-in">

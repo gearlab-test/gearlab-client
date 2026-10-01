@@ -44,8 +44,8 @@ export default function ProfilePage() {
   return (
     <main className="min-h-screen bg-background py-14 px-6 relative overflow-hidden">
       {/* Ambient background glow elements */}
-      <div className="absolute top-20 right-10 w-96 h-96 bg-primary/[0.04] rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-20 left-10 w-96 h-96 bg-accent/[0.03] rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-20 right-10 w-96 h-96 glow-orb-primary rounded-full pointer-events-none" />
+      <div className="absolute bottom-20 left-10 w-96 h-96 glow-orb-accent rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 relative z-10 animate-fade-in">
         

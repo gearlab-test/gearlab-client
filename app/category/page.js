@@ -15,8 +15,8 @@ function CategoryContent() {
     <main className="min-h-[85vh] flex flex-col items-center justify-center p-6 bg-background relative overflow-hidden">
       {/* Ambient background */}
       <div className="absolute inset-0 gradient-mesh pointer-events-none opacity-30" />
-      <div className="absolute top-1/4 left-1/3 w-[400px] h-[400px] bg-primary/[0.02] rounded-full blur-[150px] animate-pulse-glow pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/3 w-[300px] h-[300px] bg-secondary/[0.02] rounded-full blur-[120px] animate-pulse-glow pointer-events-none" style={{ animationDelay: '2s' }} />
+      <div className="absolute top-1/4 left-1/3 w-[400px] h-[400px] glow-orb-primary rounded-full pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/3 w-[300px] h-[300px] glow-orb-secondary rounded-full pointer-events-none" />
 
       {/* Back button & Track Pills */}
       <div className="w-full max-w-4xl mb-8 flex items-center justify-between relative z-10">

@@ -41,8 +41,8 @@ export default function RegisterPage() {
     <main className="min-h-[90vh] flex items-center justify-center px-6 py-16 relative overflow-hidden">
       {/* Background glow elements */}
       <div className="absolute inset-0 gradient-mesh pointer-events-none opacity-40" />
-      <div className="absolute top-1/4 -right-20 w-80 h-80 bg-primary/[0.04] rounded-full blur-[120px] pointer-events-none animate-pulse-glow" />
-      <div className="absolute bottom-1/4 -left-20 w-80 h-80 bg-secondary/[0.04] rounded-full blur-[120px] pointer-events-none animate-pulse-glow" style={{ animationDelay: '1.5s' }} />
+      <div className="absolute top-1/4 -right-20 w-80 h-80 glow-orb-primary rounded-full pointer-events-none" />
+      <div className="absolute bottom-1/4 -left-20 w-80 h-80 glow-orb-secondary rounded-full pointer-events-none" />
 
       <div className="w-full max-w-md animate-hero-reveal relative z-10">
         {/* Header */}

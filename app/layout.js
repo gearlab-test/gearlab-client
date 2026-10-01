@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
         {/* ━━━ FOOTER ━━━ */}
         <footer className="relative overflow-hidden border-t border-white/[0.03] bg-[#050505]">
           {/* Ambient glow */}
-          <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[500px] h-40 bg-primary/[0.02] rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[500px] h-40 glow-orb-primary rounded-full pointer-events-none" />
 
           <div className="max-w-7xl mx-auto px-6 pt-16 pb-8 relative z-10">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-14">
