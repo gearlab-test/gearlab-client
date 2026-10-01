@@ -152,7 +152,7 @@ function VehiclesList() {
                         ? 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&q=80&w=800'
                         : 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=800';
                     }}
-                    className="w-full h-full object-cover transition-transform duration-400 ease-out group-hover:scale-105" 
+                    className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-106" 
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-gray-700">

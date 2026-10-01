@@ -1,11 +1,21 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 
+const VARIANTS = {
+  'fade-up':    { hidden: { opacity: 0, y: 22, x: 0, scale: 1 },    visible: { opacity: 1, y: 0, x: 0, scale: 1 } },
+  'fade-down':  { hidden: { opacity: 0, y: -22, x: 0, scale: 1 },   visible: { opacity: 1, y: 0, x: 0, scale: 1 } },
+  'fade-left':  { hidden: { opacity: 0, y: 0, x: 26, scale: 1 },    visible: { opacity: 1, y: 0, x: 0, scale: 1 } },
+  'fade-right': { hidden: { opacity: 0, y: 0, x: -26, scale: 1 },   visible: { opacity: 1, y: 0, x: 0, scale: 1 } },
+  'scale-in':   { hidden: { opacity: 0, y: 12, x: 0, scale: 0.94 }, visible: { opacity: 1, y: 0, x: 0, scale: 1 } },
+  'fade':       { hidden: { opacity: 0, y: 0, x: 0, scale: 1 },     visible: { opacity: 1, y: 0, x: 0, scale: 1 } },
+};
+
 export default function ScrollReveal({
   children,
   variant = 'fade-up',
   delay = 0,
-  duration = 280,
+  duration = 550,
+  threshold = 0.05,
   className = '',
   once = true,
 }) {
@@ -16,9 +26,9 @@ export default function ScrollReveal({
     const el = ref.current;
     if (!el) return;
 
-    // Check if element is already in viewport on mount
+    // Fast check if element is already in viewport on page load
     const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight + 100) {
+    if (rect.top < window.innerHeight - 30) {
       setIsVisible(true);
       return;
     }
@@ -32,23 +42,24 @@ export default function ScrollReveal({
           setIsVisible(false);
         }
       },
-      { threshold: 0.01, rootMargin: '100px 0px 0px 0px' }
+      { threshold, rootMargin: '0px 0px -40px 0px' }
     );
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [once]);
+  }, [threshold, once]);
+
+  const v = VARIANTS[variant] || VARIANTS['fade-up'];
+  const cur = isVisible ? v.visible : v.hidden;
 
   return (
     <div
       ref={ref}
       className={className}
       style={{
-        opacity: isVisible ? 1 : 0,
-        transform: isVisible ? 'translate3d(0, 0, 0)' : 'translate3d(0, 10px, 0)',
-        transition: isVisible
-          ? `opacity ${duration}ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, transform ${duration}ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`
-          : 'none',
+        opacity: cur.opacity,
+        transform: `translate3d(${cur.x}px, ${cur.y}px, 0) scale(${cur.scale})`,
+        transition: `opacity ${duration}ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms`,
       }}
     >
       {children}

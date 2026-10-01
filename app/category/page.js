@@ -87,20 +87,19 @@ function CategoryContent() {
           <button 
             key={item.type} 
             onClick={() => router.push(`/vehicles?type=${item.type}&mode=${mode}`)}
-            className="flex-1 group relative p-8 md:p-10 bg-surface border border-border rounded-2xl overflow-hidden transition-all duration-600 hover:border-primary/20 text-left flex flex-col justify-between card-glow animate-fade-in"
-            style={{ animationDelay: `${idx * 0.12}s` }}
+            className="flex-1 group relative p-8 md:p-10 bg-surface border border-border rounded-2xl overflow-hidden transition-all duration-300 hover:border-primary/30 text-left flex flex-col justify-between card-glow animate-fade-in"
+            style={{ animationDelay: `${idx * 0.08}s` }}
           >
-            {/* Hover gradient */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-            <div className="absolute top-0 right-0 p-6 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity duration-700">
+            {/* Ambient icon watermark */}
+            <div className="absolute top-0 right-0 p-6 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity duration-300">
               {item.icon}
             </div>
             
             <div className="relative z-10 flex flex-col items-start">
-              <div className="mb-6 p-5 rounded-xl bg-primary/[0.04] text-primary group-hover:bg-primary group-hover:text-background transition-all duration-500 group-hover:scale-110 group-hover:shadow-[0_0_24px_rgba(0,255,136,0.15)]">
+              <div className="mb-6 p-5 rounded-xl bg-primary/[0.05] text-primary group-hover:bg-primary group-hover:text-background transition-all duration-300 group-hover:scale-105">
                 {item.icon}
               </div>
-              <h3 className="font-orbitron text-xl font-bold mb-1.5 text-white group-hover:text-primary transition-colors duration-500 capitalize">
+              <h3 className="font-orbitron text-xl font-bold mb-1.5 text-white group-hover:text-primary transition-colors duration-300 capitalize">
                 {item.type}s
               </h3>
               <p className="text-sm text-gray-400 font-medium mb-1">{item.title}</p>
@@ -111,11 +110,11 @@ function CategoryContent() {
               <span className="text-[11px] font-orbitron font-semibold uppercase tracking-wider text-primary">
                 {isMaintenance ? 'View Service Fleet' : isCustomize ? 'View Custom Fleet' : 'Browse Inventory'}
               </span>
-              <ArrowRight size={16} className="text-primary group-hover:translate-x-2 transition-transform duration-500" />
+              <ArrowRight size={16} className="text-primary group-hover:translate-x-1.5 transition-transform duration-300" />
             </div>
 
             {/* Bottom accent line */}
-            <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-primary to-secondary scale-x-0 group-hover:scale-x-100 transition-transform duration-600 origin-left" />
+            <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-primary to-secondary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
           </button>
         ))}
       </div>
