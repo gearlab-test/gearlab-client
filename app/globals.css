@@ -35,7 +35,7 @@ html.dark,
 /* ─── Ultra-Attractive Vibrant Light Theme ─── */
 html.light,
 [data-theme="light"] {
-  --background: #f1f5f9;
+  --background: #f4f6fa;
   --foreground: #090e1a;
   --primary: #00aa55;
   --secondary: #0284c7;
@@ -57,11 +57,11 @@ body {
 }
 
 html.light body {
-  background-color: #f1f5f9;
+  background-color: #f4f6fa;
   background-image: 
-    radial-gradient(at 10% 15%, rgba(0, 185, 95, 0.08) 0px, transparent 45%),
+    radial-gradient(at 10% 12%, rgba(0, 185, 95, 0.08) 0px, transparent 45%),
     radial-gradient(at 90% 10%, rgba(2, 132, 199, 0.07) 0px, transparent 45%),
-    radial-gradient(at 50% 85%, rgba(124, 58, 237, 0.05) 0px, transparent 50%);
+    radial-gradient(at 50% 85%, rgba(124, 58, 237, 0.04) 0px, transparent 50%);
   background-attachment: fixed;
 }
 
@@ -71,7 +71,7 @@ html.light body {
   color: #fff;
 }
 html.light ::selection {
-  background: rgba(0, 170, 85, 0.25);
+  background: rgba(0, 170, 85, 0.22);
   color: #090e1a;
 }
 
@@ -123,7 +123,7 @@ html.light .glass {
   box-shadow: 0 4px 25px -4px rgba(15, 23, 42, 0.04);
 }
 
-/* ─── Zero-Blur Ambient Orbs ─── */
+/* ─── Ambient Orbs ─── */
 .glow-orb-primary {
   background: radial-gradient(circle, rgba(0, 255, 136, 0.08) 0%, transparent 70%);
 }
@@ -135,16 +135,16 @@ html.light .glass {
 }
 
 html.light .glow-orb-primary {
-  background: radial-gradient(circle, rgba(0, 170, 85, 0.14) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(0, 170, 85, 0.12) 0%, transparent 70%);
 }
 html.light .glow-orb-secondary {
-  background: radial-gradient(circle, rgba(2, 132, 199, 0.11) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(2, 132, 199, 0.1) 0%, transparent 70%);
 }
 html.light .glow-orb-accent {
-  background: radial-gradient(circle, rgba(124, 58, 237, 0.09) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.08) 0%, transparent 70%);
 }
 
-/* ─── Refined Glow Effects ─── */
+/* ─── Glow Effects ─── */
 .neon-glow {
   text-shadow: 0 0 14px rgba(0, 255, 136, 0.35);
 }
@@ -169,7 +169,7 @@ html.light .neon-border:hover {
   box-shadow: 0 0 20px rgba(0, 170, 85, 0.2);
 }
 
-/* ─── Silky Smooth Card Hover Lift ─── */
+/* ─── Card Glow & Elevation ─── */
 .card-glow {
   transition:
     transform 0.35s var(--ease-out-quint),
@@ -189,9 +189,9 @@ html.light .card-glow {
 html.light .card-glow:hover {
   transform: translateY(-5px);
   box-shadow: 
-    0 20px 35px -8px rgba(0, 170, 85, 0.15),
+    0 20px 35px -8px rgba(0, 170, 85, 0.16),
     0 8px 16px -4px rgba(15, 23, 42, 0.04),
-    0 0 0 1px rgba(0, 170, 85, 0.35);
+    0 0 0 1.5px rgba(0, 170, 85, 0.35);
 }
 
 /* ─── Magnetic Spring Button ─── */
@@ -409,7 +409,8 @@ html.light .group:hover .group-hover\:text-background {
 
 /* High-vibrancy Primary Buttons in Light Mode */
 html.light .bg-primary {
-  background-image: linear-gradient(135deg, #00d26a 0%, #00ab55 100%);
+  background-image: linear-gradient(135deg, #00d26a 0%, #00ab55 100%) !important;
+  color: #000000 !important;
   box-shadow: 0 4px 18px rgba(0, 170, 85, 0.28);
 }
 html.light .bg-primary:hover {
@@ -417,6 +418,7 @@ html.light .bg-primary:hover {
 }
 
 /* Badges & Soft Tints in Light Mode */
+html.light .bg-primary\/\[0\.04\],
 html.light .bg-primary\/\[0\.05\],
 html.light .bg-primary\/\[0\.06\],
 html.light .bg-primary\/\[0\.08\],
@@ -441,7 +443,7 @@ html.light .bg-black\/40,
 html.light .bg-black\/50,
 html.light .bg-black\/60,
 html.light .bg-black\/80 {
-  background-color: rgba(255, 255, 255, 0.9) !important;
+  background-color: rgba(255, 255, 255, 0.92) !important;
   border-color: rgba(226, 232, 240, 0.95) !important;
 }
 

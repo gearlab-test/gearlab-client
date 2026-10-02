@@ -45,7 +45,7 @@ export default function ThemeToggle({ className = '', compact = false }) {
 
   if (!mounted) {
     return (
-      <div className={`w-[70px] h-8 rounded-full bg-white/[0.04] border border-white/[0.08] animate-pulse ${className}`} />
+      <div className={`w-[72px] h-[34px] rounded-full bg-white/[0.04] border border-white/[0.08] animate-pulse ${className}`} />
     );
   }
 
@@ -55,52 +55,52 @@ export default function ThemeToggle({ className = '', compact = false }) {
     <button
       onClick={toggleTheme}
       type="button"
-      aria-label={`Switch to ${isLight ? 'Dark' : 'Light'} Mode`}
-      title={`Currently in ${isLight ? 'Light' : 'Dark'} Mode — Click to switch`}
-      className={`relative inline-flex items-center h-8 p-1 rounded-full transition-all duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-primary select-none cursor-pointer ${
+      role="switch"
+      aria-checked={isLight}
+      aria-label={`Switch theme (currently ${isLight ? 'Light' : 'Dark'} mode)`}
+      title={`Switch to ${isLight ? 'Dark' : 'Light'} Mode`}
+      className={`group relative inline-flex items-center w-[72px] h-[34px] p-[3px] rounded-full transition-all duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-primary select-none cursor-pointer border ${
         isLight
-          ? 'bg-slate-200/90 border border-slate-300 shadow-inner'
-          : 'bg-[#111111] border border-white/10 shadow-inner'
-      } ${compact ? 'w-[64px]' : 'w-[70px]'} ${className}`}
+          ? 'bg-slate-200/90 border-slate-300 shadow-[inset_0_2px_4px_rgba(0,0,0,0.06)]'
+          : 'bg-[#0d0d0d] border-white/15 shadow-[inset_0_2px_6px_rgba(0,0,0,0.7)]'
+      } ${className}`}
     >
-      {/* Active Sliding Capsule Highlight */}
-      <span
-        aria-hidden="true"
-        className={`absolute top-1 bottom-1 rounded-full transition-all duration-300 ease-spring ${
-          compact ? 'w-7' : 'w-7'
-        } ${
-          isLight
-            ? 'translate-x-[30px] bg-white text-amber-500 shadow-[0_2px_8px_rgba(245,158,11,0.3)] border border-amber-400/40'
-            : 'translate-x-0 bg-white/10 text-primary shadow-[0_0_12px_rgba(0,255,136,0.25)] border border-primary/30'
-        }`}
-      />
-
-      {/* Left Icon: MOON (Dark Mode) */}
-      <span
-        className={`relative z-10 flex-1 flex items-center justify-center transition-all duration-300 ${
-          !isLight
-            ? 'text-primary font-bold scale-105'
-            : 'text-slate-400 opacity-60 hover:opacity-90'
-        }`}
-      >
-        <Moon
-          size={14}
-          className={`transition-transform duration-300 ${!isLight ? 'rotate-0' : '-rotate-12'}`}
-        />
+      {/* ── LEFT SLOT: MOON (Dark Mode) ── */}
+      <span className="w-7 h-7 flex items-center justify-center pointer-events-none z-0">
+        {/* Only show background Moon when knob is on the RIGHT (Light mode) */}
+        {isLight && (
+          <Moon
+            size={14}
+            className="text-slate-400 opacity-60 transition-all duration-300 group-hover:opacity-90 -rotate-12"
+          />
+        )}
       </span>
 
-      {/* Right Icon: SUN (Light Mode) */}
+      {/* ── RIGHT SLOT: SUN (Light Mode) ── */}
+      <span className="w-7 h-7 flex items-center justify-center pointer-events-none z-0 ml-auto">
+        {/* Only show background Sun when knob is on the LEFT (Dark mode) */}
+        {!isLight && (
+          <Sun
+            size={14}
+            className="text-amber-400/60 opacity-60 transition-all duration-300 group-hover:opacity-90"
+          />
+        )}
+      </span>
+
+      {/* ── SLIDING KNOB (Left = Moon, Right = Sun) ── */}
       <span
-        className={`relative z-10 flex-1 flex items-center justify-center transition-all duration-300 ${
+        aria-hidden="true"
+        className={`absolute top-[3px] left-[3px] w-7 h-7 rounded-full flex items-center justify-center shadow-lg transition-transform duration-300 ease-spring pointer-events-none z-10 ${
           isLight
-            ? 'text-amber-500 font-bold scale-105'
-            : 'text-gray-500 opacity-50 hover:opacity-80'
+            ? 'translate-x-[38px] bg-gradient-to-tr from-amber-400 to-amber-200 text-amber-950 shadow-[0_2px_10px_rgba(245,158,11,0.4)] border border-amber-300'
+            : 'translate-x-0 bg-gradient-to-tr from-emerald-500 to-[#00ff88] text-black shadow-[0_0_14px_rgba(0,255,136,0.45)] border border-[#00ff88]/50'
         }`}
       >
-        <Sun
-          size={14}
-          className={`transition-transform duration-300 ${isLight ? 'rotate-0' : 'rotate-45'}`}
-        />
+        {isLight ? (
+          <Sun size={14} className="stroke-[2.5] text-amber-950 animate-fade-in" />
+        ) : (
+          <Moon size={14} className="stroke-[2.5] text-black animate-fade-in" />
+        )}
       </span>
     </button>
   );
