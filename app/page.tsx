@@ -9,31 +9,36 @@ import ScrollReveal from './components/ScrollReveal';
 import API from '@/lib/api';
 import { getFallbackVehicles } from '@/lib/fallbackVehicles';
 
-/* ─── Fast Hero Background ─── */
+/* ─── Fast Zero-Lag Hero Background ─── */
 function ParallaxHero() {
   return (
     <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-      {/* Dark mode background: moody cyberpunk garage with smooth 700ms crossfade */}
+      {/* ── Dark Mode Atmosphere (GPU Accelerated Single Layer) ── */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-700 ease-in-out dark:opacity-100 opacity-0"
-        style={{ backgroundImage: 'url("/images/hero_v2.png")' }}
-      />
-      {/* Light mode background: luminous luxury hypercar showroom with smooth 700ms crossfade */}
+        className="absolute inset-0 transition-opacity duration-300 ease-out will-change-[opacity] dark:opacity-100 opacity-0"
+        style={{ transform: 'translate3d(0,0,0)', backfaceVisibility: 'hidden' }}
+      >
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: 'url("/images/hero_v2.png")' }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/20 to-background" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_0%,_var(--background)_70%)] opacity-60" />
+        <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] glow-orb-primary rounded-full" />
+        <div className="absolute bottom-1/4 right-1/5 w-[400px] h-[400px] glow-orb-secondary rounded-full" />
+      </div>
+
+      {/* ── Light Mode Atmosphere (GPU Accelerated Single Layer) ── */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-700 ease-in-out dark:opacity-0 opacity-100"
-        style={{ backgroundImage: 'url("/images/hero_light.jpg")' }}
-      />
-
-      {/* Dark mode gradient overlays with smooth crossfade */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/20 to-background transition-opacity duration-700 ease-in-out dark:opacity-100 opacity-0" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_0%,_var(--background)_70%)] transition-opacity duration-700 ease-in-out dark:opacity-60 opacity-0" />
-
-      {/* Light mode gentle overlays: clean feather into navbar and bottom into page without obscuring vehicles */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-transparent to-[#f8fafc] transition-opacity duration-700 ease-in-out dark:opacity-0 opacity-100" />
-
-      {/* GPU Texture Orbs */}
-      <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] glow-orb-primary rounded-full pointer-events-none transition-opacity duration-700" />
-      <div className="absolute bottom-1/4 right-1/5 w-[400px] h-[400px] glow-orb-secondary rounded-full pointer-events-none transition-opacity duration-700" />
+        className="absolute inset-0 transition-opacity duration-300 ease-out will-change-[opacity] dark:opacity-0 opacity-100"
+        style={{ transform: 'translate3d(0,0,0)', backfaceVisibility: 'hidden' }}
+      >
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: 'url("/images/hero_light.jpg")' }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-transparent to-[#f8fafc]" />
+      </div>
     </div>
   );
 }
@@ -238,7 +243,7 @@ export default function HomePage() {
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <div className="animate-hero-reveal space-y-6">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-emerald-500/30 dark:border-primary/20 bg-white/80 dark:bg-primary/[0.04] text-emerald-800 dark:text-primary text-[11px] font-semibold uppercase tracking-widest backdrop-blur-md shadow-sm">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-emerald-500/30 dark:border-primary/20 bg-white/95 dark:bg-primary/[0.08] text-emerald-800 dark:text-primary text-[11px] font-semibold uppercase tracking-widest shadow-sm">
               <Sparkles size={13} />
               Automotive Engineering & Care
             </div>
@@ -250,7 +255,7 @@ export default function HomePage() {
               </span>
             </h1>
 
-            <p className="text-base md:text-lg text-slate-800 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed font-medium bg-white/60 dark:bg-transparent backdrop-blur-md px-6 py-2.5 rounded-2xl border border-white/80 dark:border-transparent shadow-sm dark:shadow-none">
+            <p className="text-base md:text-lg text-slate-800 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed font-medium bg-white/90 dark:bg-black/60 px-6 py-2.5 rounded-2xl border border-slate-200/80 dark:border-white/10 shadow-sm">
               Whether you need routine certified maintenance or extreme performance modifications, GearLab provides complete, transparent workshop booking.
             </p>
 
@@ -258,7 +263,7 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
               <Link 
                 href="/category?mode=maintenance" 
-                className="w-full sm:w-auto group relative px-7 py-4 bg-white/95 hover:bg-white dark:bg-surface border border-slate-300/90 hover:border-sky-500 dark:border-sky-500/20 dark:hover:border-sky-500/60 text-slate-900 dark:text-white rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-sky-500/15 flex items-center justify-center gap-3 magnetic-btn shadow-md backdrop-blur-md"
+                className="w-full sm:w-auto group relative px-7 py-4 bg-white hover:bg-slate-50 dark:bg-surface border border-slate-300/90 hover:border-sky-500 dark:border-sky-500/20 dark:hover:border-sky-500/60 text-slate-900 dark:text-white rounded-xl overflow-hidden transition-all duration-200 hover:shadow-xl hover:shadow-sky-500/15 flex items-center justify-center gap-3 magnetic-btn shadow-md"
               >
                 <div className="p-2.5 rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-500 group-hover:bg-sky-500 group-hover:text-white transition-colors duration-200">
                   <Wrench size={18} />
@@ -272,7 +277,7 @@ export default function HomePage() {
 
               <Link 
                 href="/category?mode=customize" 
-                className="w-full sm:w-auto group relative px-7 py-4 bg-gradient-to-r from-emerald-500 to-emerald-400 dark:from-primary dark:to-primary text-black font-extrabold rounded-xl overflow-hidden transition-all duration-300 hover:brightness-110 flex items-center justify-center gap-3 shadow-lg shadow-emerald-500/25 magnetic-btn border border-emerald-400/40"
+                className="w-full sm:w-auto group relative px-7 py-4 bg-gradient-to-r from-emerald-500 to-emerald-400 dark:from-primary dark:to-primary text-black font-extrabold rounded-xl overflow-hidden transition-all duration-200 hover:brightness-110 flex items-center justify-center gap-3 shadow-lg shadow-emerald-500/25 magnetic-btn border border-emerald-400/40"
               >
                 <div className="p-2.5 rounded-lg bg-black/15 text-black">
                   <Zap size={18} />

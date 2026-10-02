@@ -47,7 +47,7 @@ html.light,
   --border: #e2e8f0;
 }
 
-/* ─── Global Body & Theme Transitions ─── */
+/* ─── Global Body & Fast Zero-Lag Theme Transitions ─── */
 body {
   background-color: var(--background);
   color: var(--foreground);
@@ -56,11 +56,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
-  transition: background-color 0.7s cubic-bezier(0.25, 0.1, 0.25, 1), color 0.4s ease;
-}
-
-nav, footer, .bg-surface {
-  transition: background-color 0.7s cubic-bezier(0.25, 0.1, 0.25, 1), border-color 0.5s ease, box-shadow 0.5s ease;
+  transition: background-color 0.25s ease-out, color 0.15s ease-out;
 }
 
 /* Clean Supercar Atelier Light Atmosphere */
