@@ -83,30 +83,30 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="font-orbitron text-xl font-bold tracking-tight hover:opacity-80 transition-all duration-300 group flex items-center gap-2">
             <span className="text-primary group-hover:drop-shadow-[0_0_8px_rgba(0,255,136,0.3)] transition-all duration-500">GEAR</span>
-            <span className="text-white">LAB</span>
+            <span className="text-slate-900 dark:text-white">LAB</span>
           </Link>
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-0.5">
-            <NavLink href="/category?mode=maintenance" icon={<Wrench size={13} className="text-primary/60 group-hover:text-primary transition-colors" />}>
+            <NavLink href="/category?mode=maintenance" icon={<Wrench size={13} className="text-sky-500 dark:text-primary/60 group-hover:text-sky-600 dark:group-hover:text-primary transition-colors" />}>
               Maintenance
             </NavLink>
-            <NavLink href="/category?mode=customize" icon={<Zap size={13} className="text-primary/60 group-hover:text-primary transition-colors" />}>
+            <NavLink href="/category?mode=customize" icon={<Zap size={13} className="text-emerald-500 dark:text-primary/60 group-hover:text-emerald-600 dark:group-hover:text-primary transition-colors" />}>
               Customize
             </NavLink>
 
-            <div className="w-px h-4 bg-white/[0.06] mx-1" />
+            <div className="w-px h-4 bg-slate-200 dark:bg-white/[0.06] mx-1" />
 
             <NavLink href="/vehicles?type=car" icon={<Car size={13} />}>Cars</NavLink>
             <NavLink href="/vehicles?type=bike" icon={<Bike size={13} />}>Bikes</NavLink>
 
-            <div className="w-px h-4 bg-white/[0.06] mx-1" />
+            <div className="w-px h-4 bg-slate-200 dark:bg-white/[0.06] mx-1" />
 
-            <Link href="/cart" className="relative px-3 py-2 rounded-lg hover:bg-white/[0.03] transition-all duration-300 flex items-center gap-2 text-[11px] font-semibold tracking-wide uppercase text-gray-400 hover:text-white">
+            <Link href="/cart" className="relative px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/[0.03] transition-all duration-300 flex items-center gap-2 text-[11px] font-semibold tracking-wide uppercase text-slate-700 dark:text-gray-400 hover:text-slate-950 dark:hover:text-white">
               <div className="relative">
                 <ShoppingCart size={16} />
                 {cartCount > 0 && (
-                  <span className="absolute -top-2 -right-2.5 min-w-[18px] h-[18px] bg-primary text-background text-[9px] font-bold rounded-full flex items-center justify-center shadow-[0_0_8px_rgba(0,255,136,0.4)] animate-fade-in px-0.5">
+                  <span className="absolute -top-2 -right-2.5 min-w-[18px] h-[18px] bg-primary text-black text-[9px] font-bold rounded-full flex items-center justify-center shadow-[0_0_8px_rgba(0,255,136,0.4)] animate-fade-in px-0.5">
                     {cartCount}
                   </span>
                 )}
@@ -115,41 +115,41 @@ export default function Navbar() {
             </Link>
 
             {user?.role === 'workshop' && (
-              <Link href="/workshop" className="ml-1 px-4 py-1.5 rounded-lg bg-primary/[0.06] border border-primary/15 text-primary hover:bg-primary hover:text-background transition-all duration-300 text-[11px] font-bold tracking-wide uppercase magnetic-btn">
+              <Link href="/workshop" className="ml-1 px-4 py-1.5 rounded-lg bg-primary/[0.08] dark:bg-primary/[0.06] border border-primary/30 dark:border-primary/15 text-emerald-700 dark:text-primary hover:bg-primary hover:text-black dark:hover:text-background transition-all duration-300 text-[11px] font-bold tracking-wide uppercase magnetic-btn">
                 Workshop
               </Link>
             )}
 
             {user?.role === 'admin' && (
-              <Link href="/admin" className="ml-1 px-4 py-1.5 rounded-lg bg-red-500/[0.06] border border-red-500/15 text-red-400 hover:bg-red-500 hover:text-white transition-all duration-300 text-[11px] font-bold tracking-wide uppercase magnetic-btn">
+              <Link href="/admin" className="ml-1 px-4 py-1.5 rounded-lg bg-red-500/10 dark:bg-red-500/[0.06] border border-red-500/25 dark:border-red-500/15 text-red-600 dark:text-red-400 hover:bg-red-500 hover:text-white transition-all duration-300 text-[11px] font-bold tracking-wide uppercase magnetic-btn">
                 Admin
               </Link>
             )}
 
-            <div className="w-px h-4 bg-white/[0.06] mx-1" />
+            <div className="w-px h-4 bg-slate-200 dark:bg-white/[0.06] mx-1" />
 
             {user ? (
               <div className="flex items-center gap-1">
-                <Link href="/profile" className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-primary/[0.05] text-primary transition-all duration-300 group">
-                  <div className="w-7 h-7 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <Link href="/profile" className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-primary/[0.08] text-emerald-700 dark:text-primary transition-all duration-300 group">
+                  <div className="w-7 h-7 rounded-full bg-emerald-500/10 dark:bg-primary/10 border border-emerald-500/20 dark:border-primary/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                     <User size={13} />
                   </div>
-                  <span className="font-orbitron text-[11px] font-bold tracking-wide">{user.name}</span>
+                  <span className="font-orbitron text-[11px] font-bold tracking-wide text-slate-900 dark:text-primary">{user.name}</span>
                 </Link>
                 <button 
                   onClick={logout}
-                  className="p-2 rounded-lg hover:bg-red-500/10 text-gray-600 hover:text-red-400 transition-all duration-300"
+                  className="p-2 rounded-lg hover:bg-red-500/10 text-slate-500 dark:text-gray-600 hover:text-red-500 dark:hover:text-red-400 transition-all duration-300"
                   title="Logout"
                 >
                   <LogOut size={15} />
                 </button>
               </div>
             ) : (
-              <Link href="/auth/login" className="ml-1.5 px-5 py-2 rounded-lg bg-primary/[0.08] border border-primary/25 text-primary hover:bg-primary hover:text-background font-semibold text-[11px] tracking-wide uppercase transition-all duration-300 magnetic-btn">
+              <Link href="/auth/login" className="ml-1.5 px-5 py-2 rounded-lg bg-emerald-500/10 dark:bg-primary/[0.08] border border-emerald-500/30 dark:border-primary/25 text-emerald-700 dark:text-primary hover:bg-primary hover:text-black dark:hover:text-background font-bold text-[11px] tracking-wide uppercase transition-all duration-300 magnetic-btn shadow-sm">
                 Sign In
               </Link>
             )}
-            <div className="w-px h-4 bg-white/[0.06] mx-1" />
+            <div className="w-px h-4 bg-slate-200 dark:bg-white/[0.06] mx-1" />
 
             {/* Dark / Light Mode Switch */}
             <ThemeToggle className="ml-1" />

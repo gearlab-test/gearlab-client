@@ -56,16 +56,12 @@ body {
   overflow-x: hidden;
 }
 
-/* Multi-Hue Atmospheric Supercar Showroom Ambient Lighting */
+/* Clean Supercar Atelier Light Atmosphere */
 html.light body {
-  background-color: #f6f8fc;
-  background-image: 
-    radial-gradient(at 6% 8%, rgba(0, 192, 90, 0.13) 0px, transparent 40%),
-    radial-gradient(at 94% 10%, rgba(14, 165, 233, 0.14) 0px, transparent 42%),
-    radial-gradient(at 50% 45%, rgba(139, 92, 246, 0.07) 0px, transparent 50%),
-    radial-gradient(at 10% 82%, rgba(245, 158, 11, 0.09) 0px, transparent 40%),
-    radial-gradient(at 90% 85%, rgba(244, 63, 94, 0.08) 0px, transparent 42%);
+  background-color: #f8fafc;
+  background-image: linear-gradient(180deg, #ffffff 0%, #f8fafc 25%, #f1f5f9 100%);
   background-attachment: fixed;
+  color: #0f172a;
 }
 
 /* ─── Selection ─── */
@@ -251,9 +247,9 @@ html.light .shimmer {
 }
 html.light .gradient-mesh {
   background:
-    radial-gradient(ellipse at 20% 40%, rgba(0, 186, 89, 0.09) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(14, 165, 233, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 80%, rgba(139, 92, 246, 0.06) 0%, transparent 50%);
+    radial-gradient(ellipse at 50% 0%, rgba(14, 165, 233, 0.05) 0%, transparent 60%),
+    radial-gradient(ellipse at 85% 30%, rgba(0, 186, 89, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 15% 70%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
 }
 
 /* ─── Stagger Children ─── */
@@ -377,29 +373,59 @@ main {
   animation: fadeIn 0.35s var(--ease-out-quint) forwards;
 }
 
-/* ─── Deep Light Mode Styling & Colorful Accents ─── */
+/* ─── Deep Light Mode Styling & High-Contrast Typography ─── */
 html.light .text-white {
-  color: #090e1a !important;
+  color: #0f172a !important;
 }
 
 html.light .hover\:text-white:hover {
-  color: #090e1a !important;
+  color: #0f172a !important;
 }
 
 html.light .group:hover .group-hover\:text-white {
-  color: #090e1a !important;
+  color: #0f172a !important;
 }
 
 html.light .text-gray-600,
 html.light .text-gray-500,
 html.light .text-gray-400 {
-  color: #475569;
+  color: #475569 !important;
 }
 
 html.light .text-gray-300,
 html.light .text-gray-200,
 html.light .text-gray-100 {
-  color: #1e293b;
+  color: #1e293b !important;
+}
+
+/* Ensure text on badges, colored buttons, and dark overlays stays crisp white in light mode */
+html.light .bg-primary.text-white,
+html.light .bg-secondary.text-white,
+html.light .bg-sky-500.text-white,
+html.light .bg-purple-500.text-white,
+html.light .bg-emerald-500.text-white,
+html.light .bg-red-500.text-white,
+html.light .bg-amber-500.text-white,
+html.light [class*="bg-sky-500"] .text-white,
+html.light [class*="bg-purple-500"] .text-white,
+html.light [class*="bg-emerald-500"] .text-white,
+html.light [class*="bg-red-500"] .text-white,
+html.light [class*="bg-black/"] .text-white,
+html.light [class*="bg-black/"] .text-gray-300,
+html.light [class*="bg-black/75"] .text-white,
+html.light [class*="bg-black/70"] .text-white {
+  color: #ffffff !important;
+}
+
+/* Light mode specific text highlights */
+html.light .text-blue-300,
+html.light .text-blue-300\/80 {
+  color: #1d4ed8 !important;
+}
+
+html.light .text-emerald-300,
+html.light .text-emerald-300\/80 {
+  color: #047857 !important;
 }
 
 /* Multi-stop Iridescent Gradient Text */
@@ -427,20 +453,20 @@ html.light .bg-secondary.text-background {
 html.light .bg-primary {
   background-image: linear-gradient(135deg, #00d66c 0%, #00ab55 100%) !important;
   color: #000000 !important;
-  box-shadow: 0 4px 18px rgba(0, 186, 89, 0.35);
+  box-shadow: 0 4px 18px rgba(0, 186, 89, 0.3);
 }
 html.light .bg-primary:hover {
-  box-shadow: 0 8px 26px rgba(0, 186, 89, 0.5);
+  box-shadow: 0 8px 24px rgba(0, 186, 89, 0.45);
 }
 
 /* Electric Cyan Secondary Buttons */
 html.light .bg-secondary {
   background-image: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%) !important;
   color: #ffffff !important;
-  box-shadow: 0 4px 18px rgba(14, 165, 233, 0.35);
+  box-shadow: 0 4px 18px rgba(14, 165, 233, 0.3);
 }
 html.light .bg-secondary:hover {
-  box-shadow: 0 8px 26px rgba(14, 165, 233, 0.5);
+  box-shadow: 0 8px 24px rgba(14, 165, 233, 0.45);
 }
 
 /* Multi-Tone Colorful Badges & Soft Tints in Light Mode */
@@ -475,21 +501,11 @@ html.light .border-red-500\/20 {
 /* Background surface overrides for light mode */
 html.light .bg-surface {
   background-color: #ffffff !important;
-  border-color: rgba(226, 232, 240, 0.95) !important;
+  border-color: #e2e8f0 !important;
 }
 
 html.light .bg-surface-hover:hover {
   background-color: #f8fafc !important;
-}
-
-html.light .bg-black,
-html.light .bg-black\/20,
-html.light .bg-black\/40,
-html.light .bg-black\/50,
-html.light .bg-black\/60,
-html.light .bg-black\/80 {
-  background-color: rgba(255, 255, 255, 0.92) !important;
-  border-color: rgba(226, 232, 240, 0.95) !important;
 }
 
 html.light .bg-\[\#050505\],
@@ -506,7 +522,7 @@ html.light .bg-white\/\[0\.03\],
 html.light .bg-white\/\[0\.04\],
 html.light .bg-white\/5,
 html.light .bg-white\/10 {
-  background-color: rgba(241, 245, 249, 0.85);
+  background-color: #f1f5f9 !important;
 }
 
 html.light .border-white\/5,
@@ -518,13 +534,24 @@ html.light .border-white\/\[0\.04\],
 html.light .border-white\/\[0\.05\],
 html.light .border-white\/\[0\.06\],
 html.light .border-white\/\[0\.08\] {
-  border-color: rgba(226, 232, 240, 0.95);
+  border-color: #e2e8f0 !important;
 }
 
 html.light footer {
   background-color: #ffffff !important;
   border-top: 1px solid #e2e8f0 !important;
-  box-shadow: 0 -4px 25px rgba(14, 165, 233, 0.03);
+  box-shadow: 0 -4px 25px rgba(15, 23, 42, 0.03);
+}
+
+html.light footer a.rounded-lg {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+  color: #475569 !important;
+}
+html.light footer a.rounded-lg:hover {
+  background-color: rgba(0, 186, 89, 0.1) !important;
+  border-color: rgba(0, 186, 89, 0.3) !important;
+  color: #00ba59 !important;
 }
 
 html.light input, 
@@ -532,7 +559,7 @@ html.light select,
 html.light textarea {
   background-color: #ffffff !important;
   border-color: #cbd5e1 !important;
-  color: #090e1a !important;
+  color: #0f172a !important;
 }
 
 html.light input[type="date"]::-webkit-calendar-picker-indicator {

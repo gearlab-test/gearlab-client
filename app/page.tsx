@@ -13,12 +13,25 @@ import { getFallbackVehicles } from '@/lib/fallbackVehicles';
 function ParallaxHero() {
   return (
     <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+      {/* Dark mode background: moody cyberpunk garage */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        className="hidden dark:block absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: 'url("/images/hero_v2.png")' }}
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/20 to-background" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_0%,_var(--background)_70%)] opacity-60" />
+      {/* Light mode background: luminous luxury hypercar showroom */}
+      <div
+        className="block dark:hidden absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: 'url("/images/hero_light.jpg")' }}
+      />
+
+      {/* Dark mode gradient overlays */}
+      <div className="hidden dark:block absolute inset-0 bg-gradient-to-b from-background/80 via-background/20 to-background" />
+      <div className="hidden dark:block absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_0%,_var(--background)_70%)] opacity-60" />
+
+      {/* Light mode gentle overlays: soft top and bottom feathering */}
+      <div className="block dark:hidden absolute inset-0 bg-gradient-to-b from-white/80 via-transparent to-[#f8fafc]" />
+      <div className="block dark:hidden absolute inset-0 bg-gradient-to-r from-white/30 via-transparent to-white/30" />
+
       {/* GPU Texture Orbs */}
       <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] glow-orb-primary rounded-full pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/5 w-[400px] h-[400px] glow-orb-secondary rounded-full pointer-events-none" />
@@ -86,14 +99,14 @@ function StepCard({ number, title, description, icon, color = 'emerald' }: { num
 
   return (
     <div className="relative text-center group">
-      <div className={`mx-auto mb-5 w-16 h-16 rounded-2xl bg-surface border border-border flex items-center justify-center transition-all duration-300 card-glow ${c.border} ${c.icon}`}>
+      <div className={`mx-auto mb-5 w-16 h-16 rounded-2xl bg-surface border border-border flex items-center justify-center transition-all duration-300 card-glow shadow-sm ${c.border} ${c.icon}`}>
         {icon}
       </div>
       <div className={`absolute -top-2 -right-0.5 w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold font-orbitron shadow-lg ${c.badge}`}>
         {number}
       </div>
-      <h4 className="font-orbitron text-xs font-bold uppercase tracking-tight mb-1.5 text-white group-hover:text-primary transition-colors duration-200">{title}</h4>
-      <p className="text-gray-500 text-[13px] leading-relaxed">{description}</p>
+      <h4 className="font-orbitron text-xs font-bold uppercase tracking-tight mb-1.5 text-slate-900 dark:text-white group-hover:text-primary transition-colors duration-200">{title}</h4>
+      <p className="text-slate-500 dark:text-gray-500 text-[13px] leading-relaxed">{description}</p>
     </div>
   );
 }
@@ -101,20 +114,20 @@ function StepCard({ number, title, description, icon, color = 'emerald' }: { num
 /* ─── Testimonial Card ─── */
 function TestimonialCard({ name, role, text, rating }: { name: string; role: string; text: string; rating: number }) {
   return (
-    <div className="p-7 rounded-2xl bg-surface border border-border hover:border-white/[0.08] transition-colors duration-200 card-glow group">
+    <div className="p-7 rounded-2xl bg-surface border border-border hover:border-slate-300 dark:hover:border-white/[0.08] transition-colors duration-200 card-glow group shadow-sm">
       <div className="flex gap-0.5 mb-4">
         {Array.from({ length: 5 }).map((_, i) => (
-          <Star key={i} size={14} className={i < rating ? 'text-amber-400 fill-amber-400' : 'text-white/[0.06]'} />
+          <Star key={i} size={14} className={i < rating ? 'text-amber-400 fill-amber-400' : 'text-slate-200 dark:text-white/[0.06]'} />
         ))}
       </div>
-      <p className="text-gray-400 text-sm leading-relaxed mb-5 italic">&ldquo;{text}&rdquo;</p>
+      <p className="text-slate-600 dark:text-gray-400 text-sm leading-relaxed mb-5 italic">&ldquo;{text}&rdquo;</p>
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-orbitron text-xs font-bold">
+        <div className="w-10 h-10 rounded-full bg-emerald-500/10 dark:bg-primary/10 border border-emerald-500/20 dark:border-primary/20 flex items-center justify-center text-emerald-600 dark:text-primary font-orbitron text-xs font-bold">
           {name.charAt(0)}
         </div>
         <div>
-          <p className="font-semibold text-white text-sm">{name}</p>
-          <p className="text-[11px] text-gray-500 tracking-wide">{role}</p>
+          <p className="font-semibold text-slate-900 dark:text-white text-sm">{name}</p>
+          <p className="text-[11px] text-slate-500 dark:text-gray-500 tracking-wide">{role}</p>
         </div>
       </div>
     </div>
@@ -124,9 +137,9 @@ function TestimonialCard({ name, role, text, rating }: { name: string; role: str
 /* ─── Featured Vehicle Card ─── */
 function VehicleShowcaseCard({ vehicle }: { vehicle: any }) {
   return (
-    <div className="group flex-shrink-0 w-[300px] md:w-[340px] bg-surface border border-border rounded-2xl overflow-hidden transition-colors duration-200 hover:border-primary/20 card-glow flex flex-col justify-between">
+    <div className="group flex-shrink-0 w-[300px] md:w-[340px] bg-surface border border-border rounded-2xl overflow-hidden transition-all duration-300 hover:border-primary/40 card-glow flex flex-col justify-between shadow-sm">
       <div>
-        <div className="aspect-[16/10] overflow-hidden bg-black/40 relative">
+        <div className="aspect-[16/10] overflow-hidden bg-slate-900 relative">
           {vehicle.images?.[0] ? (
             <img 
               src={vehicle.images[0]} 
@@ -144,34 +157,34 @@ function VehicleShowcaseCard({ vehicle }: { vehicle: any }) {
               <Cog size={40} />
             </div>
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-80" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
           <div className="absolute top-3.5 left-3.5">
-            <span className="px-2.5 py-1 bg-black/70 text-[10px] font-semibold text-gray-300 uppercase tracking-wider rounded-md border border-white/[0.06]">
+            <span className="px-2.5 py-1 bg-black/75 backdrop-blur-sm text-[10px] font-semibold text-white uppercase tracking-wider rounded-md border border-white/20">
               {vehicle.type === 'car' ? 'Car' : 'Bike'}
             </span>
           </div>
         </div>
 
         <div className="p-5 pb-4">
-          <h4 className="font-orbitron text-base font-bold text-white group-hover:text-primary transition-colors duration-200 mb-1">{vehicle.name}</h4>
+          <h4 className="font-orbitron text-base font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors duration-200 mb-1">{vehicle.name}</h4>
           <div className="flex justify-between items-center">
-            <p className="text-[11px] text-gray-500 font-medium tracking-wide">Starting from</p>
-            <p className="font-orbitron text-sm font-bold text-primary">&nbsp;₹{vehicle.basePrice.toLocaleString()}</p>
+            <p className="text-[11px] text-slate-500 dark:text-gray-500 font-medium tracking-wide">Starting from</p>
+            <p className="font-orbitron text-sm font-bold text-emerald-600 dark:text-primary">&nbsp;₹{vehicle.basePrice.toLocaleString()}</p>
           </div>
         </div>
       </div>
 
-      <div className="px-5 pb-5 grid grid-cols-2 gap-2.5 border-t border-border/50 pt-4">
+      <div className="px-5 pb-5 grid grid-cols-2 gap-2.5 border-t border-slate-200 dark:border-border/50 pt-4">
         <Link 
           href={`/configurator/${vehicle._id}?mode=maintenance`}
-          className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg bg-white/[0.02] hover:bg-primary/10 hover:text-primary text-gray-400 text-[11px] font-semibold transition-colors duration-200 border border-white/[0.04] hover:border-primary/25 magnetic-btn"
+          className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg bg-slate-100 hover:bg-sky-50 dark:bg-white/[0.04] dark:hover:bg-primary/10 hover:text-sky-600 dark:hover:text-primary text-slate-700 dark:text-gray-400 text-[11px] font-semibold transition-colors duration-200 border border-slate-200 dark:border-white/[0.06] hover:border-sky-400 dark:hover:border-primary/25 magnetic-btn"
         >
-          <Wrench size={12} className="text-primary/60" />
+          <Wrench size={12} className="text-sky-500 dark:text-primary/60" />
           Service
         </Link>
         <Link 
           href={`/configurator/${vehicle._id}?mode=customize`}
-          className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg bg-primary text-background hover:brightness-110 text-[11px] font-bold uppercase tracking-wide transition-colors duration-200 magnetic-btn"
+          className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg bg-emerald-500 hover:bg-emerald-600 dark:bg-primary text-white dark:text-background text-[11px] font-bold uppercase tracking-wide transition-colors duration-200 magnetic-btn shadow-sm"
         >
           <Zap size={12} />
           Modify
@@ -221,52 +234,52 @@ export default function HomePage() {
     <div className="flex flex-col">
 
       {/* ━━━ HERO ━━━ */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-10 md:py-16">
         <ParallaxHero />
 
-        <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
-          <div className="animate-hero-reveal space-y-6">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/[0.04] text-primary text-[11px] font-semibold uppercase tracking-widest">
+        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+          <div className="animate-hero-reveal rounded-3xl p-6 sm:p-10 md:p-12 dark:bg-transparent bg-white/80 dark:backdrop-blur-none backdrop-blur-xl dark:border-0 border border-slate-200/80 dark:shadow-none shadow-2xl shadow-slate-900/5 space-y-6">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-emerald-500/30 dark:border-primary/20 bg-emerald-500/10 dark:bg-primary/[0.04] text-emerald-800 dark:text-primary text-[11px] font-semibold uppercase tracking-widest shadow-sm">
               <Sparkles size={13} />
               Automotive Engineering & Care
             </div>
 
-            <h1 className="font-orbitron text-5xl md:text-7xl lg:text-[5.5rem] font-black tracking-tighter text-white mb-4 uppercase leading-[0.88]">
+            <h1 className="font-orbitron text-4xl sm:text-6xl md:text-7xl lg:text-[5.2rem] font-black tracking-tighter text-slate-900 dark:text-white mb-4 uppercase leading-[0.9]">
               Choose Your <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-primary inline-block">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-sky-600 to-emerald-600 dark:from-primary dark:via-secondary dark:to-primary inline-block">
                 Experience
               </span>
             </h1>
 
-            <p className="text-base md:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-base md:text-lg text-slate-700 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed font-normal">
               Whether you need routine certified maintenance or extreme performance modifications, GearLab provides complete, transparent workshop booking.
             </p>
 
             {/* Dual Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-3">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
               <Link 
                 href="/category?mode=maintenance" 
-                className="w-full sm:w-auto group relative px-7 py-4 bg-surface border border-sky-500/20 hover:border-sky-500/60 text-white rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-sky-500/10 flex items-center justify-center gap-3 magnetic-btn"
+                className="w-full sm:w-auto group relative px-7 py-4 bg-white hover:bg-slate-50 dark:bg-surface border border-slate-300 hover:border-sky-500 dark:border-sky-500/20 dark:hover:border-sky-500/60 text-slate-900 dark:text-white rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-sky-500/15 flex items-center justify-center gap-3 magnetic-btn shadow-md"
               >
-                <div className="p-2 rounded-lg bg-sky-500/10 text-sky-500 group-hover:bg-sky-500 group-hover:text-white transition-colors duration-200">
+                <div className="p-2.5 rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-500 group-hover:bg-sky-500 group-hover:text-white transition-colors duration-200">
                   <Wrench size={18} />
                 </div>
                 <div className="text-left">
-                  <span className="block text-[10px] text-gray-500 uppercase tracking-wider font-semibold">Periodic Care</span>
-                  <span className="text-sm font-semibold text-white group-hover:text-sky-500 transition-colors duration-200">Regular Maintenance</span>
+                  <span className="block text-[10px] text-slate-500 dark:text-gray-500 uppercase tracking-wider font-semibold">Periodic Care</span>
+                  <span className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-500 transition-colors duration-200">Regular Maintenance</span>
                 </div>
-                <ChevronRight size={16} className="text-gray-500 group-hover:translate-x-1 group-hover:text-sky-500 transition-transform duration-200 ml-1" />
+                <ChevronRight size={16} className="text-slate-400 dark:text-gray-500 group-hover:translate-x-1 group-hover:text-sky-600 dark:group-hover:text-sky-500 transition-transform duration-200 ml-1" />
               </Link>
 
               <Link 
                 href="/category?mode=customize" 
-                className="w-full sm:w-auto group relative px-7 py-4 bg-primary text-black font-bold rounded-xl overflow-hidden transition-all duration-300 hover:brightness-110 flex items-center justify-center gap-3 shadow-lg shadow-emerald-500/25 magnetic-btn"
+                className="w-full sm:w-auto group relative px-7 py-4 bg-gradient-to-r from-emerald-500 to-emerald-400 dark:from-primary dark:to-primary text-black font-extrabold rounded-xl overflow-hidden transition-all duration-300 hover:brightness-110 flex items-center justify-center gap-3 shadow-lg shadow-emerald-500/25 magnetic-btn border border-emerald-400/40"
               >
-                <div className="p-2 rounded-lg bg-black/15 text-black">
+                <div className="p-2.5 rounded-lg bg-black/15 text-black">
                   <Zap size={18} />
                 </div>
                 <div className="text-left">
-                  <span className="block text-[10px] text-black/70 uppercase tracking-wider font-bold">Performance & Mods</span>
+                  <span className="block text-[10px] text-black/75 uppercase tracking-wider font-bold">Performance & Mods</span>
                   <span className="text-sm font-extrabold text-black">Vehicle Customization</span>
                 </div>
                 <ChevronRight size={16} className="text-black group-hover:translate-x-1 transition-transform duration-200 ml-1" />
@@ -276,9 +289,9 @@ export default function HomePage() {
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-40">
-          <span className="text-[9px] uppercase tracking-[0.3em] text-gray-500 font-medium">Scroll</span>
-          <ChevronDown size={14} className="text-primary animate-scroll-down" />
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-60">
+          <span className="text-[9px] uppercase tracking-[0.3em] text-slate-600 dark:text-gray-500 font-semibold">Scroll</span>
+          <ChevronDown size={14} className="text-emerald-600 dark:text-primary animate-scroll-down" />
         </div>
       </section>
 
@@ -567,20 +580,20 @@ export default function HomePage() {
       {/* ━━━ CTA BANNER ━━━ */}
       <section className="py-20 px-6">
         <ScrollReveal>
-          <div className="max-w-4xl mx-auto relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/[0.05] via-surface to-secondary/[0.03] border border-white/[0.05] p-10 md:p-14 text-center">
+          <div className="max-w-4xl mx-auto relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500/10 via-surface to-sky-500/10 dark:from-primary/[0.05] dark:via-surface dark:to-secondary/[0.03] border border-slate-200 dark:border-white/[0.05] p-10 md:p-14 text-center shadow-lg dark:shadow-none">
             <div className="relative z-10">
-              <h2 className="font-orbitron text-2xl md:text-4xl font-bold text-white tracking-tight mb-3">
-                Ready to Upgrade Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Vehicle</span>?
+              <h2 className="font-orbitron text-2xl md:text-4xl font-bold text-slate-900 dark:text-white tracking-tight mb-3">
+                Ready to Upgrade Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-sky-600 dark:from-primary dark:to-secondary">Vehicle</span>?
               </h2>
-              <p className="text-gray-400 text-base max-w-lg mx-auto mb-8 leading-relaxed">
+              <p className="text-slate-600 dark:text-gray-400 text-base max-w-lg mx-auto mb-8 leading-relaxed">
                 Book scheduled service or start engineering your dream build today.
               </p>
               
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-                <Link href="/category?mode=maintenance" className="px-7 py-3.5 bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] hover:border-primary/25 text-white font-semibold text-sm rounded-xl transition-colors duration-200 flex items-center gap-2 magnetic-btn">
-                  <Wrench size={15} className="text-primary/60" /> Book Maintenance
+                <Link href="/category?mode=maintenance" className="px-7 py-3.5 bg-white dark:bg-white/[0.04] hover:bg-slate-50 dark:hover:bg-white/[0.08] border border-slate-300 dark:border-white/[0.06] hover:border-sky-500 dark:hover:border-primary/25 text-slate-900 dark:text-white font-semibold text-sm rounded-xl transition-all duration-200 flex items-center gap-2 magnetic-btn shadow-sm">
+                  <Wrench size={15} className="text-sky-500 dark:text-primary/60" /> Book Maintenance
                 </Link>
-                <Link href="/category?mode=customize" className="px-7 py-3.5 bg-primary text-background font-bold text-sm rounded-xl transition-all duration-200 hover:brightness-110 flex items-center gap-2 magnetic-btn">
+                <Link href="/category?mode=customize" className="px-7 py-3.5 bg-gradient-to-r from-emerald-500 to-emerald-400 dark:from-primary dark:to-primary text-black font-bold text-sm rounded-xl transition-all duration-200 hover:brightness-110 flex items-center gap-2 magnetic-btn shadow-md shadow-emerald-500/20">
                   <Zap size={15} /> Start Customizing <ChevronRight size={15} />
                 </Link>
               </div>
