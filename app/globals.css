@@ -32,13 +32,13 @@ html.dark,
   --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
-/* ─── Vibrant Light Theme (Cybernetic Mint & Hyper Azure) ─── */
+/* ─── Ultra-Attractive Vibrant Light Theme ─── */
 html.light,
 [data-theme="light"] {
-  --background: #f4f6fb;
-  --foreground: #0f172a;
-  --primary: #00b359;
-  --secondary: #0090e3;
+  --background: #f1f5f9;
+  --foreground: #090e1a;
+  --primary: #00aa55;
+  --secondary: #0284c7;
   --accent: #7c3aed;
   --surface: #ffffff;
   --surface-hover: #f8fafc;
@@ -56,14 +56,23 @@ body {
   overflow-x: hidden;
 }
 
+html.light body {
+  background-color: #f1f5f9;
+  background-image: 
+    radial-gradient(at 10% 15%, rgba(0, 185, 95, 0.08) 0px, transparent 45%),
+    radial-gradient(at 90% 10%, rgba(2, 132, 199, 0.07) 0px, transparent 45%),
+    radial-gradient(at 50% 85%, rgba(124, 58, 237, 0.05) 0px, transparent 50%);
+  background-attachment: fixed;
+}
+
 /* ─── Selection ─── */
 ::selection {
   background: rgba(0, 255, 136, 0.15);
   color: #fff;
 }
 html.light ::selection {
-  background: rgba(0, 179, 89, 0.22);
-  color: #0f172a;
+  background: rgba(0, 170, 85, 0.25);
+  color: #090e1a;
 }
 
 /* ─── Custom Scrollbar ─── */
@@ -84,10 +93,10 @@ html.light ::selection {
 }
 
 html.light ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.16);
 }
 html.light ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 179, 89, 0.45);
+  background: rgba(0, 170, 85, 0.5);
 }
 
 .scrollbar-hide {
@@ -107,14 +116,14 @@ html.light ::-webkit-scrollbar-thumb:hover {
 }
 
 html.light .glass {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(226, 232, 240, 0.85);
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.9) !important;
+  box-shadow: 0 4px 25px -4px rgba(15, 23, 42, 0.04);
 }
 
-/* ─── Zero-Blur Ambient Orbs (100% GPU Gradient Textures) ─── */
+/* ─── Zero-Blur Ambient Orbs ─── */
 .glow-orb-primary {
   background: radial-gradient(circle, rgba(0, 255, 136, 0.08) 0%, transparent 70%);
 }
@@ -126,13 +135,13 @@ html.light .glass {
 }
 
 html.light .glow-orb-primary {
-  background: radial-gradient(circle, rgba(0, 179, 89, 0.12) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(0, 170, 85, 0.14) 0%, transparent 70%);
 }
 html.light .glow-orb-secondary {
-  background: radial-gradient(circle, rgba(0, 144, 227, 0.09) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(2, 132, 199, 0.11) 0%, transparent 70%);
 }
 html.light .glow-orb-accent {
-  background: radial-gradient(circle, rgba(124, 58, 237, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.09) 0%, transparent 70%);
 }
 
 /* ─── Refined Glow Effects ─── */
@@ -140,7 +149,7 @@ html.light .glow-orb-accent {
   text-shadow: 0 0 14px rgba(0, 255, 136, 0.35);
 }
 html.light .neon-glow {
-  text-shadow: 0 0 14px rgba(0, 179, 89, 0.3);
+  text-shadow: 0 0 14px rgba(0, 170, 85, 0.35);
 }
 
 .neon-border {
@@ -153,11 +162,11 @@ html.light .neon-glow {
 }
 
 html.light .neon-border {
-  border: 1px solid rgba(0, 179, 89, 0.25);
+  border: 1px solid rgba(0, 170, 85, 0.3);
 }
 html.light .neon-border:hover {
-  border-color: rgba(0, 179, 89, 0.6);
-  box-shadow: 0 0 20px rgba(0, 179, 89, 0.15);
+  border-color: rgba(0, 170, 85, 0.65);
+  box-shadow: 0 0 20px rgba(0, 170, 85, 0.2);
 }
 
 /* ─── Silky Smooth Card Hover Lift ─── */
@@ -175,13 +184,14 @@ html.light .neon-border:hover {
 }
 
 html.light .card-glow {
-  box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.05), 0 2px 6px -2px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.05), 0 2px 6px -2px rgba(15, 23, 42, 0.02);
 }
 html.light .card-glow:hover {
-  transform: translateY(-4px);
+  transform: translateY(-5px);
   box-shadow: 
-    0 20px 35px -10px rgba(0, 0, 0, 0.08),
-    0 0 0 1px rgba(0, 179, 89, 0.25);
+    0 20px 35px -8px rgba(0, 170, 85, 0.15),
+    0 8px 16px -4px rgba(15, 23, 42, 0.04),
+    0 0 0 1px rgba(0, 170, 85, 0.35);
 }
 
 /* ─── Magnetic Spring Button ─── */
@@ -238,8 +248,8 @@ html.light .shimmer {
 }
 html.light .gradient-mesh {
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(0, 179, 89, 0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(0, 144, 227, 0.05) 0%, transparent 50%);
+    radial-gradient(ellipse at 20% 50%, rgba(0, 170, 85, 0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(2, 132, 199, 0.06) 0%, transparent 50%);
 }
 
 /* ─── Stagger Children ─── */
@@ -255,7 +265,7 @@ html.light .gradient-mesh {
 .stagger-children > *:nth-child(5) { animation-delay: 0.15s; }
 .stagger-children > *:nth-child(6) { animation-delay: 0.18s; }
 
-/* ─── Smooth GPU-Accelerated Keyframes ─── */
+/* ─── Keyframes ─── */
 @keyframes fadeIn {
   from { opacity: 0; transform: translate3d(0, 10px, 0); }
   to   { opacity: 1; transform: translate3d(0, 0, 0); }
@@ -336,7 +346,7 @@ html.light .gradient-mesh {
   border-radius: 8px;
 }
 html.light :focus-visible {
-  outline: 2px solid rgba(0, 179, 89, 0.5);
+  outline: 2px solid rgba(0, 170, 85, 0.5);
 }
 
 button, a {
@@ -354,7 +364,7 @@ input:focus, select:focus, textarea:focus {
 html.light input:focus, 
 html.light select:focus, 
 html.light textarea:focus {
-  box-shadow: 0 0 0 2px rgba(0, 179, 89, 0.25);
+  box-shadow: 0 0 0 3px rgba(0, 170, 85, 0.22) !important;
 }
 
 /* Smooth Page Entry */
@@ -362,17 +372,17 @@ main {
   animation: fadeIn 0.35s var(--ease-out-quint) forwards;
 }
 
-/* ─── Comprehensive Light Mode Adaptations ─── */
+/* ─── Deep Light Mode Styling & Typography ─── */
 html.light .text-white {
-  color: #0f172a !important;
+  color: #090e1a !important;
 }
 
 html.light .hover\:text-white:hover {
-  color: #0f172a !important;
+  color: #090e1a !important;
 }
 
 html.light .group:hover .group-hover\:text-white {
-  color: #0f172a !important;
+  color: #090e1a !important;
 }
 
 html.light .text-gray-600,
@@ -397,14 +407,42 @@ html.light .group:hover .group-hover\:text-background {
   color: #000000 !important;
 }
 
+/* High-vibrancy Primary Buttons in Light Mode */
+html.light .bg-primary {
+  background-image: linear-gradient(135deg, #00d26a 0%, #00ab55 100%);
+  box-shadow: 0 4px 18px rgba(0, 170, 85, 0.28);
+}
+html.light .bg-primary:hover {
+  box-shadow: 0 8px 24px rgba(0, 170, 85, 0.42);
+}
+
+/* Badges & Soft Tints in Light Mode */
+html.light .bg-primary\/\[0\.05\],
+html.light .bg-primary\/\[0\.06\],
+html.light .bg-primary\/\[0\.08\],
+html.light .bg-primary\/10 {
+  background-color: rgba(0, 170, 85, 0.08) !important;
+  border-color: rgba(0, 170, 85, 0.25) !important;
+}
+
 /* Background surface overrides for light mode */
+html.light .bg-surface {
+  background-color: #ffffff !important;
+  border-color: rgba(226, 232, 240, 0.9) !important;
+}
+
+html.light .bg-surface-hover:hover {
+  background-color: #f8fafc !important;
+}
+
 html.light .bg-black,
 html.light .bg-black\/20,
 html.light .bg-black\/40,
 html.light .bg-black\/50,
 html.light .bg-black\/60,
 html.light .bg-black\/80 {
-  background-color: rgba(241, 245, 249, 0.85);
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(226, 232, 240, 0.95) !important;
 }
 
 html.light .bg-\[\#050505\],
@@ -413,7 +451,7 @@ html.light .bg-\[\#0a0a0a\],
 html.light .bg-\[\#0d0d0d\],
 html.light .bg-\[\#0f0f0f\],
 html.light .bg-\[\#121212\] {
-  background-color: #ffffff;
+  background-color: #ffffff !important;
 }
 
 html.light .bg-white\/\[0\.02\],
@@ -421,7 +459,7 @@ html.light .bg-white\/\[0\.03\],
 html.light .bg-white\/\[0\.04\],
 html.light .bg-white\/5,
 html.light .bg-white\/10 {
-  background-color: rgba(241, 245, 249, 0.7);
+  background-color: rgba(241, 245, 249, 0.85);
 }
 
 html.light .border-white\/5,
@@ -439,16 +477,28 @@ html.light .border-white\/\[0\.08\] {
 html.light footer {
   background-color: #ffffff !important;
   border-top: 1px solid #e2e8f0 !important;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.02);
 }
 
 html.light input, 
 html.light select, 
 html.light textarea {
-  color: #0f172a;
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #090e1a !important;
 }
 
 html.light input[type="date"]::-webkit-calendar-picker-indicator {
   filter: none;
+}
+
+/* Tables in light mode */
+html.light thead tr {
+  background-color: #f8fafc !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+html.light tbody tr:hover {
+  background-color: #f8fafc !important;
 }
 
 @media (prefers-reduced-motion: reduce) {

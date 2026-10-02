@@ -45,65 +45,62 @@ export default function ThemeToggle({ className = '', compact = false }) {
 
   if (!mounted) {
     return (
-      <div className={`w-14 h-8 rounded-full bg-white/[0.04] border border-white/[0.08] animate-pulse ${className}`} />
+      <div className={`w-[70px] h-8 rounded-full bg-white/[0.04] border border-white/[0.08] animate-pulse ${className}`} />
     );
   }
 
   const isLight = theme === 'light';
 
-  if (compact) {
-    return (
-      <button
-        onClick={toggleTheme}
-        aria-label="Toggle Dark/Light Mode"
-        className={`relative p-2.5 rounded-xl transition-all duration-300 flex items-center justify-center ${
-          isLight
-            ? 'bg-amber-500/10 text-amber-600 hover:bg-amber-500/20 border border-amber-500/20'
-            : 'bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20'
-        } ${className}`}
-        title={isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
-      >
-        {isLight ? (
-          <Sun size={18} className="animate-spin-once text-amber-500" />
-        ) : (
-          <Moon size={18} className="text-primary" />
-        )}
-      </button>
-    );
-  }
-
   return (
     <button
       onClick={toggleTheme}
+      type="button"
       aria-label={`Switch to ${isLight ? 'Dark' : 'Light'} Mode`}
-      title={`Switch to ${isLight ? 'Dark' : 'Light'} Mode`}
-      className={`group relative flex items-center justify-between w-16 h-8 p-1 rounded-full transition-all duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+      title={`Currently in ${isLight ? 'Light' : 'Dark'} Mode — Click to switch`}
+      className={`relative inline-flex items-center h-8 p-1 rounded-full transition-all duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-primary select-none cursor-pointer ${
         isLight
-          ? 'bg-gradient-to-r from-amber-100 to-sky-100 border border-amber-300/40 shadow-inner'
-          : 'bg-[#121212] border border-white/10 shadow-inner'
-      } ${className}`}
+          ? 'bg-slate-200/90 border border-slate-300 shadow-inner'
+          : 'bg-[#111111] border border-white/10 shadow-inner'
+      } ${compact ? 'w-[64px]' : 'w-[70px]'} ${className}`}
     >
-      {/* Background Icons */}
-      <span className="flex items-center justify-center w-6 h-6 text-amber-500 transition-opacity duration-300 z-0">
-        <Sun size={13} className={isLight ? 'opacity-100' : 'opacity-30'} />
-      </span>
-      <span className="flex items-center justify-center w-6 h-6 text-primary transition-opacity duration-300 z-0">
-        <Moon size={13} className={!isLight ? 'opacity-100' : 'opacity-30'} />
-      </span>
-
-      {/* Sliding Knob */}
+      {/* Active Sliding Capsule Highlight */}
       <span
-        className={`absolute top-1 left-1 w-6 h-6 rounded-full flex items-center justify-center shadow-md transform transition-transform duration-300 ease-spring ${
+        aria-hidden="true"
+        className={`absolute top-1 bottom-1 rounded-full transition-all duration-300 ease-spring ${
+          compact ? 'w-7' : 'w-7'
+        } ${
           isLight
-            ? 'translate-x-8 bg-gradient-to-tr from-amber-400 to-amber-200 text-slate-900 shadow-amber-500/30'
-            : 'translate-x-0 bg-gradient-to-tr from-emerald-500 to-primary text-black shadow-emerald-500/30'
+            ? 'translate-x-[30px] bg-white text-amber-500 shadow-[0_2px_8px_rgba(245,158,11,0.3)] border border-amber-400/40'
+            : 'translate-x-0 bg-white/10 text-primary shadow-[0_0_12px_rgba(0,255,136,0.25)] border border-primary/30'
+        }`}
+      />
+
+      {/* Left Icon: MOON (Dark Mode) */}
+      <span
+        className={`relative z-10 flex-1 flex items-center justify-center transition-all duration-300 ${
+          !isLight
+            ? 'text-primary font-bold scale-105'
+            : 'text-slate-400 opacity-60 hover:opacity-90'
         }`}
       >
-        {isLight ? (
-          <Sun size={12} className="text-amber-950 stroke-[2.5]" />
-        ) : (
-          <Moon size={12} className="text-black stroke-[2.5]" />
-        )}
+        <Moon
+          size={14}
+          className={`transition-transform duration-300 ${!isLight ? 'rotate-0' : '-rotate-12'}`}
+        />
+      </span>
+
+      {/* Right Icon: SUN (Light Mode) */}
+      <span
+        className={`relative z-10 flex-1 flex items-center justify-center transition-all duration-300 ${
+          isLight
+            ? 'text-amber-500 font-bold scale-105'
+            : 'text-gray-500 opacity-50 hover:opacity-80'
+        }`}
+      >
+        <Sun
+          size={14}
+          className={`transition-transform duration-300 ${isLight ? 'rotate-0' : 'rotate-45'}`}
+        />
       </span>
     </button>
   );
