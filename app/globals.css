@@ -32,14 +32,14 @@ html.dark,
   --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
-/* ─── Ultra-Attractive Vibrant Light Theme ─── */
+/* ─── Ultra-Attractive Vibrant Multi-Color Light Theme ─── */
 html.light,
 [data-theme="light"] {
-  --background: #f4f6fa;
+  --background: #f6f8fc;
   --foreground: #090e1a;
-  --primary: #00aa55;
-  --secondary: #0284c7;
-  --accent: #7c3aed;
+  --primary: #00ba59;
+  --secondary: #0ea5e9;
+  --accent: #8b5cf6;
   --surface: #ffffff;
   --surface-hover: #f8fafc;
   --border: #e2e8f0;
@@ -56,12 +56,15 @@ body {
   overflow-x: hidden;
 }
 
+/* Multi-Hue Atmospheric Supercar Showroom Ambient Lighting */
 html.light body {
-  background-color: #f4f6fa;
+  background-color: #f6f8fc;
   background-image: 
-    radial-gradient(at 10% 12%, rgba(0, 185, 95, 0.08) 0px, transparent 45%),
-    radial-gradient(at 90% 10%, rgba(2, 132, 199, 0.07) 0px, transparent 45%),
-    radial-gradient(at 50% 85%, rgba(124, 58, 237, 0.04) 0px, transparent 50%);
+    radial-gradient(at 6% 8%, rgba(0, 192, 90, 0.13) 0px, transparent 40%),
+    radial-gradient(at 94% 10%, rgba(14, 165, 233, 0.14) 0px, transparent 42%),
+    radial-gradient(at 50% 45%, rgba(139, 92, 246, 0.07) 0px, transparent 50%),
+    radial-gradient(at 10% 82%, rgba(245, 158, 11, 0.09) 0px, transparent 40%),
+    radial-gradient(at 90% 85%, rgba(244, 63, 94, 0.08) 0px, transparent 42%);
   background-attachment: fixed;
 }
 
@@ -71,7 +74,7 @@ html.light body {
   color: #fff;
 }
 html.light ::selection {
-  background: rgba(0, 170, 85, 0.22);
+  background: rgba(0, 186, 89, 0.25);
   color: #090e1a;
 }
 
@@ -93,10 +96,10 @@ html.light ::selection {
 }
 
 html.light ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.16);
+  background: rgba(14, 165, 233, 0.25);
 }
 html.light ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 170, 85, 0.5);
+  background: rgba(0, 186, 89, 0.6);
 }
 
 .scrollbar-hide {
@@ -116,14 +119,14 @@ html.light ::-webkit-scrollbar-thumb:hover {
 }
 
 html.light .glass {
-  background: rgba(255, 255, 255, 0.85) !important;
-  backdrop-filter: blur(16px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  background: rgba(255, 255, 255, 0.86) !important;
+  backdrop-filter: blur(20px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(200%) !important;
   border-bottom: 1px solid rgba(226, 232, 240, 0.9) !important;
-  box-shadow: 0 4px 25px -4px rgba(15, 23, 42, 0.04);
+  box-shadow: 0 4px 25px -4px rgba(14, 165, 233, 0.08);
 }
 
-/* ─── Ambient Orbs ─── */
+/* ─── Multi-Color Ambient Orbs ─── */
 .glow-orb-primary {
   background: radial-gradient(circle, rgba(0, 255, 136, 0.08) 0%, transparent 70%);
 }
@@ -135,13 +138,13 @@ html.light .glass {
 }
 
 html.light .glow-orb-primary {
-  background: radial-gradient(circle, rgba(0, 170, 85, 0.12) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(0, 186, 89, 0.16) 0%, transparent 70%);
 }
 html.light .glow-orb-secondary {
-  background: radial-gradient(circle, rgba(2, 132, 199, 0.1) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, transparent 70%);
 }
 html.light .glow-orb-accent {
-  background: radial-gradient(circle, rgba(124, 58, 237, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, transparent 70%);
 }
 
 /* ─── Glow Effects ─── */
@@ -149,7 +152,7 @@ html.light .glow-orb-accent {
   text-shadow: 0 0 14px rgba(0, 255, 136, 0.35);
 }
 html.light .neon-glow {
-  text-shadow: 0 0 14px rgba(0, 170, 85, 0.35);
+  text-shadow: 0 0 14px rgba(0, 186, 89, 0.4);
 }
 
 .neon-border {
@@ -162,14 +165,14 @@ html.light .neon-glow {
 }
 
 html.light .neon-border {
-  border: 1px solid rgba(0, 170, 85, 0.3);
+  border: 1px solid rgba(0, 186, 89, 0.35);
 }
 html.light .neon-border:hover {
-  border-color: rgba(0, 170, 85, 0.65);
-  box-shadow: 0 0 20px rgba(0, 170, 85, 0.2);
+  border-color: rgba(14, 165, 233, 0.7);
+  box-shadow: 0 0 20px rgba(14, 165, 233, 0.25);
 }
 
-/* ─── Card Glow & Elevation ─── */
+/* ─── Card Glow & Multi-Color Hover Elevation ─── */
 .card-glow {
   transition:
     transform 0.35s var(--ease-out-quint),
@@ -184,14 +187,14 @@ html.light .neon-border:hover {
 }
 
 html.light .card-glow {
-  box-shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.05), 0 2px 6px -2px rgba(15, 23, 42, 0.02);
+  box-shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.06), 0 2px 6px -2px rgba(15, 23, 42, 0.03);
 }
 html.light .card-glow:hover {
   transform: translateY(-5px);
   box-shadow: 
-    0 20px 35px -8px rgba(0, 170, 85, 0.16),
-    0 8px 16px -4px rgba(15, 23, 42, 0.04),
-    0 0 0 1.5px rgba(0, 170, 85, 0.35);
+    0 22px 42px -10px rgba(14, 165, 233, 0.16),
+    0 8px 18px -4px rgba(0, 186, 89, 0.14),
+    0 0 0 1.5px rgba(0, 186, 89, 0.4);
 }
 
 /* ─── Magnetic Spring Button ─── */
@@ -227,9 +230,9 @@ html.light .card-glow:hover {
 html.light .shimmer {
   background: linear-gradient(
     90deg,
-    rgba(0,0,0,0) 0%,
-    rgba(0,0,0,0.04) 50%,
-    rgba(0,0,0,0) 100%
+    rgba(14,165,233,0) 0%,
+    rgba(14,165,233,0.06) 50%,
+    rgba(14,165,233,0) 100%
   );
 }
 
@@ -248,8 +251,9 @@ html.light .shimmer {
 }
 html.light .gradient-mesh {
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(0, 170, 85, 0.07) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(2, 132, 199, 0.06) 0%, transparent 50%);
+    radial-gradient(ellipse at 20% 40%, rgba(0, 186, 89, 0.09) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(14, 165, 233, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(139, 92, 246, 0.06) 0%, transparent 50%);
 }
 
 /* ─── Stagger Children ─── */
@@ -346,7 +350,7 @@ html.light .gradient-mesh {
   border-radius: 8px;
 }
 html.light :focus-visible {
-  outline: 2px solid rgba(0, 170, 85, 0.5);
+  outline: 2px solid rgba(14, 165, 233, 0.5);
 }
 
 button, a {
@@ -364,7 +368,8 @@ input:focus, select:focus, textarea:focus {
 html.light input:focus, 
 html.light select:focus, 
 html.light textarea:focus {
-  box-shadow: 0 0 0 3px rgba(0, 170, 85, 0.22) !important;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.25) !important;
+  border-color: #0ea5e9 !important;
 }
 
 /* Smooth Page Entry */
@@ -372,7 +377,7 @@ main {
   animation: fadeIn 0.35s var(--ease-out-quint) forwards;
 }
 
-/* ─── Deep Light Mode Styling & Typography ─── */
+/* ─── Deep Light Mode Styling & Colorful Accents ─── */
 html.light .text-white {
   color: #090e1a !important;
 }
@@ -397,40 +402,80 @@ html.light .text-gray-100 {
   color: #1e293b;
 }
 
+/* Multi-stop Iridescent Gradient Text */
+html.light .bg-gradient-to-r.from-primary.via-secondary.to-primary {
+  background-image: linear-gradient(135deg, #00ba59 0%, #0ea5e9 45%, #8b5cf6 85%, #f59e0b 100%) !important;
+}
+html.light .bg-gradient-to-r.from-primary.to-secondary {
+  background-image: linear-gradient(135deg, #00ba59 0%, #0ea5e9 100%) !important;
+}
+
 /* Crisp button text contrast on primary/secondary buttons */
 html.light .bg-primary.text-background,
 html.light .bg-primary .text-background,
 html.light [class*="bg-primary"].text-background,
-html.light .bg-secondary.text-background,
 html.light .hover\:text-background:hover,
 html.light .group:hover .group-hover\:text-background {
   color: #000000 !important;
 }
 
-/* High-vibrancy Primary Buttons in Light Mode */
-html.light .bg-primary {
-  background-image: linear-gradient(135deg, #00d26a 0%, #00ab55 100%) !important;
-  color: #000000 !important;
-  box-shadow: 0 4px 18px rgba(0, 170, 85, 0.28);
-}
-html.light .bg-primary:hover {
-  box-shadow: 0 8px 24px rgba(0, 170, 85, 0.42);
+html.light .bg-secondary.text-background {
+  color: #ffffff !important;
 }
 
-/* Badges & Soft Tints in Light Mode */
+/* High-vibrancy Primary Buttons in Light Mode */
+html.light .bg-primary {
+  background-image: linear-gradient(135deg, #00d66c 0%, #00ab55 100%) !important;
+  color: #000000 !important;
+  box-shadow: 0 4px 18px rgba(0, 186, 89, 0.35);
+}
+html.light .bg-primary:hover {
+  box-shadow: 0 8px 26px rgba(0, 186, 89, 0.5);
+}
+
+/* Electric Cyan Secondary Buttons */
+html.light .bg-secondary {
+  background-image: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 18px rgba(14, 165, 233, 0.35);
+}
+html.light .bg-secondary:hover {
+  box-shadow: 0 8px 26px rgba(14, 165, 233, 0.5);
+}
+
+/* Multi-Tone Colorful Badges & Soft Tints in Light Mode */
 html.light .bg-primary\/\[0\.04\],
 html.light .bg-primary\/\[0\.05\],
 html.light .bg-primary\/\[0\.06\],
 html.light .bg-primary\/\[0\.08\],
 html.light .bg-primary\/10 {
-  background-color: rgba(0, 170, 85, 0.08) !important;
-  border-color: rgba(0, 170, 85, 0.25) !important;
+  background-color: rgba(0, 186, 89, 0.09) !important;
+  border-color: rgba(0, 186, 89, 0.28) !important;
+  color: #008f43 !important;
+}
+
+html.light .bg-secondary\/\[0\.05\],
+html.light .bg-secondary\/10,
+html.light .border-secondary\/10 {
+  background-color: rgba(14, 165, 233, 0.09) !important;
+  border-color: rgba(14, 165, 233, 0.28) !important;
+  color: #0284c7 !important;
+}
+
+/* Red / Danger / Admin Badges */
+html.light .bg-red-500\/10,
+html.light .bg-red-500\/\[0\.06\],
+html.light .border-red-500\/15,
+html.light .border-red-500\/20 {
+  background-color: rgba(239, 68, 68, 0.09) !important;
+  border-color: rgba(239, 68, 68, 0.28) !important;
+  color: #dc2626 !important;
 }
 
 /* Background surface overrides for light mode */
 html.light .bg-surface {
   background-color: #ffffff !important;
-  border-color: rgba(226, 232, 240, 0.9) !important;
+  border-color: rgba(226, 232, 240, 0.95) !important;
 }
 
 html.light .bg-surface-hover:hover {
@@ -479,7 +524,7 @@ html.light .border-white\/\[0\.08\] {
 html.light footer {
   background-color: #ffffff !important;
   border-top: 1px solid #e2e8f0 !important;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 -4px 25px rgba(14, 165, 233, 0.03);
 }
 
 html.light input, 

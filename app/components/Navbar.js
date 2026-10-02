@@ -76,8 +76,8 @@ export default function Navbar() {
           ? 'glass shadow-[0_2px_32px_rgba(0,0,0,0.5)]'
           : 'bg-transparent'
       }`}>
-        {/* Scroll progress bar */}
-        <div ref={progressBarRef} className="absolute bottom-0 left-0 h-[1px] bg-primary/40 pointer-events-none" style={{ width: '0%' }} />
+        {/* Scroll progress bar with multi-color gradient */}
+        <div ref={progressBarRef} className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-emerald-400 via-cyan-400 via-purple-500 to-amber-400 pointer-events-none" style={{ width: '0%' }} />
 
         <div className="max-w-7xl mx-auto px-6 h-[72px] flex items-center justify-between">
           {/* Logo */}

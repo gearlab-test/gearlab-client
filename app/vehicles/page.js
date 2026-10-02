@@ -168,10 +168,10 @@ function VehiclesList() {
                 <div className="absolute bottom-3.5 left-5">
                   <span className={`px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider rounded-md ${
                     isMaintenance 
-                      ? 'bg-blue-500/80 text-white' 
+                      ? 'bg-sky-500 text-white shadow-sm' 
                       : isCustomize 
-                      ? 'bg-primary/90 text-background' 
-                      : 'bg-primary/90 text-background'
+                      ? 'bg-emerald-500 text-black font-bold shadow-sm' 
+                      : 'bg-primary text-black font-bold shadow-sm'
                   }`}>
                     {isMaintenance ? 'Service Ready' : isCustomize ? 'Mod Ready' : 'Verified'}
                   </span>
@@ -203,9 +203,9 @@ function VehiclesList() {
                 {isMaintenance && (
                   <button
                     onClick={() => router.push(`/configurator/${v._id}?mode=maintenance`)}
-                    className="px-4 py-2 bg-primary/[0.08] hover:bg-primary hover:text-background text-primary text-[11px] font-semibold rounded-lg transition-all duration-400 border border-primary/20 flex items-center gap-1.5 magnetic-btn hover:shadow-[0_0_16px_rgba(0,255,136,0.15)]"
+                    className="px-4 py-2 bg-sky-500/10 hover:bg-sky-500 hover:text-white text-sky-600 dark:text-sky-300 text-[11px] font-semibold rounded-lg transition-all duration-300 border border-sky-500/25 hover:border-sky-500 flex items-center gap-1.5 magnetic-btn hover:shadow-lg hover:shadow-sky-500/20"
                   >
-                    <Wrench size={13} />
+                    <Wrench size={13} className="text-sky-500" />
                     Book Service
                   </button>
                 )}
@@ -213,7 +213,7 @@ function VehiclesList() {
                 {isCustomize && (
                   <button
                     onClick={() => router.push(`/configurator/${v._id}?mode=customize`)}
-                    className="px-4 py-2 bg-primary text-background hover:shadow-[0_0_20px_rgba(0,255,136,0.2)] text-[11px] font-bold uppercase tracking-wide rounded-lg transition-all duration-400 flex items-center gap-1.5 magnetic-btn"
+                    className="px-4 py-2 bg-primary text-black hover:shadow-lg hover:shadow-emerald-500/25 text-[11px] font-extrabold uppercase tracking-wide rounded-lg transition-all duration-300 flex items-center gap-1.5 magnetic-btn"
                   >
                     <Zap size={13} />
                     Customize
@@ -224,15 +224,15 @@ function VehiclesList() {
                   <div className="flex gap-2">
                     <button
                       onClick={() => router.push(`/configurator/${v._id}?mode=maintenance`)}
-                      className="px-3 py-2 bg-white/[0.03] hover:bg-primary/10 hover:text-primary text-gray-400 text-[11px] font-semibold rounded-lg transition-all duration-400 border border-white/[0.05] hover:border-primary/20 flex items-center gap-1 magnetic-btn"
+                      className="px-3 py-2 bg-sky-500/10 hover:bg-sky-500 hover:text-white text-sky-600 dark:text-sky-300 text-[11px] font-semibold rounded-lg transition-all duration-300 border border-sky-500/25 hover:border-sky-500 flex items-center gap-1 magnetic-btn"
                       title="Maintenance"
                     >
-                      <Wrench size={12} className="text-primary/60" />
+                      <Wrench size={12} className="text-sky-500" />
                       Service
                     </button>
                     <button
                       onClick={() => router.push(`/configurator/${v._id}?mode=customize`)}
-                      className="px-3 py-2 bg-primary text-background hover:shadow-[0_0_16px_rgba(0,255,136,0.2)] text-[11px] font-bold uppercase tracking-wide rounded-lg transition-all duration-400 flex items-center gap-1 magnetic-btn"
+                      className="px-3 py-2 bg-primary text-black font-extrabold text-[11px] uppercase tracking-wide rounded-lg transition-all duration-300 flex items-center gap-1 shadow-md shadow-emerald-500/20 magnetic-btn"
                       title="Customize"
                     >
                       <Zap size={12} />

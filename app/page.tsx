@@ -59,12 +59,12 @@ function AnimatedCounter({ target, suffix = '', duration = 1200 }: { target: num
   return <span ref={ref}>{count.toLocaleString()}{suffix}</span>;
 }
 
-/* ─── Zero-Lag Feature Card ─── */
-function FeatureCard({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) {
+/* ─── Zero-Lag Feature Card with Multi-Color Support ─── */
+function FeatureCard({ icon, title, description, colorClass = 'text-primary bg-primary/[0.05] border-primary/20' }: { icon: React.ReactNode; title: string; description: string; colorClass?: string }) {
   return (
-    <div className="relative p-8 rounded-2xl bg-surface border border-border hover:border-primary/25 transition-colors duration-200 group card-glow overflow-hidden">
+    <div className="relative p-8 rounded-2xl bg-surface border border-border hover:border-primary/30 transition-all duration-300 group card-glow overflow-hidden">
       <div className="relative z-10">
-        <div className="mb-5 p-4 rounded-xl bg-primary/[0.05] inline-flex group-hover:bg-primary/[0.08] transition-colors duration-200 text-primary">
+        <div className={`mb-5 p-4 rounded-xl inline-flex border transition-transform duration-300 group-hover:scale-110 ${colorClass}`}>
           {icon}
         </div>
         <h3 className="font-orbitron text-lg font-bold mb-2.5 text-white group-hover:text-primary transition-colors duration-200">{title}</h3>
@@ -74,14 +74,22 @@ function FeatureCard({ icon, title, description }: { icon: React.ReactNode; titl
   );
 }
 
-/* ─── Step Card ─── */
-function StepCard({ number, title, description, icon }: { number: string; title: string; description: string; icon: React.ReactNode }) {
+/* ─── Step Card with Multi-Color Accent ─── */
+function StepCard({ number, title, description, icon, color = 'emerald' }: { number: string; title: string; description: string; icon: React.ReactNode; color?: string }) {
+  const colorMap: Record<string, { badge: string; icon: string; border: string }> = {
+    emerald: { badge: 'bg-emerald-500 text-black shadow-emerald-500/30', icon: 'text-emerald-500', border: 'group-hover:border-emerald-500/40 group-hover:shadow-emerald-500/10' },
+    sky: { badge: 'bg-sky-500 text-white shadow-sky-500/30', icon: 'text-sky-500', border: 'group-hover:border-sky-500/40 group-hover:shadow-sky-500/10' },
+    purple: { badge: 'bg-purple-500 text-white shadow-purple-500/30', icon: 'text-purple-500', border: 'group-hover:border-purple-500/40 group-hover:shadow-purple-500/10' },
+    amber: { badge: 'bg-amber-500 text-black shadow-amber-500/30', icon: 'text-amber-500', border: 'group-hover:border-amber-500/40 group-hover:shadow-amber-500/10' },
+  };
+  const c = colorMap[color] || colorMap.emerald;
+
   return (
     <div className="relative text-center group">
-      <div className="mx-auto mb-5 w-16 h-16 rounded-2xl bg-surface border border-border group-hover:border-primary/20 flex items-center justify-center text-primary transition-colors duration-200 card-glow">
+      <div className={`mx-auto mb-5 w-16 h-16 rounded-2xl bg-surface border border-border flex items-center justify-center transition-all duration-300 card-glow ${c.border} ${c.icon}`}>
         {icon}
       </div>
-      <div className="absolute -top-2 -right-0.5 w-7 h-7 rounded-full bg-primary text-background flex items-center justify-center text-[10px] font-bold font-orbitron shadow-[0_0_12px_rgba(0,255,136,0.3)]">
+      <div className={`absolute -top-2 -right-0.5 w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold font-orbitron shadow-lg ${c.badge}`}>
         {number}
       </div>
       <h4 className="font-orbitron text-xs font-bold uppercase tracking-tight mb-1.5 text-white group-hover:text-primary transition-colors duration-200">{title}</h4>
@@ -238,30 +246,30 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-3">
               <Link 
                 href="/category?mode=maintenance" 
-                className="w-full sm:w-auto group relative px-7 py-4 bg-white/[0.03] border border-white/[0.06] hover:border-primary/30 text-white rounded-xl overflow-hidden transition-colors duration-200 hover:bg-white/[0.05] flex items-center justify-center gap-3 magnetic-btn"
+                className="w-full sm:w-auto group relative px-7 py-4 bg-surface border border-sky-500/20 hover:border-sky-500/60 text-white rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-sky-500/10 flex items-center justify-center gap-3 magnetic-btn"
               >
-                <div className="p-2 rounded-lg bg-primary/[0.06] text-primary group-hover:bg-primary group-hover:text-background transition-colors duration-200">
+                <div className="p-2 rounded-lg bg-sky-500/10 text-sky-500 group-hover:bg-sky-500 group-hover:text-white transition-colors duration-200">
                   <Wrench size={18} />
                 </div>
                 <div className="text-left">
-                  <span className="block text-[10px] text-gray-500 uppercase tracking-wider font-medium">Periodic Care</span>
-                  <span className="text-sm font-semibold text-white group-hover:text-primary transition-colors duration-200">Regular Maintenance</span>
+                  <span className="block text-[10px] text-gray-500 uppercase tracking-wider font-semibold">Periodic Care</span>
+                  <span className="text-sm font-semibold text-white group-hover:text-sky-500 transition-colors duration-200">Regular Maintenance</span>
                 </div>
-                <ChevronRight size={16} className="text-gray-600 group-hover:translate-x-1 group-hover:text-primary transition-transform duration-200 ml-1" />
+                <ChevronRight size={16} className="text-gray-500 group-hover:translate-x-1 group-hover:text-sky-500 transition-transform duration-200 ml-1" />
               </Link>
 
               <Link 
                 href="/category?mode=customize" 
-                className="w-full sm:w-auto group relative px-7 py-4 bg-primary text-background font-bold rounded-xl overflow-hidden transition-all duration-200 hover:brightness-110 flex items-center justify-center gap-3 magnetic-btn"
+                className="w-full sm:w-auto group relative px-7 py-4 bg-primary text-black font-bold rounded-xl overflow-hidden transition-all duration-300 hover:brightness-110 flex items-center justify-center gap-3 shadow-lg shadow-emerald-500/25 magnetic-btn"
               >
-                <div className="p-2 rounded-lg bg-background/15 text-background">
+                <div className="p-2 rounded-lg bg-black/15 text-black">
                   <Zap size={18} />
                 </div>
                 <div className="text-left">
-                  <span className="block text-[10px] text-background/70 uppercase tracking-wider font-bold">Performance & Mods</span>
-                  <span className="text-sm font-bold">Vehicle Customization</span>
+                  <span className="block text-[10px] text-black/70 uppercase tracking-wider font-bold">Performance & Mods</span>
+                  <span className="text-sm font-extrabold text-black">Vehicle Customization</span>
                 </div>
-                <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform duration-200 ml-1" />
+                <ChevronRight size={16} className="text-black group-hover:translate-x-1 transition-transform duration-200 ml-1" />
               </Link>
             </div>
           </div>
@@ -294,18 +302,18 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Track 1: Maintenance */}
             <ScrollReveal delay={50}>
-              <div className="relative p-8 md:p-10 rounded-2xl bg-surface border border-border hover:border-primary/20 transition-colors duration-200 card-glow flex flex-col justify-between h-full group overflow-hidden">
+              <div className="relative p-8 md:p-10 rounded-2xl bg-surface border border-border hover:border-sky-500/40 transition-all duration-300 card-glow flex flex-col justify-between h-full group overflow-hidden">
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-6">
-                    <div className="w-14 h-14 rounded-xl bg-primary/[0.05] border border-primary/10 flex items-center justify-center text-primary group-hover:bg-primary/[0.08] transition-colors duration-200">
+                    <div className="w-14 h-14 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-500 group-hover:bg-sky-500/20 transition-colors duration-200">
                       <Wrench size={28} />
                     </div>
-                    <span className="px-3 py-1 rounded-md bg-white/[0.02] border border-white/[0.04] text-[10px] font-semibold uppercase tracking-wider text-gray-400">
+                    <span className="px-3 py-1 rounded-md bg-sky-500/10 border border-sky-500/20 text-[10px] font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400">
                       Routine Care
                     </span>
                   </div>
 
-                  <h3 className="font-orbitron text-xl md:text-2xl font-bold text-white mb-3 group-hover:text-primary transition-colors duration-200">
+                  <h3 className="font-orbitron text-xl md:text-2xl font-bold text-white mb-3 group-hover:text-sky-500 transition-colors duration-200">
                     Regular Maintenance
                   </h3>
                   <p className="text-gray-500 text-sm leading-relaxed mb-6">
@@ -323,8 +331,8 @@ export default function HomePage() {
                         'Chain Cleaning & Tensioning',
                         'Factory Fluid Flushing & Top-up'
                       ].map((service, idx) => (
-                        <div key={idx} className="flex items-center gap-2 text-[13px] text-gray-400">
-                          <CheckCircle2 size={14} className="text-primary/60 flex-shrink-0" />
+                        <div key={idx} className="flex items-center gap-2 text-[13px] text-gray-500 dark:text-gray-400">
+                          <CheckCircle2 size={14} className="text-sky-500 flex-shrink-0" />
                           <span>{service}</span>
                         </div>
                       ))}
@@ -334,7 +342,7 @@ export default function HomePage() {
 
                 <Link
                   href="/category?mode=maintenance"
-                  className="relative z-10 w-full py-3.5 rounded-xl bg-white/[0.03] hover:bg-primary hover:text-background border border-white/[0.06] hover:border-primary text-white font-semibold text-sm tracking-wide flex items-center justify-center gap-2 transition-all duration-200 magnetic-btn"
+                  className="relative z-10 w-full py-3.5 rounded-xl bg-sky-500/10 hover:bg-sky-500 hover:text-white border border-sky-500/25 hover:border-sky-500 text-sky-600 dark:text-sky-300 font-semibold text-sm tracking-wide flex items-center justify-center gap-2 transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-sky-500/20 magnetic-btn"
                 >
                   Book Periodic Maintenance
                   <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform duration-200" />
@@ -344,18 +352,18 @@ export default function HomePage() {
 
             {/* Track 2: Customization */}
             <ScrollReveal delay={100}>
-              <div className="relative p-8 md:p-10 rounded-2xl bg-surface border border-border hover:border-primary/20 transition-colors duration-200 card-glow flex flex-col justify-between h-full group overflow-hidden">
+              <div className="relative p-8 md:p-10 rounded-2xl bg-surface border border-border hover:border-emerald-500/40 transition-all duration-300 card-glow flex flex-col justify-between h-full group overflow-hidden">
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-6">
-                    <div className="w-14 h-14 rounded-xl bg-secondary/[0.05] border border-secondary/10 flex items-center justify-center text-primary group-hover:bg-secondary/[0.08] transition-colors duration-200">
+                    <div className="w-14 h-14 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500 group-hover:bg-emerald-500/20 transition-colors duration-200">
                       <Zap size={28} />
                     </div>
-                    <span className="px-3 py-1 rounded-md bg-primary/[0.03] border border-primary/10 text-[10px] font-semibold uppercase tracking-wider text-primary">
+                    <span className="px-3 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-[10px] font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
                       Aftermarket Builds
                     </span>
                   </div>
 
-                  <h3 className="font-orbitron text-xl md:text-2xl font-bold text-white mb-3 group-hover:text-primary transition-colors duration-200">
+                  <h3 className="font-orbitron text-xl md:text-2xl font-bold text-white mb-3 group-hover:text-emerald-500 transition-colors duration-200">
                     Parts & Customization
                   </h3>
                   <p className="text-gray-500 text-sm leading-relaxed mb-6">
@@ -373,8 +381,8 @@ export default function HomePage() {
                         'Aero Spoilers & Sunroofs',
                         'Crash Guards & Touring Kits'
                       ].map((mod, idx) => (
-                        <div key={idx} className="flex items-center gap-2 text-[13px] text-gray-400">
-                          <Zap size={13} className="text-primary/60 flex-shrink-0" />
+                        <div key={idx} className="flex items-center gap-2 text-[13px] text-gray-500 dark:text-gray-400">
+                          <Zap size={13} className="text-emerald-500 flex-shrink-0" />
                           <span>{mod}</span>
                         </div>
                       ))}
@@ -384,7 +392,7 @@ export default function HomePage() {
 
                 <Link
                   href="/category?mode=customize"
-                  className="relative z-10 w-full py-3.5 rounded-xl bg-primary text-background font-bold text-sm tracking-wide flex items-center justify-center gap-2 transition-all duration-200 hover:brightness-110 magnetic-btn"
+                  className="relative z-10 w-full py-3.5 rounded-xl bg-primary text-black font-extrabold text-sm tracking-wide flex items-center justify-center gap-2 transition-all duration-300 hover:brightness-110 shadow-lg shadow-emerald-500/25 magnetic-btn"
                 >
                   Launch Customization Studio
                   <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform duration-200" />
@@ -400,20 +408,20 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
             {[
-              { value: 500, suffix: '+', label: 'Builds & Services', icon: <Sparkles size={22} className="text-primary" /> },
-              { value: 50, suffix: '+', label: 'Certified Workshops', icon: <Users size={22} className="text-primary" /> },
-              { value: 98, suffix: '%', label: 'Customer Satisfaction', icon: <Award size={22} className="text-primary" /> },
-              { value: 24, suffix: '/7', label: 'Support & Tracking', icon: <Clock size={22} className="text-primary" /> },
+              { value: 500, suffix: '+', label: 'Builds & Services', icon: <Sparkles size={22} className="text-emerald-500" />, border: 'border-emerald-500/20 bg-emerald-500/10' },
+              { value: 50, suffix: '+', label: 'Certified Workshops', icon: <Users size={22} className="text-sky-500" />, border: 'border-sky-500/20 bg-sky-500/10' },
+              { value: 98, suffix: '%', label: 'Customer Satisfaction', icon: <Award size={22} className="text-amber-500" />, border: 'border-amber-500/20 bg-amber-500/10' },
+              { value: 24, suffix: '/7', label: 'Support & Tracking', icon: <Clock size={22} className="text-purple-500" />, border: 'border-purple-500/20 bg-purple-500/10' },
             ].map((stat, i) => (
               <ScrollReveal key={i} delay={i * 40}>
                 <div className="text-center space-y-2 group">
-                  <div className="mx-auto w-12 h-12 rounded-xl bg-primary/[0.04] border border-primary/10 flex items-center justify-center transition-colors duration-200">
+                  <div className={`mx-auto w-12 h-12 rounded-xl border flex items-center justify-center transition-transform duration-300 group-hover:scale-110 ${stat.border}`}>
                     {stat.icon}
                   </div>
                   <p className="font-orbitron text-3xl md:text-4xl font-bold text-white tracking-tight">
                     <AnimatedCounter target={stat.value} suffix={stat.suffix} />
                   </p>
-                  <p className="text-[11px] text-gray-500 font-medium tracking-wider">{stat.label}</p>
+                  <p className="text-[11px] text-gray-500 font-semibold tracking-wider uppercase">{stat.label}</p>
                 </div>
               </ScrollReveal>
             ))}
@@ -433,9 +441,9 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { icon: <Zap className="text-primary" size={26} />, title: "Certified Excellence", description: "All maintenance tasks and modifications are carried out by certified partner workshops with verified credentials." },
-              { icon: <Cog className="text-primary" size={26} />, title: "Full Custom Control", description: "Configure exhausts, wraps, accessories, and parts with real-time pricing breakdowns and visual previews." },
-              { icon: <ShieldCheck className="text-primary" size={26} />, title: "Guaranteed Fitment", description: "Every aftermarket component and maintenance fluid meets exact OEM specifications for your vehicle." },
+              { icon: <Zap size={26} />, title: "Certified Excellence", description: "All maintenance tasks and modifications are carried out by certified partner workshops with verified credentials.", colorClass: "text-emerald-500 bg-emerald-500/10 border-emerald-500/25" },
+              { icon: <Cog size={26} />, title: "Full Custom Control", description: "Configure exhausts, wraps, accessories, and parts with real-time pricing breakdowns and visual previews.", colorClass: "text-sky-500 bg-sky-500/10 border-sky-500/25" },
+              { icon: <ShieldCheck size={26} />, title: "Guaranteed Fitment", description: "Every aftermarket component and maintenance fluid meets exact OEM specifications for your vehicle.", colorClass: "text-purple-500 bg-purple-500/10 border-purple-500/25" },
             ].map((feature, i) => (
               <ScrollReveal key={i} delay={i * 60}>
                 <FeatureCard {...feature} />
@@ -518,10 +526,10 @@ export default function HomePage() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6">
             {[
-              { number: '01', title: 'Choose Track', description: 'Pick Regular Maintenance or Custom Mods.', icon: <Layers size={22} /> },
-              { number: '02', title: 'Select Vehicle', description: 'Choose your exact bike or car model.', icon: <Sparkles size={22} /> },
-              { number: '03', title: 'Configure', description: 'Add services or performance upgrades.', icon: <Cog size={22} /> },
-              { number: '04', title: 'Book Workshop', description: 'Schedule with an approved specialist.', icon: <Clock size={22} /> },
+              { number: '01', title: 'Choose Track', description: 'Pick Regular Maintenance or Custom Mods.', icon: <Layers size={22} />, color: 'sky' },
+              { number: '02', title: 'Select Vehicle', description: 'Choose your exact bike or car model.', icon: <Sparkles size={22} />, color: 'emerald' },
+              { number: '03', title: 'Configure', description: 'Add services or performance upgrades.', icon: <Cog size={22} />, color: 'purple' },
+              { number: '04', title: 'Book Workshop', description: 'Schedule with an approved specialist.', icon: <Clock size={22} />, color: 'amber' },
             ].map((step, i) => (
               <ScrollReveal key={i} delay={i * 50}>
                 <StepCard {...step} />
