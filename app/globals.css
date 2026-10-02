@@ -1,26 +1,48 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #00ff88;
-  --color-secondary: #00e1ff;
-  --color-accent: #7000ff;
-  --color-background: #060606;
-  --color-surface: #0f0f0f;
-  --color-surface-hover: #161616;
-  --color-border: #1a1a1a;
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-border: var(--border);
   
   --font-orbitron: var(--font-orbitron);
   --font-poppins: var(--font-poppins);
 }
 
-:root {
+:root,
+html.dark,
+[data-theme="dark"] {
   --background: #060606;
   --foreground: #e0e0e0;
+  --primary: #00ff88;
+  --secondary: #00e1ff;
+  --accent: #7000ff;
+  --surface: #0f0f0f;
+  --surface-hover: #161616;
+  --border: #1a1a1a;
+  
   /* Silky smooth motion curves */
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* ─── Vibrant Light Theme (Cybernetic Mint & Hyper Azure) ─── */
+html.light,
+[data-theme="light"] {
+  --background: #f4f6fb;
+  --foreground: #0f172a;
+  --primary: #00b359;
+  --secondary: #0090e3;
+  --accent: #7c3aed;
+  --surface: #ffffff;
+  --surface-hover: #f8fafc;
+  --border: #e2e8f0;
 }
 
 /* ─── Global Body ─── */
@@ -38,6 +60,10 @@ body {
 ::selection {
   background: rgba(0, 255, 136, 0.15);
   color: #fff;
+}
+html.light ::selection {
+  background: rgba(0, 179, 89, 0.22);
+  color: #0f172a;
 }
 
 /* ─── Custom Scrollbar ─── */
@@ -57,6 +83,13 @@ body {
   background: rgba(0, 255, 136, 0.3);
 }
 
+html.light ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+}
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 179, 89, 0.45);
+}
+
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -73,6 +106,14 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+html.light .glass {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+}
+
 /* ─── Zero-Blur Ambient Orbs (100% GPU Gradient Textures) ─── */
 .glow-orb-primary {
   background: radial-gradient(circle, rgba(0, 255, 136, 0.08) 0%, transparent 70%);
@@ -84,9 +125,22 @@ body {
   background: radial-gradient(circle, rgba(112, 0, 255, 0.05) 0%, transparent 70%);
 }
 
+html.light .glow-orb-primary {
+  background: radial-gradient(circle, rgba(0, 179, 89, 0.12) 0%, transparent 70%);
+}
+html.light .glow-orb-secondary {
+  background: radial-gradient(circle, rgba(0, 144, 227, 0.09) 0%, transparent 70%);
+}
+html.light .glow-orb-accent {
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.08) 0%, transparent 70%);
+}
+
 /* ─── Refined Glow Effects ─── */
 .neon-glow {
   text-shadow: 0 0 14px rgba(0, 255, 136, 0.35);
+}
+html.light .neon-glow {
+  text-shadow: 0 0 14px rgba(0, 179, 89, 0.3);
 }
 
 .neon-border {
@@ -96,6 +150,14 @@ body {
 .neon-border:hover {
   border-color: rgba(0, 255, 136, 0.45);
   box-shadow: 0 0 20px rgba(0, 255, 136, 0.15);
+}
+
+html.light .neon-border {
+  border: 1px solid rgba(0, 179, 89, 0.25);
+}
+html.light .neon-border:hover {
+  border-color: rgba(0, 179, 89, 0.6);
+  box-shadow: 0 0 20px rgba(0, 179, 89, 0.15);
 }
 
 /* ─── Silky Smooth Card Hover Lift ─── */
@@ -110,6 +172,16 @@ body {
   box-shadow: 
     0 16px 36px -12px rgba(0, 0, 0, 0.7),
     0 0 0 1px rgba(0, 255, 136, 0.08);
+}
+
+html.light .card-glow {
+  box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.05), 0 2px 6px -2px rgba(0, 0, 0, 0.03);
+}
+html.light .card-glow:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 20px 35px -10px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(0, 179, 89, 0.25);
 }
 
 /* ─── Magnetic Spring Button ─── */
@@ -142,6 +214,15 @@ body {
   animation: shimmer 1.8s ease-in-out infinite;
 }
 
+html.light .shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,0.04) 50%,
+    rgba(0,0,0,0) 100%
+  );
+}
+
 /* ─── Divider Line Reveal ─── */
 .line-reveal {
   transform: scaleX(0);
@@ -154,6 +235,11 @@ body {
   background:
     radial-gradient(ellipse at 20% 50%, rgba(0, 255, 136, 0.035) 0%, transparent 50%),
     radial-gradient(ellipse at 80% 20%, rgba(0, 225, 255, 0.025) 0%, transparent 50%);
+}
+html.light .gradient-mesh {
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(0, 179, 89, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(0, 144, 227, 0.05) 0%, transparent 50%);
 }
 
 /* ─── Stagger Children ─── */
@@ -249,6 +335,9 @@ body {
   outline-offset: 3px;
   border-radius: 8px;
 }
+html.light :focus-visible {
+  outline: 2px solid rgba(0, 179, 89, 0.5);
+}
 
 button, a {
   -webkit-tap-highlight-color: transparent;
@@ -262,9 +351,104 @@ input:focus, select:focus, textarea:focus {
   box-shadow: 0 0 0 2px rgba(0, 255, 136, 0.2);
 }
 
+html.light input:focus, 
+html.light select:focus, 
+html.light textarea:focus {
+  box-shadow: 0 0 0 2px rgba(0, 179, 89, 0.25);
+}
+
 /* Smooth Page Entry */
 main {
   animation: fadeIn 0.35s var(--ease-out-quint) forwards;
+}
+
+/* ─── Comprehensive Light Mode Adaptations ─── */
+html.light .text-white {
+  color: #0f172a !important;
+}
+
+html.light .hover\:text-white:hover {
+  color: #0f172a !important;
+}
+
+html.light .group:hover .group-hover\:text-white {
+  color: #0f172a !important;
+}
+
+html.light .text-gray-600,
+html.light .text-gray-500,
+html.light .text-gray-400 {
+  color: #475569;
+}
+
+html.light .text-gray-300,
+html.light .text-gray-200,
+html.light .text-gray-100 {
+  color: #1e293b;
+}
+
+/* Crisp button text contrast on primary/secondary buttons */
+html.light .bg-primary.text-background,
+html.light .bg-primary .text-background,
+html.light [class*="bg-primary"].text-background,
+html.light .bg-secondary.text-background,
+html.light .hover\:text-background:hover,
+html.light .group:hover .group-hover\:text-background {
+  color: #000000 !important;
+}
+
+/* Background surface overrides for light mode */
+html.light .bg-black,
+html.light .bg-black\/20,
+html.light .bg-black\/40,
+html.light .bg-black\/50,
+html.light .bg-black\/60,
+html.light .bg-black\/80 {
+  background-color: rgba(241, 245, 249, 0.85);
+}
+
+html.light .bg-\[\#050505\],
+html.light .bg-\[\#060606\],
+html.light .bg-\[\#0a0a0a\],
+html.light .bg-\[\#0d0d0d\],
+html.light .bg-\[\#0f0f0f\],
+html.light .bg-\[\#121212\] {
+  background-color: #ffffff;
+}
+
+html.light .bg-white\/\[0\.02\],
+html.light .bg-white\/\[0\.03\],
+html.light .bg-white\/\[0\.04\],
+html.light .bg-white\/5,
+html.light .bg-white\/10 {
+  background-color: rgba(241, 245, 249, 0.7);
+}
+
+html.light .border-white\/5,
+html.light .border-white\/10,
+html.light .border-white\/15,
+html.light .border-white\/20,
+html.light .border-white\/\[0\.03\],
+html.light .border-white\/\[0\.04\],
+html.light .border-white\/\[0\.05\],
+html.light .border-white\/\[0\.06\],
+html.light .border-white\/\[0\.08\] {
+  border-color: rgba(226, 232, 240, 0.95);
+}
+
+html.light footer {
+  background-color: #ffffff !important;
+  border-top: 1px solid #e2e8f0 !important;
+}
+
+html.light input, 
+html.light select, 
+html.light textarea {
+  color: #0f172a;
+}
+
+html.light input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

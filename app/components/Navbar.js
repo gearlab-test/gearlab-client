@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import useStore from '@/store/useStore';
 import { User, LogOut, ShoppingCart, Menu, X, Package, ShieldCheck, Wrench, Zap, Car, Bike } from 'lucide-react';
+import ThemeToggle from './ThemeToggle';
 
 function NavLink({ href, children, icon, className = '' }) {
   const pathname = usePathname();
@@ -148,18 +149,25 @@ export default function Navbar() {
                 Sign In
               </Link>
             )}
+            <div className="w-px h-4 bg-white/[0.06] mx-1" />
+
+            {/* Dark / Light Mode Switch */}
+            <ThemeToggle className="ml-1" />
           </div>
 
-          {/* Mobile Toggle */}
-          <button 
-            onClick={toggleMobileMenu}
-            className="md:hidden p-2.5 rounded-lg hover:bg-white/[0.04] text-gray-400 hover:text-white transition-all duration-300"
-          >
-            <div className="relative w-5 h-5">
-              <Menu size={20} className={`absolute inset-0 transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0 rotate-90 scale-75' : 'opacity-100 rotate-0 scale-100'}`} />
-              <X size={20} className={`absolute inset-0 transition-all duration-300 ${isMobileMenuOpen ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-75'}`} />
-            </div>
-          </button>
+          {/* Mobile Actions */}
+          <div className="flex items-center gap-2 md:hidden">
+            <ThemeToggle compact />
+            <button 
+              onClick={toggleMobileMenu}
+              className="p-2.5 rounded-lg hover:bg-white/[0.04] text-gray-400 hover:text-white transition-all duration-300"
+            >
+              <div className="relative w-5 h-5">
+                <Menu size={20} className={`absolute inset-0 transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0 rotate-90 scale-75' : 'opacity-100 rotate-0 scale-100'}`} />
+                <X size={20} className={`absolute inset-0 transition-all duration-300 ${isMobileMenuOpen ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-75'}`} />
+              </div>
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -240,6 +248,12 @@ export default function Navbar() {
                 <ShieldCheck size={18} /> Admin Panel
               </Link>
             )}
+
+            {/* Theme Toggle Row in Mobile */}
+            <div className="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+              <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">Appearance</span>
+              <ThemeToggle />
+            </div>
 
             <div className="h-px bg-white/[0.04] my-1" />
 

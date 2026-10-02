@@ -18,7 +18,7 @@ function ParallaxHero() {
         style={{ backgroundImage: 'url("/images/hero_v2.png")' }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/20 to-background" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_0%,_#060606_70%)] opacity-60" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_0%,_var(--background)_70%)] opacity-60" />
       {/* GPU Texture Orbs */}
       <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] glow-orb-primary rounded-full pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/5 w-[400px] h-[400px] glow-orb-secondary rounded-full pointer-events-none" />

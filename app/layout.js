@@ -16,8 +16,31 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${orbitron.variable} ${poppins.variable}`}>
-      <body className="font-poppins bg-background text-foreground antialiased min-h-screen flex flex-col">
+    <html lang="en" suppressHydrationWarning className={`${orbitron.variable} ${poppins.variable}`}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var saved = localStorage.getItem('gearlab-theme');
+                  var theme = saved || 'dark';
+                  if (theme === 'light') {
+                    document.documentElement.classList.add('light');
+                    document.documentElement.classList.remove('dark');
+                    document.documentElement.setAttribute('data-theme', 'light');
+                  } else {
+                    document.documentElement.classList.add('dark');
+                    document.documentElement.classList.remove('light');
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
+      <body className="font-poppins bg-background text-foreground antialiased min-h-screen flex flex-col transition-colors duration-300">
         <Navbar />
         <Toast />
 
