@@ -15,8 +15,8 @@ function NavLink({ href, children, icon, className = '' }) {
       href={href} 
       className={`relative px-3 py-2 rounded-lg transition-all duration-300 ease-out text-[11px] font-semibold tracking-wide uppercase flex items-center gap-1.5 group ${
         isActive 
-          ? 'text-primary bg-primary/[0.06]' 
-          : 'text-gray-400 hover:text-white hover:bg-white/[0.03]'
+          ? 'text-emerald-700 dark:text-primary bg-emerald-500/10 dark:bg-primary/[0.06]' 
+          : 'text-slate-700 hover:text-slate-950 hover:bg-slate-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-white/[0.03]'
       } ${className}`}
     >
       {icon}
